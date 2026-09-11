@@ -25,7 +25,7 @@ export const brand = {
   tagline: "Fine jewellery, made to be lived in.",
   lede: "Handcrafted in 18k and 22k gold, set with certified stones.",
   description:
-    "Manish Jewellers, Jaipur. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
+    "Manish Jewellers, Beawar. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
   since: 1986,
   url: "https://manishjewellers.in",
 } as const;
@@ -277,7 +277,7 @@ export const craft = {
 
 export const invitation = {
   heading: "Come see them in person.",
-  body: "Private viewings at our Jaipur atelier, by appointment.",
+  body: "Private viewings at our Beawar atelier, by appointment.",
   cta: { label: "Book an appointment", href: "/home#visit" },
 } as const;
 
@@ -431,7 +431,7 @@ export const bespoke = {
     },
     {
       title: "We make it",
-      body: "Cut, set and finished in Jaipur. Six to eight weeks. Delivered with its certificates, in person if you prefer.",
+      body: "Cut, set and finished in Beawar. Six to eight weeks. Delivered with its certificates, in person if you prefer.",
     },
   ] satisfies Step[],
   cta: { label: "Start a bespoke enquiry", href: "#visit" },
@@ -466,9 +466,9 @@ export const testimonials = {
 export const store = {
   id: "visit",
   eyebrow: "Visit",
-  heading: "MI Road, Jaipur.",
+  heading: "Panch Batti, Beawar.",
   body: "The atelier is above the showroom. Ask, and we will take you up.",
-  addressLines: ["12 Gopalbari, MI Road", "Jaipur, Rajasthan 302001"],
+  addressLines: ["Panch Batti", "Beawar 305901"],
   hours: [
     { days: "Mon – Sat", time: "11:00 – 20:00" },
     { days: "Sunday", time: "By appointment" },
@@ -479,13 +479,13 @@ export const store = {
   whatsappLabel: "WhatsApp",
   whatsappHref: "https://wa.me/910000000000",
   instagram: "https://instagram.com/",
-  directions: { label: "Get directions", href: "https://maps.google.com/?q=MI+Road+Jaipur" },
+  directions: { label: "Get directions", href: "https://maps.google.com/?q=Panch+Batti+Beawar+305901" },
   hoursLabel: "Hours",
   addressLabel: "Address",
   contactLabel: "Contact",
-  mapLabel: "Illustrated map showing the store on MI Road, Jaipur",
+  mapLabel: "Illustrated map showing the store at Panch Batti, Beawar",
   mapNote: "Illustrative map. Real map embed arrives in Phase 2.",
-  geo: { lat: 26.9155, lng: 75.8035 },
+  geo: { lat: 26.1018, lng: 74.3203 },
 } as const;
 
 /* ------------------------------------------------------------------ */

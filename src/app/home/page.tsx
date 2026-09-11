@@ -27,9 +27,9 @@ const jsonLd = {
   address: {
     "@type": "PostalAddress",
     streetAddress: store.addressLines[0],
-    addressLocality: "Jaipur",
+    addressLocality: "Beawar",
     addressRegion: "Rajasthan",
-    postalCode: "302001",
+    postalCode: "305901",
     addressCountry: "IN",
   },
   geo: { "@type": "GeoCoordinates", latitude: store.geo.lat, longitude: store.geo.lng },

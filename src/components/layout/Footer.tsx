@@ -37,8 +37,8 @@ export function Footer() {
   return (
     <footer ref={ref} className="on-wine overflow-hidden bg-wine-deep text-cream">
       <div className="container-x pb-[clamp(80px,10vw,140px)]">
-        {/* Masthead — the real wordmark, flush with the top edge and deliberately clipped */}
-        <div aria-hidden="true" className="-mt-[clamp(8px,1.6vw,22px)] text-cream/92">
+        {/* Masthead — the real wordmark, shown in full */}
+        <div aria-hidden="true" className="pt-[clamp(56px,7vw,112px)] text-cream/92">
           <BrandWordmark className="hidden h-auto w-full md:block" />
           <div className="md:hidden">
             <BrandWordmark words={[0]} className="h-auto w-[64.5%]" />

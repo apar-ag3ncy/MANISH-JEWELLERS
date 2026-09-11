@@ -42,16 +42,10 @@ export function MapIllustration({ className, label }: Props) {
         opacity="0.75"
       >
         <text x="24" y="218">
-          MI ROAD
+          BEAWAR
         </text>
-        <text x="130" y="70">
+        <text x="384" y="196">
           PANCH BATTI
-        </text>
-        <text x="480" y="30">
-          RAM NIWAS
-        </text>
-        <text x="300" y="450">
-          AJMERI GATE
         </text>
       </g>
       {/* pin: the real monogram in a wine disc */}
