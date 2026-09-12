@@ -231,19 +231,9 @@ export function BottomHeritage() {
         </div>
       </div>
 
-      {/* the family, and the welcome */}
-      <div className="relative container-x grid grid-cols-12 items-end gap-x-6 gap-y-8 pb-[clamp(72px,10vw,140px)]">
-        <div className="col-span-12 lg:col-span-5">
-          <p className="eyebrow text-cream/60">{homeBottomHeritage.welcome}</p>
-        </div>
-        <ImageFrame
-          src={heritage.family.src}
-          alt={heritage.family.alt}
-          sizes="(min-width: 1024px) 55vw, 100vw"
-          focus="object-[50%_45%]"
-          curtain="wine-deep"
-          className="col-span-12 aspect-[16/9] w-full lg:col-span-6 lg:col-start-7 lg:aspect-[16/7]"
-        />
+      {/* the welcome, on its own */}
+      <div className="relative container-x pb-[clamp(56px,8vw,110px)]">
+        <p className="eyebrow text-cream/60">{homeBottomHeritage.welcome}</p>
       </div>
     </section>
   );
