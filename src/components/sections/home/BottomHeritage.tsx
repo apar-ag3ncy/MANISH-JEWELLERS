@@ -24,8 +24,8 @@ import { ImageFrame } from "@/components/ui/ImageFrame";
  * See src/styles/enhance-home-bottom.css.
  */
 
-/** Pin only where the composition fits one screen and motion is welcome. */
-const STEP_OK = "(prefers-reduced-motion: no-preference) and (min-width: 768px) and (min-height: 720px)";
+/** Pin only at lg and up: below that the section is one column and a pin would strand it. */
+const STEP_OK = "(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (min-height: 720px)";
 
 export function BottomHeritage() {
   const ref = useRef<HTMLElement>(null);
@@ -139,7 +139,7 @@ export function BottomHeritage() {
 
       <div className="relative container-x grid min-h-[88svh] grid-cols-12 items-center gap-x-6 gap-y-14 section-y">
         {/* the house, and the bench it was built on */}
-        <div className="col-span-12 md:col-span-5">
+        <div className="col-span-12 lg:col-span-5">
           <SectionHead
             tone="wine"
             eyebrow={heritage.eyebrow}
@@ -151,7 +151,7 @@ export function BottomHeritage() {
           <ImageFrame
             src={heritage.bench.src}
             alt={heritage.bench.alt}
-            sizes="(min-width: 768px) 40vw, 100vw"
+            sizes="(min-width: 1024px) 40vw, 100vw"
             focus="object-[50%_45%]"
             curtain="wine-deep"
             depth={0}
@@ -161,7 +161,7 @@ export function BottomHeritage() {
         </div>
 
         {/* the century */}
-        <div className="col-span-12 md:col-span-6 md:col-start-7">
+        <div className="col-span-12 lg:col-span-6 lg:col-start-7">
           {/* decorative stage: one numeral at a time, gold leaf behind it */}
           <div aria-hidden="true" className="mj-heritage-stage relative">
             <span className="pointer-events-none absolute -inset-x-[8%] -top-[12%] h-[80%] [mask-image:radial-gradient(58%_62%_at_32%_45%,black,transparent_75%)] opacity-[0.10]">
@@ -233,16 +233,16 @@ export function BottomHeritage() {
 
       {/* the family, and the welcome */}
       <div className="relative container-x grid grid-cols-12 items-end gap-x-6 gap-y-8 pb-[clamp(72px,10vw,140px)]">
-        <div className="col-span-12 md:col-span-5">
+        <div className="col-span-12 lg:col-span-5">
           <p className="eyebrow text-cream/60">{homeBottomHeritage.welcome}</p>
         </div>
         <ImageFrame
           src={heritage.family.src}
           alt={heritage.family.alt}
-          sizes="(min-width: 768px) 55vw, 100vw"
+          sizes="(min-width: 1024px) 55vw, 100vw"
           focus="object-[50%_45%]"
           curtain="wine-deep"
-          className="col-span-12 aspect-[16/7] w-full md:col-span-6 md:col-start-7"
+          className="col-span-12 aspect-[16/9] w-full lg:col-span-6 lg:col-start-7 lg:aspect-[16/7]"
         />
       </div>
     </section>
