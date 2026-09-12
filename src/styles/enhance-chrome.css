@@ -1,0 +1,8 @@
+/* Chrome group styles. Owned by the chrome group. */
+
+/* The scrolled nav pill eases between its two states; under reduced motion it snaps. */
+@media (prefers-reduced-motion: reduce) {
+  [data-pill] {
+    transition: none !important;
+  }
+}

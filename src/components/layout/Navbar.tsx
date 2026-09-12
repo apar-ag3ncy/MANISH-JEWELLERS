@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { gsap, useGSAP, ScrollTrigger, MOTION_OK } from "@/lib/gsap";
 import { onReveal } from "@/lib/reveal";
 import { lockScroll, unlockScroll } from "@/lib/lenis";
+import { getWineGround, getWineGroundServer, subscribeGround } from "./ground";
 import { NAV_SCROLL_THRESHOLD } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { brand, nav, navCta, mobileMenu } from "@/data/content";
@@ -18,7 +19,9 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input, [tabindex]:not([tabin
 
 export function Navbar() {
   const pathname = usePathname();
-  const onWine = pathname === "/";
+  /* The landing page is wine; so is any route that declares itself wine (the 404). */
+  const wineRoute = useSyncExternalStore(subscribeGround, getWineGround, getWineGroundServer);
+  const onWine = pathname === "/" || wineRoute;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLElement>(null);
@@ -124,8 +127,9 @@ export function Navbar() {
 
   const pillActive = scrolled;
   const ctaVariant = pillActive ? "secondary" : onWine ? "outline-cream" : "outline";
-  /* On the landing hero the lockup itself is the logo; the nav mark joins once you scroll. */
-  const logoHidden = onWine && !pillActive;
+  /* On the landing hero the lockup itself is the logo; the nav mark joins once you scroll.
+     Only the landing page has that lockup — a wine 404 keeps its nav mark. */
+  const logoHidden = pathname === "/" && !pillActive;
 
   return (
     <header ref={ref} className="pointer-events-none fixed inset-x-0 top-5 z-50">
@@ -133,8 +137,11 @@ export function Navbar() {
         <div
           data-pill
           className={cn(
-            "pointer-events-auto flex items-center justify-between rounded-full px-5 transition-[background-color,box-shadow,height,color] duration-500 ease-[var(--ease-lux)] lg:px-7",
-            pillActive ? "h-16 bg-cream text-wine shadow-nav" : "h-[88px] bg-transparent",
+            "pointer-events-auto mx-auto flex items-center justify-between rounded-full px-5 transition-[background-color,box-shadow,height,color,max-width] duration-500 ease-[var(--ease-lux)] lg:px-7",
+            /* Scrolled, it narrows to 880px so it stops reading as a toolbar laid over the photography. */
+            pillActive
+              ? "h-14 max-w-[min(100%,880px)] bg-cream text-wine shadow-nav"
+              : "h-[88px] max-w-full bg-transparent",
             !pillActive && (onWine ? "on-wine text-cream" : "text-wine"),
           )}
         >

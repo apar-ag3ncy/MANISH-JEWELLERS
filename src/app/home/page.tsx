@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { brand, homeHero, lookbook, store } from "@/data/content";
+import { brand, homeHero, store } from "@/data/content";
 import { SITE_URL } from "@/lib/constants";
 import { HomeHero } from "@/components/sections/home/HomeHero";
 import { CategoryGrid } from "@/components/sections/home/CategoryGrid";
 import { FeaturedPieces } from "@/components/sections/home/FeaturedPieces";
+import { TopReel } from "@/components/sections/home/TopReel";
 import { CutStudio } from "@/components/sections/home/CutStudio";
-import { CampaignSlides } from "@/components/sections/landing/CampaignSlides";
 import { Bespoke } from "@/components/sections/home/Bespoke";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { VisitStore } from "@/components/sections/home/VisitStore";
@@ -51,8 +51,8 @@ export default function HomePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <HomeHero />
       <CategoryGrid />
+      <TopReel />
       <FeaturedPieces />
-      <CampaignSlides slides={lookbook.slides} id={lookbook.id} />
       <CutStudio />
       <Bespoke />
       <Testimonials />

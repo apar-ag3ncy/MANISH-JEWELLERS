@@ -4,9 +4,18 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { TESTIMONIAL_INTERVAL_MS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { testimonials } from "@/data/content";
-import { Reveal } from "@/components/ui/Reveal";
+import { testimonials, homeBottomTestimonials } from "@/data/content";
+import { SectionHead } from "@/components/ui/SectionHead";
+import { Rule } from "@/components/ui/Rule";
+import { ImageFrame } from "@/components/ui/ImageFrame";
 
+/**
+ * Testimonials — a face beside the words.
+ *
+ * The oversized quote glyph is gone (the eyebrow used to sit inside its bowl); a short
+ * drawn hairline opens the quote instead. The crossfade, the pause on hover and focus,
+ * the reduced-motion bail and the hairline-dash pagination are unchanged.
+ */
 export function Testimonials() {
   const ref = useRef<HTMLElement>(null);
   const [index, setIndex] = useState(0);
@@ -49,43 +58,53 @@ export function Testimonials() {
   return (
     <section
       ref={ref}
-      className="bg-white section-y text-ink"
+      className="bg-cream-soft section-y text-ink"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className="container-x grid grid-cols-12 gap-6">
-        <div className="relative col-span-12 md:col-span-10 md:col-start-2">
-          <Reveal>
-            <p className="eyebrow text-wine-soft">{testimonials.eyebrow}</p>
-          </Reveal>
+      <div className="container-x grid grid-cols-12 gap-x-6 gap-y-12">
+        {/* left rail: the head, then the face */}
+        <div className="col-span-12 md:col-span-6 lg:col-span-4">
+          <SectionHead
+            eyebrow={testimonials.eyebrow}
+            heading={homeBottomTestimonials.heading}
+            headingClassName="max-w-[12ch]"
+          />
+          <ImageFrame
+            src={homeBottomTestimonials.photo.src}
+            alt={homeBottomTestimonials.photo.alt}
+            sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
+            focus="object-[52%_38%]"
+            curtain="cream-soft"
+            depth={3}
+            delay={0.08}
+            className="mt-10 aspect-[4/5] w-full"
+          />
+        </div>
 
-          <div className="relative mt-10">
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-[0.55em] -left-[0.08em] font-display text-[clamp(8rem,20vw,16rem)] leading-none text-cream select-none"
-            >
-              “
-            </span>
+        {/* the words */}
+        <div className="col-span-12 md:col-span-6 lg:col-span-7 lg:col-start-6 lg:pt-14">
+          <Rule tone="light" draw className="w-16" />
 
-            <div className="relative grid">
-              {testimonials.items.map((t, i) => (
-                <figure
-                  key={t.name}
-                  data-item
-                  aria-hidden={i !== index}
-                  className={cn("col-start-1 row-start-1", i !== index && "pointer-events-none")}
-                >
-                  <blockquote className="max-w-[24ch] font-display text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.12] tracking-[-0.01em]">
-                    {t.quote}
-                  </blockquote>
-                  <figcaption className="mt-8 caption text-ink-muted">
-                    {t.name} · {t.city}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
+          <div className="relative mt-10 grid">
+            {testimonials.items.map((t, i) => (
+              <figure
+                key={t.name}
+                data-item
+                aria-hidden={i !== index}
+                className={cn("col-start-1 row-start-1", i !== index && "pointer-events-none")}
+              >
+                <blockquote className="max-w-[24ch] font-display text-[clamp(1.75rem,3.2vw,3rem)] leading-[1.12] tracking-[-0.01em]">
+                  {t.quote}
+                </blockquote>
+                <figcaption className="mt-8">
+                  <span className="block text-[15px] text-ink">{t.name}</span>
+                  <span className="mt-1 block caption text-ink-muted">{t.city}</span>
+                </figcaption>
+              </figure>
+            ))}
           </div>
 
           {/* hairline-dash pagination */}

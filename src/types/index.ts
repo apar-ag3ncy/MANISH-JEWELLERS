@@ -53,3 +53,16 @@ export type StoreHours = { days: string; time: string };
 export type FooterColumn = { heading: string; links: NavLink[] };
 
 export type Slide = { src: string; alt: string; caption: string; focus: string };
+
+/* ------------------------------------------------------------------ */
+/*  Shared motion primitives (src/components/ui)                       */
+/* ------------------------------------------------------------------ */
+
+/** Ground colour an ImageFrame curtain retracts in. MUST match the section ground. */
+export type CurtainTone = "cream-soft" | "cream" | "white" | "wine" | "wine-deep";
+
+/** Which ground a SectionHead / MetaRow sits on. */
+export type HeadTone = "light" | "wine";
+
+/** One frame of a scrubbed photographic reel: photo, its one line, its crop. */
+export type ReelFrame = { src: string; alt: string; line: string; focus: string };

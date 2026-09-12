@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { brand } from "@/data/content";
+import { brand, landingCampaign } from "@/data/content";
 import { Hero } from "@/components/sections/landing/Hero";
 import { CampaignSlides } from "@/components/sections/landing/CampaignSlides";
 import { Marquee } from "@/components/sections/landing/Marquee";
@@ -16,7 +16,7 @@ export default function LandingPage() {
   return (
     <>
       <Hero />
-      <CampaignSlides />
+      <CampaignSlides slides={landingCampaign.slides} />
       <Marquee />
       <SignatureRail />
       <Invitation />

@@ -17,7 +17,7 @@ type Props = {
 export function SplitText({ text, type = "words", className, innerClassName }: Props) {
   const parts = type === "words" ? text.split(" ") : Array.from(text);
   return (
-    <span className={cn("inline", className)} aria-label={text} role="text">
+    <span className={cn("inline", className)} aria-label={text}>
       {parts.map((part, i) => (
         <Fragment key={`${part}-${i}`}>
           <span aria-hidden="true" className="-mb-[0.1em] inline-block overflow-hidden pb-[0.1em] align-bottom">

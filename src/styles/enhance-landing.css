@@ -1,0 +1,26 @@
+/* Landing group styles. Owned by the landing group. No hex values: tokens only. */
+
+/* SignatureRail — the horizontal layout only exists because a pinned master tween
+   translates it. Under reduced motion no tween is ever created, so the rail must not
+   lay out sideways either: panels 2–4 would sit outside the section's overflow and be
+   unreachable. Below lg the same stacked layout already applies through Tailwind. */
+@media (prefers-reduced-motion: reduce) {
+  [data-rail="track"] {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    align-items: stretch;
+  }
+
+  [data-rail="track"] > [data-panel] {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* A scroll hint and a progress bar for a rail that no longer scrolls sideways. */
+  [data-rail="progress-row"] {
+    display: none;
+  }
+}

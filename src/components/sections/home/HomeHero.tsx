@@ -1,13 +1,23 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { onReveal } from "@/lib/reveal";
-import { homeHero } from "@/data/content";
+import { homeHero, homeTopStack } from "@/data/content";
 import { SplitText } from "@/components/ui/SplitText";
+import { ArchFrame } from "@/components/ui/ArchFrame";
+import { ImageFrame } from "@/components/ui/ImageFrame";
+
+/**
+ * HomeHero — the offset two-photo stack, now cut by the brand arch and stood on a
+ * wine plinth so the page shows its colour in the first screen.
+ *
+ * Both photographs are ImageFrames with depth={0} and reveal="none": this section
+ * already owns their entrance (the loader hand-off) and their parallax (the -5 / -12
+ * wrapper scrubs), and two parallaxes on one plate would fight.
+ */
 
 export function HomeHero() {
   const ref = useRef<HTMLElement>(null);
@@ -54,6 +64,7 @@ export function HomeHero() {
     <section ref={ref} className="relative overflow-hidden bg-cream-soft text-ink">
       <div className="container-x grid grid-cols-12 items-center gap-6 pt-[140px] pb-[clamp(64px,8vw,120px)] md:pt-[168px]">
         <div className="col-span-12 lg:col-span-5">
+          <span data-fade aria-hidden="true" className="mb-6 block h-px w-6 bg-rose-deep/70" />
           <p data-fade className="eyebrow text-wine-soft">
             {homeHero.eyebrow}
           </p>
@@ -77,28 +88,39 @@ export function HomeHero() {
         <div className="col-span-12 mt-16 lg:col-span-6 lg:col-start-7 lg:mt-0">
           <div className="relative aspect-[10/9] w-full">
             <div data-rear className="absolute top-0 left-0 w-[62%] will-change-transform">
-              <div className="relative aspect-[4/5] overflow-hidden bg-wine-deep">
-                <Image
-                  src={homeHero.stack.rearSrc}
-                  alt={homeHero.stack.rearAlt}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 30vw, 62vw"
-                  className="object-cover object-[50%_60%]"
-                />
-              </div>
+              <ImageFrame
+                src={homeHero.stack.rearSrc}
+                alt={homeHero.stack.rearAlt}
+                sizes="(min-width: 1024px) 30vw, 62vw"
+                focus={homeTopStack.rearFocus}
+                curtain="cream-soft"
+                depth={0}
+                reveal="none"
+                priority
+                className="aspect-[4/5] w-full"
+              />
             </div>
+
             <div data-front className="absolute right-0 bottom-0 w-[54%] will-change-transform">
-              <div className="relative aspect-[4/5] overflow-hidden border-8 border-cream-soft bg-wine-deep">
-                <Image
+              {/* A rectangular plinth under an arch silhouette states the arch, and
+                  gives depth with no shadow and no radius. */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 translate-x-3 translate-y-3 bg-wine md:translate-x-5 md:translate-y-5"
+              />
+              <ArchFrame ratio={0.8} className="w-full">
+                <ImageFrame
                   src={homeHero.stack.frontSrc}
                   alt={homeHero.stack.frontAlt}
-                  fill
-                  priority
                   sizes="(min-width: 1024px) 26vw, 54vw"
-                  className="object-cover object-[50%_28%]"
+                  focus={homeTopStack.frontFocus}
+                  curtain="cream-soft"
+                  depth={0}
+                  reveal="none"
+                  priority
+                  className="aspect-[4/5] h-full w-full"
                 />
-              </div>
+              </ArchFrame>
             </div>
           </div>
         </div>

@@ -25,8 +25,8 @@ export const brand = {
   tagline: "Fine jewellery, made to be lived in.",
   lede: "Handcrafted in 18k and 22k gold, set with certified stones.",
   description:
-    "Manish Jewellers, Beawar. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
-  since: 1986,
+    "Manish Jewellers, Beawar, since 1915. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
+  since: 1915,
   url: "https://manishjewellers.in",
 } as const;
 
@@ -60,7 +60,7 @@ export const hero = {
   primary: { label: "Explore the collection", href: "/home" },
   secondary: { label: "Book a private viewing", href: "/home#visit" },
   stats: [
-    { label: "Since", value: 1986, counter: true },
+    { label: "Since", value: 1915, counter: true },
     { label: "BIS Hallmarked", value: null, counter: false },
     { label: "IGI Certified Stones", value: null, counter: false },
   ],
@@ -529,7 +529,7 @@ export const footer = {
   },
   legal: {
     copyright: `© ${new Date().getFullYear()} Manish Jewellers`,
-    marks: "BIS Hallmarked · IGI Certified",
+    marks: "Hallmarked since 1988 · BIS · IGI",
     links: [
       { label: "Instagram", href: store.instagram },
       { label: "WhatsApp", href: store.whatsappHref },
@@ -547,3 +547,63 @@ export const notFound = {
   body: "Collections, bespoke and appointments open in the next release. Until then, the home page has everything you need.",
   cta: { label: "Go to the home page", href: "/home" },
 } as const;
+
+/* ------------------------------------------------------------------ */
+/*  Per-group enhancement copy (one module per implementation group)   */
+/* ------------------------------------------------------------------ */
+
+/* ------------------------------------------------------------------ */
+/*  Heritage + brochure assets — from the house brochure (since 1915)   */
+/* ------------------------------------------------------------------ */
+export const heritage = {
+  id: "heritage",
+  eyebrow: "The house",
+  hindiMark: "आपके अपने",
+  heading: "A century in Beawar.",
+  line: "Founded in 1915 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat.",
+  closing: "Over a hundred years, and counting.",
+  bench: { src: "/brochure/br-bench.jpg", alt: "A goldsmith at the bench, shaping a piece by hand" },
+  team: { src: "/brochure/br-team.jpg", alt: "The Karnawat family greeting guests at the showroom" },
+  family: { src: "/brochure/br-family.jpg", alt: "The Manish Jewellers family at a celebration" },
+  foil: { src: "/brochure/br-gold-foil.jpg", alt: "" },
+  milestones: [
+    { year: 1915, label: "The house opens in Beawar" },
+    { year: 1932, label: "Gold enters the ledger" },
+    { year: 1952, label: "Silver follows" },
+    { year: 1988, label: "Certified hallmarking, pioneered" },
+    { year: 2025, label: "A grand new space" },
+  ],
+} as const;
+
+/** Studio packshots lifted from the house brochure. Clean light, silk, marble and sand. */
+export const brochureShots = [
+  {
+    src: "/brochure/br-earrings-rose.jpg",
+    alt: "Rose gold and diamond drop earrings on white silk",
+    subject: "earrings",
+  },
+  { src: "/brochure/br-harness-pink.jpg", alt: "Gold hand harness set with pink stones", subject: "bridal" },
+  { src: "/brochure/br-ring-peacock.jpg", alt: "Gold peacock ring on a pink ground", subject: "rings" },
+  { src: "/brochure/br-kada-sand.jpg", alt: "A pair of kundan kada resting on rippled sand", subject: "bangles" },
+  { src: "/brochure/br-ring-flower.jpg", alt: "Gold flower ring set with pink and violet stones", subject: "rings" },
+  { src: "/brochure/br-bracelet-vine.jpg", alt: "Gold vine bracelet set with pink stones", subject: "bangles" },
+  { src: "/brochure/br-bangles-trio.jpg", alt: "Three gold bangles on a stone dish", subject: "bangles" },
+  { src: "/brochure/br-haram-pearl.jpg", alt: "Long gold haram with pearls and emeralds", subject: "necklaces" },
+  { src: "/brochure/br-choker-pearl.jpg", alt: "Gold choker with pearls and rubies on marble", subject: "necklaces" },
+  {
+    src: "/brochure/br-pendant-emerald.jpg",
+    alt: "Round gold medallion set with emerald and ruby",
+    subject: "pendants",
+  },
+  { src: "/brochure/br-kada-emerald.jpg", alt: "Emerald kada with matching earrings on silk", subject: "bangles" },
+  { src: "/brochure/br-set-emerald.jpg", alt: "Emerald choker set with bangles and earrings", subject: "sets" },
+  { src: "/brochure/br-necklace-green.jpg", alt: "Gold necklace set with green stones on silk", subject: "necklaces" },
+  { src: "/brochure/br-ring-ruby.jpg", alt: "Ruby cocktail ring on marble", subject: "rings" },
+  { src: "/brochure/br-brooch-blue.jpg", alt: "Gold piece set with blue and green stones on silk", subject: "sets" },
+  { src: "/brochure/br-set-ruby.jpg", alt: "Ruby and diamond necklace with matching rings", subject: "sets" },
+] as const;
+
+export * from "./enhance-landing";
+export * from "./enhance-home";
+export * from "./enhance-home-bottom";
+export * from "./enhance-chrome";

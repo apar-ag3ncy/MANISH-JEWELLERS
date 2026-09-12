@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Per-group enhancement partials. Each group owns exactly one file. */
+@import "../styles/enhance-landing.css";
+@import "../styles/enhance-home.css";
+@import "../styles/enhance-home-bottom.css";
+@import "../styles/enhance-chrome.css";
+
 /* ------------------------------------------------------------------ */
 /*  DESIGN TOKENS — the single source of truth (spec §4)               */
 /*  #6E2D3C appears ONLY here.                                          */
@@ -241,6 +247,13 @@
   overflow: hidden;
   padding-block: 0.14em;
   margin-block: -0.14em;
+}
+
+/* Soft edges on anything that runs off the viewport (marquee, reel rail).
+   Static mask — never animated. */
+@utility edge-fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
 }
 
 /* linkUnderline — CSS only. Rule wipes out to the right, back in from the left. */

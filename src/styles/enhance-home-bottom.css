@@ -1,0 +1,13 @@
+/* Home-bottom group styles. Owned by the homeBottom group.
+   Unlayered on purpose: these three rules must beat the @utility they refine. */
+
+/* The Cut Studio is pinned at lg and up, so the whole composition has to sit inside
+   one screen with the controls reachable. The heading trims a step there — one size
+   down from display-l — which is what buys the five cut rows and the slider their
+   room. Below lg the section flows and display-l stands as written. */
+@media (min-width: 1024px) {
+  .cut-studio-heading {
+    font-size: clamp(2.5rem, 3.6vw, 3.25rem);
+    line-height: 1.04;
+  }
+}

@@ -5,6 +5,7 @@ import { brand } from "@/data/content";
 import { SITE_URL } from "@/lib/constants";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { PreloaderGate } from "@/components/layout/PreloaderGate";
+import { ScrollLine } from "@/components/layout/ScrollLine";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <SmoothScroll>
           <PreloaderGate />
+          <ScrollLine />
           <Navbar />
           <main>{children}</main>
           <Footer />

@@ -1,34 +1,115 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { gsap, useGSAP, MOTION_OK, HOVER_OK } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP, MOTION_OK, HOVER_OK } from "@/lib/gsap";
 import { CARAT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { cutStudio } from "@/data/content";
+import { cutStudio, homeBottomCutStudio } from "@/data/content";
 import type { CutId } from "@/types";
+import { SectionHead } from "@/components/ui/SectionHead";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { GemGroup } from "@/components/ui/Gem";
+
+/**
+ * The Cut Studio — the second pinned sequence on /home.
+ *
+ * The stage is held for 140% of a viewport while the five cuts step through it. The
+ * step is deliberately NOT scrubbed: the existing 0.9s expo.out crossfade IS the
+ * shutter, and scrubbing it would turn the change to mush. The five hairline dashes
+ * under the stage are the visible progress, and they are also the control.
+ *
+ * The moment the reader touches a cut name, a dash or the slider, `locked` is set and
+ * scroll stops driving the state — the pin remains, but the reader has taken over.
+ *
+ * The pin is gated to lg and up: below that the section is one tall column and pinning
+ * it would trap the viewer. Under reduced motion nothing is pinned and nothing steps;
+ * every cut stays reachable by button and the slider is unaffected.
+ */
+
+/**
+ * Pin/step guard. Deliberately lg, not md — below lg the section is one tall column —
+ * and deliberately height-aware: the studio is only pinned where the whole
+ * composition fits one screen, so the pin can never clip the controls.
+ */
+const STEP_OK = "(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (min-height: 860px)";
 
 /** Visual radius (in stage units) for a carat weight. 1 ct ≈ 0.62 of the stage. */
 function scaleFor(carat: number) {
   return 0.62 * Math.cbrt(carat);
 }
 
-/**
- * The Cut Studio — interactive. Pick a cut, slide the carat, tilt the stone
- * with the cursor. All state lives here; copy lives in content.ts.
- */
 export function CutStudio() {
   const ref = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const locked = useRef(false);
   const [cutId, setCutId] = useState<CutId>(cutStudio.cuts[0].id);
   const [carat, setCarat] = useState<number>(CARAT.initial);
 
   const cut = useMemo(() => cutStudio.cuts.find((c) => c.id === cutId) ?? cutStudio.cuts[0], [cutId]);
   const mm = (cut.mmFactor * Math.cbrt(carat)).toFixed(1);
 
-  /* switch cut: crossfade + settle */
+  /** Any deliberate input hands control to the reader for the rest of the visit. */
+  function take(id: CutId) {
+    locked.current = true;
+    setCutId(id);
+  }
+
+  /* PINNED STEP-THROUGH — the stage is held, the cuts advance with the scroll. */
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      const media = gsap.matchMedia();
+
+      media.add(STEP_OK, () => {
+        const cuts = cutStudio.cuts;
+        const st = ScrollTrigger.create({
+          trigger: el,
+          start: "top top",
+          end: "+=140%",
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (locked.current) return;
+            const i = Math.min(cuts.length - 1, Math.max(0, Math.floor(self.progress * cuts.length)));
+            const next = cuts[i].id;
+            setCutId((prev) => (prev === next ? prev : next));
+          },
+        });
+        return () => st.kill();
+      });
+    },
+    { scope: ref },
+  );
+
+  /* the readouts below the stage arrive together, on the section's own trigger:
+     a trigger nested inside a pinned element can be stranded mid-pin */
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      const details = Array.from(el.querySelectorAll<HTMLElement>("[data-detail]"));
+      if (!details.length) return;
+
+      const media = gsap.matchMedia();
+      media.add(MOTION_OK, () => {
+        gsap.set(details, { y: 20, opacity: 0 });
+        gsap.to(details, {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.08,
+          scrollTrigger: { trigger: el, start: "top 70%", once: true },
+        });
+      });
+    },
+    { scope: ref },
+  );
+
+  /* switch cut: crossfade + settle — this is the shutter */
   useGSAP(
     () => {
       const el = ref.current;
@@ -81,9 +162,9 @@ export function CutStudio() {
       const el = ref.current;
       const stage = stageRef.current;
       if (!el || !stage) return;
-      const mq = gsap.matchMedia();
+      const media = gsap.matchMedia();
 
-      mq.add(MOTION_OK, () => {
+      media.add(MOTION_OK, () => {
         const rotor = el.querySelector("[data-rotor]");
         const grad = el.querySelector("[data-grad]");
         gsap.to(rotor, { rotation: 360, duration: 70, ease: "none", repeat: -1, transformOrigin: "50% 50%" });
@@ -94,7 +175,7 @@ export function CutStudio() {
         );
       });
 
-      mq.add(HOVER_OK, () => {
+      media.add(HOVER_OK, () => {
         const tilt = stage.querySelector("[data-tilt]");
         if (!tilt) return;
         const rx = gsap.quickTo(tilt, "rotationX", { duration: 0.8, ease: "power3.out" });
@@ -122,17 +203,22 @@ export function CutStudio() {
   );
 
   return (
-    <section ref={ref} id={cutStudio.id} className="scroll-mt-20 bg-white section-y text-ink">
-      <div className="container-x grid grid-cols-12 gap-x-6 gap-y-12">
+    <section
+      ref={ref}
+      id={cutStudio.id}
+      className="scroll-mt-20 bg-white py-[clamp(96px,12vw,200px)] text-ink lg:flex lg:min-h-svh lg:items-center lg:pt-[clamp(80px,10svh,116px)] lg:pb-[clamp(32px,4.5svh,60px)]"
+    >
+      <div className="container-x grid w-full grid-cols-12 gap-x-6 gap-y-12">
         {/* Controls */}
         <div className="col-span-12 lg:col-span-5">
-          <Reveal>
-            <p className="eyebrow text-wine-soft">{cutStudio.eyebrow}</p>
-            <h2 className="mt-6 max-w-[14ch] display-l">{cutStudio.heading}</h2>
-            <p className="mt-6 body-copy text-ink-muted">{cutStudio.intro}</p>
-          </Reveal>
+          <SectionHead
+            eyebrow={cutStudio.eyebrow}
+            heading={cutStudio.heading}
+            lede={homeBottomCutStudio.intro}
+            headingClassName="cut-studio-heading max-w-[18ch]"
+          />
 
-          <Reveal delay={0.1} className="mt-12">
+          <Reveal delay={0.1} className="mt-10 lg:mt-8">
             <ul role="list" className="border-t border-cream-deep">
               {cutStudio.cuts.map((c) => {
                 const active = c.id === cutId;
@@ -141,8 +227,8 @@ export function CutStudio() {
                     <button
                       type="button"
                       aria-pressed={active}
-                      onClick={() => setCutId(c.id)}
-                      className="group flex w-full items-center justify-between gap-6 py-4 text-left transition-colors duration-300 hover:text-wine"
+                      onClick={() => take(c.id)}
+                      className="group flex w-full items-center justify-between gap-6 py-4 text-left transition-colors duration-300 hover:text-wine lg:py-3"
                     >
                       <span className="flex items-center gap-4">
                         <span
@@ -153,12 +239,20 @@ export function CutStudio() {
                           )}
                         />
                         <span
-                          className={cn("display-m transition-colors duration-300", active ? "text-wine" : "text-ink")}
+                          className={cn(
+                            "display-m transition-colors duration-300",
+                            active ? "text-wine" : "text-ink/55 group-hover:text-wine",
+                          )}
                         >
                           {c.name}
                         </span>
                       </span>
-                      <span className="caption text-ink-muted tabular">
+                      <span
+                        className={cn(
+                          "caption tabular transition-colors duration-300",
+                          active ? "text-ink-muted" : "text-ink-muted/60",
+                        )}
+                      >
                         {c.facets} {cutStudio.facetsLabel.toLowerCase()}
                       </span>
                     </button>
@@ -167,7 +261,7 @@ export function CutStudio() {
               })}
             </ul>
 
-            <div className="mt-10">
+            <div className="mt-8 lg:mt-6">
               <div className="flex items-baseline justify-between">
                 <label htmlFor="carat" className="eyebrow text-wine-soft">
                   {cutStudio.caratLabel}
@@ -184,7 +278,10 @@ export function CutStudio() {
                 max={CARAT.max}
                 step={CARAT.step}
                 value={carat}
-                onChange={(e) => setCarat(Number(e.target.value))}
+                onChange={(e) => {
+                  locked.current = true;
+                  setCarat(Number(e.target.value));
+                }}
                 aria-valuetext={`${carat.toFixed(2)} ${cutStudio.caratUnit}`}
               />
             </div>
@@ -196,7 +293,7 @@ export function CutStudio() {
           <Reveal>
             <div
               ref={stageRef}
-              className="on-wine relative aspect-square w-full overflow-hidden bg-wine text-cream [perspective:1400px]"
+              className="on-wine relative mx-auto aspect-square w-full overflow-hidden bg-wine text-cream [perspective:1400px] lg:h-[min(40svh,460px)] lg:w-[min(40svh,460px)]"
             >
               <div data-tilt className="absolute inset-0 will-change-transform [transform-style:preserve-3d]">
                 <svg viewBox="-1.2 -1.2 2.4 2.4" className="block h-full w-full" aria-hidden="true">
@@ -229,19 +326,43 @@ export function CutStudio() {
                 <span className="tabular" aria-live="polite">
                   {cut.name} · {carat.toFixed(2)} {cutStudio.caratUnit}
                 </span>
-                <span className="hidden [@media(hover:hover)]:inline">{cutStudio.hint}</span>
+                <span className="hidden md:[@media(hover:hover)]:inline">{cutStudio.hint}</span>
               </div>
-              <div className="pointer-events-none absolute top-5 left-6 eyebrow text-cream/60">{cutStudio.eyebrow}</div>
+            </div>
+
+            {/* progress: five hairline dashes, also the control */}
+            <div
+              className="mx-auto mt-5 flex items-center gap-3 lg:w-[min(40svh,460px)]"
+              role="group"
+              aria-label={homeBottomCutStudio.progressLabel}
+            >
+              {cutStudio.cuts.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  aria-label={`${homeBottomCutStudio.goTo}: ${c.name}`}
+                  aria-current={c.id === cutId ? "true" : undefined}
+                  onClick={() => take(c.id)}
+                  className="group flex h-8 items-center"
+                >
+                  <span
+                    className={cn(
+                      "block h-px transition-[width,background-color] duration-700 ease-[var(--ease-lux)]",
+                      c.id === cutId ? "w-16 bg-wine" : "w-8 bg-cream-deep group-hover:bg-wine-soft",
+                    )}
+                  />
+                </button>
+              ))}
             </div>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-8 grid grid-cols-3 gap-6 border-t border-cream-deep pt-6">
+          <div data-detail className="mt-4 grid grid-cols-3 gap-6 border-t border-cream-deep pt-5">
             <Stat label={cutStudio.facetsLabel} value={String(cut.facets)} />
             <Stat label={cutStudio.ratioLabel} value={cut.ratio} />
             <Stat label={cutStudio.sizeLabel} value={`${mm} mm`} />
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.15} className="mt-8 grid gap-8 md:grid-cols-2">
+          <div data-detail className="mt-7 grid gap-6 md:grid-cols-2">
             <div>
               <h3 className="eyebrow font-body text-wine-soft">{cutStudio.bestForLabel}</h3>
               <p className="mt-3 text-[15px] leading-[1.7] text-ink">{cut.bestFor}</p>
@@ -250,13 +371,13 @@ export function CutStudio() {
               <h3 className="eyebrow font-body text-wine-soft">{cutStudio.noteLabel}</h3>
               <p className="mt-3 text-[15px] leading-[1.7] text-ink">{cut.note}</p>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={0.2} className="mt-10">
+          <div data-detail className="mt-8">
             <Button href={cutStudio.cta.href} variant="outline">
               {cutStudio.cta.label}
             </Button>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

@@ -1,10 +1,11 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { isRevealPending, onReveal } from "@/lib/reveal";
 import { cn } from "@/lib/utils";
-import { hero } from "@/data/content";
+import { hero, landingHero, landingHeroBand } from "@/data/content";
 import { Button } from "@/components/ui/Button";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { BrandLockup, SHINE_TRAVEL } from "@/components/ui/brand/BrandLockup";
@@ -13,7 +14,7 @@ import { WineGround } from "@/components/ui/brand/WineGround";
 /** Lifts the lockup above the preloader curtain while the intro plays. */
 const RAISED = "z-[120]";
 
-const STAT_ALIGN = ["sm:text-left", "sm:text-center", "sm:text-right"];
+const STAT_ALIGN = ["sm:justify-start", "sm:justify-center", "sm:justify-end"];
 
 function countUp(node: HTMLElement) {
   const target = Number(node.dataset.counter);
@@ -52,6 +53,8 @@ export function Hero() {
         const lines = q("[data-line]");
         const fades = q("[data-fade]");
         const counters = q("[data-counter]") as HTMLElement[];
+        const strip = q("[data-strip]")[0] as HTMLElement | undefined;
+        const seg = q("[data-cue-seg]");
         const dx = (target: Element) => Number((target as SVGElement).dataset.dx ?? 0);
         const loader = isRevealPending();
 
@@ -74,7 +77,7 @@ export function Hero() {
           gsap.set(flip, { y: window.innerHeight / 2 - (r.top + r.height / 2) });
         }
 
-        /* the rest of the hero: masked tagline, buttons, stats */
+        /* the rest of the hero: masked tagline, buttons, stats, campaign band */
         const revealRest = () => {
           const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
           if (loader) {
@@ -88,6 +91,7 @@ export function Hero() {
           tl.to(lines, { yPercent: 0, duration: 1.2, stagger: 0.09 }, t0)
             .to(fades, { y: 0, opacity: 1, duration: 0.9, stagger: 0.08 }, t0 + 0.12)
             .add(() => counters.forEach(countUp), t0 + 0.5);
+          if (strip) tl.fromTo(strip, { scale: 1.06 }, { scale: 1, duration: 1.6, ease: "expo.out" }, t0 + 0.35);
         };
 
         /* the lockup intro: trace → fill → track in → tagline → sheen */
@@ -112,6 +116,15 @@ export function Hero() {
           ease: "none",
           scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
         });
+        if (strip) {
+          gsap.to(strip, {
+            yPercent: -6,
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top top", end: "bottom top", scrub: true },
+          });
+        }
+        if (seg.length)
+          gsap.fromTo(seg, { y: 0 }, { y: 22, duration: 2.2, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
         const unsubscribe = loader ? onReveal(revealRest) : () => {};
         return () => {
@@ -127,6 +140,19 @@ export function Hero() {
     <section ref={ref} className="on-wine relative overflow-hidden bg-wine text-cream">
       <WineGround />
 
+      {/* the campaign, dissolving up out of the ground at the foot of the hero */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[18svh] min-h-[132px] overflow-hidden sm:h-[24svh] sm:min-h-[150px]"
+      >
+        <div data-strip className="absolute inset-x-0 -inset-y-[10%] will-change-transform">
+          <Image src={landingHeroBand.src} alt="" fill sizes="100vw" className="object-cover object-[50%_40%]" />
+        </div>
+        {/* strong at the foot, where the stats sit; open through the middle, where the
+            photograph should read; solid wine at the top, so the band has no seam */}
+        <span className="absolute inset-0 bg-linear-to-t from-wine/80 via-wine/45 to-wine" />
+      </div>
+
       <div className="relative container-x flex min-h-[88svh] flex-col items-center pt-[clamp(104px,15vh,168px)] pb-7 md:pb-8">
         <h1 data-lockup-flip className="relative w-[min(84vw,720px,calc((88svh_-_360px)*2.2))] will-change-transform">
           <span data-lockup-drift className="block will-change-transform">
@@ -134,7 +160,7 @@ export function Hero() {
           </span>
         </h1>
 
-        <div className="mt-[clamp(28px,5vh,64px)] mb-12 flex flex-col items-center text-center">
+        <div className="mt-[clamp(28px,5vh,64px)] mb-10 flex flex-col items-center text-center">
           <p className="display-m text-cream/90">
             <span className="mask-line">
               <span data-line className="block will-change-transform">
@@ -160,16 +186,30 @@ export function Hero() {
           </div>
         </div>
 
-        <div data-fade className="mt-auto w-full border-t border-wine-soft/40 pt-5">
-          <ul className="grid grid-cols-1 gap-2 text-center caption text-cream/70 tabular sm:grid-cols-3 sm:gap-6">
+        <div data-fade className="my-auto hidden flex-col items-center gap-2.5 pb-6 sm:flex">
+          <span className="eyebrow text-cream/55">{landingHero.scrollCue}</span>
+          <span aria-hidden="true" className="relative block h-8 w-px overflow-hidden bg-cream/25">
+            <span data-cue-seg className="absolute inset-x-0 top-0 block h-2.5 bg-cream/75 will-change-transform" />
+          </span>
+        </div>
+
+        <div data-fade className="relative z-10 mt-auto w-full border-t border-cream/25 pt-5">
+          <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-6">
             {hero.stats.map((s, i) => (
-              <li key={s.label} className={cn(STAT_ALIGN[i])}>
-                {s.label}
+              <li
+                key={s.label}
+                className={cn(
+                  "relative flex items-baseline justify-center gap-2",
+                  STAT_ALIGN[i],
+                  i > 0 &&
+                    "sm:before:absolute sm:before:top-1/2 sm:before:left-[-12px] sm:before:h-3.5 sm:before:w-px sm:before:-translate-y-1/2 sm:before:bg-cream/25 sm:before:content-['']",
+                )}
+              >
+                <span className="eyebrow text-cream/70">{s.label}</span>
                 {s.value !== null ? (
-                  <>
-                    {" "}
-                    <span data-counter={s.value}>{s.value}</span>
-                  </>
+                  <span data-counter={s.value} className="caption text-cream/95 tabular">
+                    {s.value}
+                  </span>
                 ) : null}
               </li>
             ))}

@@ -1,0 +1,76 @@
+/* Home-top group styles. Owned by the homeTop group. */
+
+/* ------------------------------------------------------------------ */
+/*  TopReel — one component, two layouts, no JS branching.             */
+/*                                                                     */
+/*  DEFAULT (mobile, and every width under prefers-reduced-motion):    */
+/*  three figures in normal vertical flow, captions beneath, nothing   */
+/*  pinned and nothing overlaid. This is also the no-JS rendering.     */
+/*                                                                     */
+/*  The absolute stack, the 100svh stage and the overlaid chrome only  */
+/*  exist inside the one media query where the pin will actually run,  */
+/*  so reduced motion can never be trapped by a pin.                   */
+/* ------------------------------------------------------------------ */
+.mj-reel-chrome {
+  display: none;
+}
+
+.mj-reel-pin {
+  --mj-reel-base: clamp(56px, 9vh, 104px);
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  .mj-reel-pin {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .mj-reel-stack {
+    gap: 0;
+    padding-bottom: 0;
+  }
+
+  .mj-reel-frame {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+
+  .mj-reel-plate {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
+
+  .mj-reel-caption {
+    position: absolute;
+    right: 0;
+    bottom: var(--mj-reel-base);
+    left: 0;
+    margin-top: 0;
+  }
+
+  .mj-reel-chrome {
+    display: block;
+  }
+
+  .mj-reel-flow {
+    display: none;
+  }
+
+  .mj-reel-eyebrow {
+    bottom: calc(var(--mj-reel-base) + clamp(56px, 6vh, 84px));
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Card hovers — one gesture per card, driven from the whole target.  */
+/*  `link-underline-draw` only reacts to a hover on the text itself;   */
+/*  these two rules let the entire tile drive the same underline.      */
+/* ------------------------------------------------------------------ */
+.mj-cat-tile:hover .mj-cat-name::after,
+.mj-cat-tile:focus-visible .mj-cat-name::after,
+.mj-piece:hover .mj-piece-name::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
