@@ -7,6 +7,7 @@ import { FeaturedPieces } from "@/components/sections/home/FeaturedPieces";
 import { TopReel } from "@/components/sections/home/TopReel";
 import { CutStudio } from "@/components/sections/home/CutStudio";
 import { Bespoke } from "@/components/sections/home/Bespoke";
+import { BottomHeritage } from "@/components/sections/home/BottomHeritage";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { VisitStore } from "@/components/sections/home/VisitStore";
 
@@ -55,6 +56,7 @@ export default function HomePage() {
       <FeaturedPieces />
       <CutStudio />
       <Bespoke />
+      <BottomHeritage />
       <Testimonials />
       <VisitStore />
     </>

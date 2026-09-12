@@ -29,3 +29,9 @@ export const homeBottomTestimonials = {
     alt: "A bride seated behind a blurred brass lamp, wearing a polki choker",
   },
 } as const;
+
+export const homeBottomHeritage = {
+  goTo: "Show the year",
+  progressLabel: "The house through time",
+  welcome: "We welcome you.",
+} as const;

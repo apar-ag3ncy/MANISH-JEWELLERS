@@ -11,3 +11,24 @@
     line-height: 1.04;
   }
 }
+
+/* Heritage. The stacked numeral is a decorative stage; the list is the real content.
+   Default (no JS, small screens, reduced motion): the list shows, the stage is hidden.
+   At md and up with motion allowed they swap, and the list stays in the a11y tree. */
+.mj-heritage-stage {
+  display: none;
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .mj-heritage-stage {
+    display: block;
+  }
+  .mj-heritage-list {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
