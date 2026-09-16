@@ -26,7 +26,7 @@ export function AboutStory() {
             as="h1"
             eyebrow={about.eyebrow}
             heading={about.heading}
-            headingClassName="display-xl max-w-[12ch]"
+            headingClassName="[font-size:clamp(2.25rem,6.2vw,6.5rem)]! md:whitespace-nowrap"
             className="mt-8"
           />
         </div>
