@@ -137,10 +137,10 @@ export function Navbar() {
         <div
           data-pill
           className={cn(
-            "pointer-events-auto mx-auto flex items-center justify-between rounded-full px-5 transition-[background-color,box-shadow,height,color,max-width] duration-500 ease-[var(--ease-lux)] lg:px-7",
+            "pointer-events-auto mx-auto flex items-center justify-between gap-6 rounded-full px-5 transition-[background-color,box-shadow,height,color,max-width] duration-500 ease-[var(--ease-lux)] lg:gap-8 lg:px-7",
             /* Scrolled, it narrows to 880px so it stops reading as a toolbar laid over the photography. */
             pillActive
-              ? "h-14 max-w-[min(100%,880px)] bg-cream text-wine shadow-nav"
+              ? "h-14 max-w-[min(100%,1040px)] bg-cream text-wine shadow-nav"
               : "h-[88px] max-w-full bg-transparent",
             !pillActive && (onWine ? "on-wine text-cream" : "text-wine"),
           )}
@@ -151,7 +151,7 @@ export function Navbar() {
             aria-hidden={logoHidden || undefined}
             tabIndex={logoHidden ? -1 : undefined}
             className={cn(
-              "flex items-center gap-2.5 transition-opacity duration-700 ease-[var(--ease-lux)]",
+              "flex shrink-0 items-center gap-2.5 transition-opacity duration-700 ease-[var(--ease-lux)]",
               logoHidden && "pointer-events-none opacity-0",
             )}
           >
@@ -159,7 +159,7 @@ export function Navbar() {
             <BrandWordmark className="h-[10px] w-auto sm:h-[11px]" />
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex xl:gap-10">
+          <nav aria-label="Primary" className="hidden shrink-0 items-center gap-6 lg:flex xl:gap-9">
             {nav.map((l) => (
               <Link key={l.label} href={l.href} className="link-underline-draw py-1 ui-label">
                 {l.label}
@@ -170,7 +170,7 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden shrink-0 lg:block">
             <Button href={navCta.href} variant={ctaVariant} className="h-10 px-5 text-[12px]">
               {navCta.label}
             </Button>
