@@ -32,3 +32,12 @@
     white-space: nowrap;
   }
 }
+
+/* The brochure reader: a scroll-snap strip, with its own scrollbar hidden.
+   Keyboard users still get a focus ring on the list itself. */
+.mj-book {
+  scrollbar-width: none;
+}
+.mj-book::-webkit-scrollbar {
+  display: none;
+}

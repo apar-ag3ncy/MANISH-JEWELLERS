@@ -603,6 +603,32 @@ export const brochureShots = [
   { src: "/brochure/br-set-ruby.jpg", alt: "Ruby and diamond necklace with matching rings", subject: "sets" },
 ] as const;
 
+/* ------------------------------------------------------------------ */
+/*  The brochure, page by page (rendered from the house PDF)           */
+/* ------------------------------------------------------------------ */
+export const brochureBook = {
+  id: "brochure",
+  eyebrow: "The brochure",
+  heading: "The book, page by page.",
+  prev: "Previous page",
+  next: "Next page",
+  scroller: "Brochure pages",
+  pages: [
+    { src: "/brochure/pages/page-01.jpg", alt: "Cover: आपके अपने, Manish Jewellers, since 1915" },
+    { src: "/brochure/pages/page-03.jpg", alt: "स्वागत, the welcome page" },
+    { src: "/brochure/pages/page-04.jpg", alt: "हम: the house, founded in Beawar in 1915" },
+    { src: "/brochure/pages/page-05.jpg", alt: "Rose gold earrings and a gemstone hand harness" },
+    { src: "/brochure/pages/page-06.jpg", alt: "A peacock ring and a pair of kundan kada" },
+    { src: "/brochure/pages/page-07.jpg", alt: "A flower ring and a vine bracelet set with pink stones" },
+    { src: "/brochure/pages/page-08.jpg", alt: "Gold bangles and a long haram with pearls" },
+    { src: "/brochure/pages/page-09.jpg", alt: "A pearl choker and a medallion set with emerald and ruby" },
+    { src: "/brochure/pages/page-10.jpg", alt: "Emerald sets in 22k gold" },
+    { src: "/brochure/pages/page-11.jpg", alt: "A ruby ring and a necklace set with green stones" },
+    { src: "/brochure/pages/page-12.jpg", alt: "A blue stone piece and a ruby set with matching rings" },
+    { src: "/brochure/pages/page-13.jpg", alt: "We welcome you: the Manish Jewellers family" },
+  ],
+} as const;
+
 export * from "./enhance-landing";
 export * from "./enhance-home";
 export * from "./enhance-home-bottom";

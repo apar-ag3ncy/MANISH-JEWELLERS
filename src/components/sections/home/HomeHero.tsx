@@ -12,7 +12,7 @@ import { ImageFrame } from "@/components/ui/ImageFrame";
 
 /**
  * HomeHero — the offset two-photo stack, now cut by the brand arch and stood on a
- * wine plinth so the page shows its colour in the first screen.
+ * arch-clipped portrait so the page shows its colour in the first screen.
  *
  * Both photographs are ImageFrames with depth={0} and reveal="none": this section
  * already owns their entrance (the loader hand-off) and their parallax (the -5 / -12
@@ -102,12 +102,6 @@ export function HomeHero() {
             </div>
 
             <div data-front className="absolute right-0 bottom-0 w-[54%] will-change-transform">
-              {/* A rectangular plinth under an arch silhouette states the arch, and
-                  gives depth with no shadow and no radius. */}
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 -z-10 translate-x-3 translate-y-3 bg-wine md:translate-x-5 md:translate-y-5"
-              />
               <ArchFrame ratio={0.8} className="w-full">
                 <ImageFrame
                   src={homeHero.stack.frontSrc}
