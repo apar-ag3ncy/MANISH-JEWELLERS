@@ -28,7 +28,13 @@ import { Button } from "@/components/ui/Button";
  * JavaScript the first piece renders at its default measurement, fully legible.
  */
 
-const TICK_EVERY = 5;
+/** Candidate label steps, in mm. The rule picks the smallest that yields six labels or fewer. */
+const NICE_STEPS = [1, 2, 5, 10, 20, 25, 50, 100];
+const MAX_LABELS = 6;
+
+function tickStep(min: number, max: number) {
+  return NICE_STEPS.find((step) => (max - min) / step <= MAX_LABELS) ?? NICE_STEPS[NICE_STEPS.length - 1];
+}
 
 /** The ids are literal because the data is `as const`; keep the state honest to them. */
 type PieceId = (typeof fittingRoom.pieces)[number]["id"];
@@ -44,11 +50,12 @@ export function BottomFitting() {
   const circumference = Math.PI * mm;
   const scale = mm / piece.stageMm;
 
-  /** Ticks across the piece's own range, labelled every other one. */
+  /** Labels across the piece's own range, at a step that keeps them legible. */
   const ticks = useMemo(() => {
-    const first = Math.ceil(piece.min / TICK_EVERY) * TICK_EVERY;
+    const step = tickStep(piece.min, piece.max);
+    const first = Math.ceil(piece.min / step) * step;
     const out: number[] = [];
-    for (let v = first; v <= piece.max; v += TICK_EVERY) out.push(v);
+    for (let v = first; v <= piece.max; v += step) out.push(v);
     return out;
   }, [piece]);
 
@@ -198,7 +205,7 @@ export function BottomFitting() {
                         {p.name}
                       </span>
                     </span>
-                    <span className="caption text-ink-muted">{p.measure}</span>
+                    <span className="shrink-0 caption whitespace-nowrap text-ink-muted">{p.measure}</span>
                   </button>
                 </li>
               );
@@ -308,10 +315,10 @@ export function BottomFitting() {
               {ticks.map((t) => (
                 <span
                   key={t}
-                  className="absolute top-0 caption text-ink-muted tabular"
+                  className="absolute top-0 -translate-x-1/2 caption whitespace-nowrap text-ink-muted tabular"
                   style={{ left: `${((t - piece.min) / (piece.max - piece.min)) * 100}%` }}
                 >
-                  <span className="mx-[-50%] block">{t}</span>
+                  {t}
                 </span>
               ))}
             </div>
