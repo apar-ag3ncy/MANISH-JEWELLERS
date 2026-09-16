@@ -163,6 +163,9 @@ export function Navbar() {
             {nav.map((l) => (
               <Link key={l.label} href={l.href} className="link-underline-draw py-1 ui-label">
                 {l.label}
+                {l.mark ? (
+                  <span className="ml-1.5 font-body tracking-normal text-current/70 normal-case">({l.mark})</span>
+                ) : null}
               </Link>
             ))}
           </nav>
@@ -221,6 +224,11 @@ export function Navbar() {
                 className="block font-display text-[clamp(2.5rem,10vw,4.5rem)] leading-[1.05] tracking-[-0.02em]"
               >
                 {l.label}
+                {"mark" in l && l.mark ? (
+                  <span className="ml-3 inline-block align-middle font-body text-[0.34em] tracking-normal text-cream/70">
+                    ({l.mark})
+                  </span>
+                ) : null}
               </Link>
             </span>
           ))}

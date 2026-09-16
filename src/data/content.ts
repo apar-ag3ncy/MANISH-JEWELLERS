@@ -39,7 +39,7 @@ export const nav: readonly NavLink[] = [
   { label: "Collections", href: "/home#collections" },
   { label: "Bespoke", href: "/home#bespoke" },
   { label: "Campaign", href: "/#campaign" },
-  { label: "About", href: "/about" },
+  { label: "About", mark: "हम", href: "/about" },
   { label: "Visit", href: "/home#visit" },
 ] as const;
 

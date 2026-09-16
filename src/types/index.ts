@@ -17,7 +17,8 @@ export type Piece = {
   art: PieceArtKind;
 };
 
-export type NavLink = { label: string; href: string };
+/** `mark` is an optional aside shown in brackets after the label, e.g. the Devanagari हम. */
+export type NavLink = { label: string; href: string; mark?: string };
 
 export type CraftNote = { label: string; title: string; body: string };
 
