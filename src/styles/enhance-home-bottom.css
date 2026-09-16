@@ -41,3 +41,14 @@
 .mj-book::-webkit-scrollbar {
   display: none;
 }
+
+/* The fitting-room graticule: 10 mm squares, sized from --mj-grid, which the
+   component writes per piece (a ring's stage spans 64 mm, a kada's 150 mm).
+   Decorative: with no JS the property is unset and no grid is drawn. */
+.mj-graticule {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-cream-deep) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-cream-deep) 55%, transparent) 1px, transparent 1px);
+  background-size: var(--mj-grid, 0) var(--mj-grid, 0);
+  background-position: center center;
+}

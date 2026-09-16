@@ -629,6 +629,80 @@ export const brochureBook = {
   ],
 } as const;
 
+
+/* ------------------------------------------------------------------ */
+/*  The fitting room — scale, computed live from millimetres           */
+/* ------------------------------------------------------------------ */
+export const fittingRoom = {
+  id: "fitting",
+  eyebrow: "The fitting room",
+  heading: "See it at its real size.",
+  intro: "Pick a piece, set the measurement, and the photograph is drawn to that scale against the rule.",
+  sizeLabel: "Measurement",
+  circumferenceLabel: "Circumference",
+  acrossLabel: "Across",
+  rulerLabel: "Millimetre rule",
+  note: "On-screen scale is indicative and depends on your display. Bring a piece you already wear and we will size it exactly.",
+  cta: { label: "Book a fitting", href: "#visit" },
+  pieces: [
+    {
+      id: "ring",
+      name: "Ruby cocktail ring",
+      measure: "Inner diameter",
+      src: "/brochure/br-ring-ruby.jpg",
+      alt: "A ruby and gold cocktail ring on marble",
+      focus: "object-[50%_45%]",
+      /* the stage width stands for this many millimetres */
+      stageMm: 64,
+      min: 14,
+      max: 22,
+      step: 0.5,
+      value: 17,
+      hotspots: [
+        { x: 50, y: 40, label: "Carved ruby centre" },
+        { x: 72, y: 62, label: "Uncut diamonds, hand-set" },
+        { x: 30, y: 70, label: "22k gold shank" },
+      ],
+    },
+    {
+      id: "kada",
+      name: "Kundan kada, pair",
+      measure: "Inner diameter",
+      src: "/brochure/br-kada-sand.jpg",
+      alt: "A pair of kundan kada resting on rippled sand",
+      focus: "object-[50%_50%]",
+      stageMm: 150,
+      min: 50,
+      max: 68,
+      step: 1,
+      value: 58,
+      hotspots: [
+        { x: 46, y: 44, label: "Kundan, set in lac" },
+        { x: 66, y: 58, label: "Hollow 22k, worn light" },
+        { x: 32, y: 64, label: "Screw clasp" },
+      ],
+    },
+    {
+      id: "choker",
+      name: "Pearl and ruby choker",
+      measure: "Inner length",
+      src: "/brochure/br-choker-pearl.jpg",
+      alt: "A gold choker with pearls and rubies on marble",
+      focus: "object-[50%_45%]",
+      stageMm: 460,
+      min: 330,
+      max: 440,
+      step: 5,
+      value: 380,
+      hotspots: [
+        { x: 50, y: 56, label: "Pearl drops" },
+        { x: 68, y: 44, label: "Ruby cabochons" },
+        { x: 28, y: 46, label: "Silk cord, adjustable" },
+      ],
+    },
+  ],
+} as const;
+
 export * from "./enhance-landing";
 export * from "./enhance-home";
 export * from "./enhance-home-bottom";

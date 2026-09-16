@@ -6,6 +6,7 @@ import { CategoryGrid } from "@/components/sections/home/CategoryGrid";
 import { FeaturedPieces } from "@/components/sections/home/FeaturedPieces";
 import { TopReel } from "@/components/sections/home/TopReel";
 import { CutStudio } from "@/components/sections/home/CutStudio";
+import { BottomFitting } from "@/components/sections/home/BottomFitting";
 import { Bespoke } from "@/components/sections/home/Bespoke";
 import { BottomHeritage } from "@/components/sections/home/BottomHeritage";
 import { BottomBrochure } from "@/components/sections/home/BottomBrochure";
@@ -56,6 +57,7 @@ export default function HomePage() {
       <TopReel />
       <FeaturedPieces />
       <CutStudio />
+      <BottomFitting />
       <Bespoke />
       <BottomHeritage />
       <BottomBrochure />
