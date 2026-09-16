@@ -16,11 +16,11 @@ export function Footer() {
 
   /**
    * The closing chord. The masthead — the largest occurrence of the brand anywhere on
-   * the site — rises out of its two masks first; the rules and columns follow 0.4s
+   * the site — rises out of its mask first; the rules and columns follow 0.4s
    * behind it; then a single sheen crosses the metal, the same gesture the lockup
    * performs at the top of the page, borrowed once at the bottom.
    *
-   * REDUCED MOTION: nothing is set and nothing runs. Both words sit in place, the rules
+   * REDUCED MOTION: nothing is set and nothing runs. The wordmark sits in place, the rules
    * are at full width, the columns are visible, and the sheen stays parked off-frame.
    */
   useGSAP(
@@ -57,20 +57,13 @@ export function Footer() {
   return (
     <footer ref={ref} className="on-wine overflow-hidden bg-wine-deep text-cream">
       <div className="container-x pb-[clamp(80px,10vw,140px)]">
-        {/* Masthead — the real wordmark in full, set as two rows so both read at the same cap height. */}
+        {/* Masthead — the real wordmark in full, one line at every width. */}
         <div aria-hidden="true" className="relative overflow-hidden pt-[clamp(56px,7vw,112px)] text-cream/92">
           <span className="mask-line">
             <span data-word className="block will-change-transform">
-              <BrandWordmark words={[0]} className="h-auto w-[64.5%]" />
+              <BrandWordmark className="h-auto w-full" />
             </span>
           </span>
-          <div className="mt-2 md:mt-4">
-            <span className="mask-line">
-              <span data-word className="block will-change-transform">
-                <BrandWordmark words={[1]} className="h-auto w-full" />
-              </span>
-            </span>
-          </div>
           <span
             data-sheen
             className="pointer-events-none absolute inset-y-0 left-0 w-[38%] [transform:translateX(-60%)] bg-linear-to-r from-transparent via-rose-light/22 to-transparent opacity-0"
