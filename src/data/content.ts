@@ -39,6 +39,7 @@ export const nav: readonly NavLink[] = [
   { label: "Collections", href: "/home#collections" },
   { label: "Bespoke", href: "/home#bespoke" },
   { label: "Campaign", href: "/#campaign" },
+  { label: "About", href: "/about" },
   { label: "Visit", href: "/home#visit" },
 ] as const;
 
@@ -507,6 +508,7 @@ export const footer = {
         { label: "Collections", href: "/home#collections" },
         { label: "Bespoke", href: "/home#bespoke" },
         { label: "The campaign", href: "/#campaign" },
+        { label: "About us", href: "/about" },
         { label: "The story", href: "/" },
       ],
     },
@@ -629,7 +631,6 @@ export const brochureBook = {
   ],
 } as const;
 
-
 /* ------------------------------------------------------------------ */
 /*  The fitting room — scale, computed live from millimetres           */
 /* ------------------------------------------------------------------ */
@@ -701,6 +702,33 @@ export const fittingRoom = {
       ],
     },
   ],
+} as const;
+
+/* ------------------------------------------------------------------ */
+/*  About us — the brochure's हम spread, in the house's own words      */
+/* ------------------------------------------------------------------ */
+export const about = {
+  path: "/about",
+  title: "About us",
+  eyebrow: "About us",
+  mark: "हम",
+  heading: "A century in Beawar.",
+  description:
+    "Founded in 1915 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
+  photo: {
+    src: "/brochure/br-bench.jpg",
+    alt: "A goldsmith at the bench, shaping a piece by hand",
+    caption: { text: "Crafted with precision,", italic: "treasured for eternity" },
+  },
+  paragraphs: [
+    "Founded in 1915 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
+    "From our early beginnings to embracing gold in 1932 and silver in 1952, each chapter has shaped our reputation for trust and craftsmanship. In 1988, we pioneered certified hallmark jewellery, reinforcing our commitment to purity and integrity.",
+    "As we celebrate over 100 years, we enter 2025 with a renewed vision and a grand new space, honouring our past while embracing the future.",
+    "Thank you for being part of this enduring journey and for the trust that continues to inspire us.",
+  ],
+  timelineEyebrow: "The house through time",
+  cta: { label: "Book a viewing", href: "/home#visit" },
+  secondary: { label: "See the collection", href: "/home#collections" },
 } as const;
 
 export * from "./enhance-landing";
