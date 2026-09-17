@@ -10,6 +10,17 @@ import { WineGround } from "@/components/ui/brand/WineGround";
 let playedThisSession = false;
 
 /**
+ * The loader's state, readable by tests and by anything that must wait for the brand
+ * intro: `data-intro` is the current state, `data-intro-log` the sequence so far
+ * (e.g. "playing,done"), so a fast hand-off can never be missed by a late observer.
+ */
+function markIntro(state: "playing" | "done") {
+  const root = document.documentElement;
+  root.dataset.intro = state;
+  root.dataset.introLog = [root.dataset.introLog, state].filter(Boolean).join(",");
+}
+
+/**
  * preloader — a lit wine curtain. The hero's real brand lockup is lifted above
  * it and performs its intro in the centre of the screen: the monogram traces
  * and fills with rose gold, the wordmark tracks in, the tagline follows, a
@@ -31,6 +42,7 @@ export function Preloader() {
       const failsafeFired = getComputedStyle(el).visibility === "hidden";
       if (reduced || failsafeFired || playedThisSession) {
         gsap.set(el, { display: "none" });
+        markIntro("done");
         return;
       }
 
@@ -38,6 +50,7 @@ export function Preloader() {
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       window.scrollTo(0, 0);
       holdReveal();
+      markIntro("playing");
       lockScroll();
 
       const bar = el.querySelector("[data-progress]");
@@ -47,6 +60,7 @@ export function Preloader() {
         .timeline({
           onComplete: () => {
             gsap.set(el, { display: "none" });
+            markIntro("done");
             unlockScroll();
             playedThisSession = true;
           },
