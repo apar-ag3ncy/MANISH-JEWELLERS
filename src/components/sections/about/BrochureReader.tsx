@@ -9,17 +9,16 @@ import { brochureBook } from "@/data/content";
 import { SectionHead } from "@/components/ui/SectionHead";
 
 /**
- * The brochure — the house's printed book, laid out as a horizontal reader.
+ * The brochure — the house's printed book, laid out as a horizontal reader on /about.
  *
- * Deliberately NOT a fourth pinned sequence: /home already holds three, and a
- * printed book wants to be leafed at the reader's pace. This is a native
- * scroll-snap strip, so it works with a trackpad, a drag, the arrow buttons and
- * the keyboard, and it needs no JavaScript to be usable at all. `data-lenis-prevent`
- * keeps the smooth-scroll wrapper off the horizontal axis.
+ * A native scroll-snap strip, so it works with a trackpad, a drag, the arrow buttons
+ * and the keyboard, and it needs no JavaScript to be usable at all. `data-lenis-prevent`
+ * keeps the smooth-scroll wrapper off the horizontal axis. On a page with no pinned
+ * sequences the pages can run wide: up to 1180px, so a spread reads at print scale.
  *
  * Motion is one entrance stagger under MOTION_OK; the pages themselves never move.
  */
-export function BottomBrochure() {
+export function BrochureReader() {
   const ref = useRef<HTMLElement>(null);
   const strip = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);
@@ -102,13 +101,13 @@ export function BottomBrochure() {
         className="mj-book mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-[clamp(20px,5vw,80px)] pb-4 md:mt-16"
       >
         {brochureBook.pages.map((page, i) => (
-          <li key={page.src} data-page className={cn("shrink-0 snap-center", "w-[min(88vw,1000px)]")}>
+          <li key={page.src} data-page className={cn("shrink-0 snap-center", "w-[min(92vw,1180px)]")}>
             <div className="relative aspect-[1322/585] w-full overflow-hidden border border-cream-deep bg-white">
               <Image
                 src={page.src}
                 alt={page.alt}
                 fill
-                sizes="(min-width: 1024px) 1000px, 88vw"
+                sizes="(min-width: 1280px) 1180px, 92vw"
                 className="object-contain"
               />
             </div>

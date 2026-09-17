@@ -58,7 +58,8 @@ usual "is the pipeline green" apparatus does not exist yet.
 ## Smoke test (both preview and production)
 
 - [ ] `/` cold load: loader plays the lockup, then hands off to the hero
-- [ ] `/home` renders all sections; brochure reader scrolls; Cut Studio and Fitting Room respond
+- [ ] `/home` renders all sections; Cut Studio and Fitting Room respond
+- [ ] `/about` renders the story, the timeline and the brochure reader; the reader scrolls
 - [ ] Mobile 390: no horizontal scroll, menu opens, nothing pinned
 - [ ] Reduced motion on: everything visible, nothing pinned, no intro
 - [ ] 404 page renders; nav and footer links all resolve

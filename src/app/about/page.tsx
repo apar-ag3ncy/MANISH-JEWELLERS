@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { about } from "@/data/content";
 import { AboutStory } from "@/components/sections/about/AboutStory";
+import { BrochureReader } from "@/components/sections/about/BrochureReader";
 
 export const metadata: Metadata = {
   title: about.title,
@@ -9,5 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutStory />;
+  return (
+    <>
+      <AboutStory />
+      <BrochureReader />
+    </>
+  );
 }

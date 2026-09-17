@@ -9,7 +9,6 @@ import { CutStudio } from "@/components/sections/home/CutStudio";
 import { BottomFitting } from "@/components/sections/home/BottomFitting";
 import { Bespoke } from "@/components/sections/home/Bespoke";
 import { BottomHeritage } from "@/components/sections/home/BottomHeritage";
-import { BottomBrochure } from "@/components/sections/home/BottomBrochure";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { VisitStore } from "@/components/sections/home/VisitStore";
 
@@ -60,7 +59,6 @@ export default function HomePage() {
       <BottomFitting />
       <Bespoke />
       <BottomHeritage />
-      <BottomBrochure />
       <Testimonials />
       <VisitStore />
     </>
