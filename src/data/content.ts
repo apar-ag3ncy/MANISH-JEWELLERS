@@ -25,8 +25,8 @@ export const brand = {
   tagline: "Fine jewellery, made to be lived in.",
   lede: "Handcrafted in 18k and 22k gold, set with certified stones.",
   description:
-    "Manish Jewellers, Beawar, since 1915. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
-  since: 1915,
+    "Manish Jewellers, Beawar, since 1916. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
+  since: 1916,
   url: "https://manishjewellers.in",
 } as const;
 
@@ -61,7 +61,7 @@ export const hero = {
   primary: { label: "Explore the collection", href: "/home" },
   secondary: { label: "Book a private viewing", href: "/home#visit" },
   stats: [
-    { label: "Since", value: 1915, counter: true },
+    { label: "Since", value: 1916, counter: true },
     { label: "BIS Hallmarked", value: null, counter: false },
     { label: "IGI Certified Stones", value: null, counter: false },
   ],
@@ -555,21 +555,21 @@ export const notFound = {
 /* ------------------------------------------------------------------ */
 
 /* ------------------------------------------------------------------ */
-/*  Heritage + brochure assets — from the house brochure (since 1915)   */
+/*  Heritage + brochure assets — from the house brochure (since 1916)   */
 /* ------------------------------------------------------------------ */
 export const heritage = {
   id: "heritage",
   eyebrow: "The house",
   hindiMark: "आपके अपने",
   heading: "A century in Beawar.",
-  line: "Founded in 1915 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat.",
+  line: "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat.",
   closing: "Over a hundred years, and counting.",
   bench: { src: "/brochure/br-bench.jpg", alt: "A goldsmith at the bench, shaping a piece by hand" },
   team: { src: "/brochure/br-team.jpg", alt: "The Karnawat family greeting guests at the showroom" },
   family: { src: "/brochure/br-family.jpg", alt: "The Manish Jewellers family at a celebration" },
   foil: { src: "/brochure/br-gold-foil.jpg", alt: "" },
   milestones: [
-    { year: 1915, label: "The house opens in Beawar" },
+    { year: 1916, label: "The house opens in Beawar" },
     { year: 1932, label: "Gold enters the ledger" },
     { year: 1952, label: "Silver follows" },
     { year: 1988, label: "Certified hallmarking, pioneered" },
@@ -616,9 +616,9 @@ export const brochureBook = {
   next: "Next page",
   scroller: "Brochure pages",
   pages: [
-    { src: "/brochure/pages/page-01.jpg", alt: "Cover: आपके अपने, Manish Jewellers, since 1915" },
+    { src: "/brochure/pages/page-01.jpg", alt: "Cover: आपके अपने, Manish Jewellers, since 1916" },
     { src: "/brochure/pages/page-03.jpg", alt: "स्वागत, the welcome page" },
-    { src: "/brochure/pages/page-04.jpg", alt: "हम: the house, founded in Beawar in 1915" },
+    { src: "/brochure/pages/page-04.jpg", alt: "हम: the house, founded in Beawar in 1916" },
     { src: "/brochure/pages/page-05.jpg", alt: "Rose gold earrings and a gemstone hand harness" },
     { src: "/brochure/pages/page-06.jpg", alt: "A peacock ring and a pair of kundan kada" },
     { src: "/brochure/pages/page-07.jpg", alt: "A flower ring and a vine bracelet set with pink stones" },
@@ -714,14 +714,14 @@ export const about = {
   mark: "हम",
   heading: "A century in Beawar.",
   description:
-    "Founded in 1915 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
+    "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
   photo: {
     src: "/brochure/br-bench.jpg",
     alt: "A goldsmith at the bench, shaping a piece by hand",
     caption: { text: "Crafted with precision,", italic: "treasured for eternity" },
   },
   paragraphs: [
-    "Founded in 1915 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
+    "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
     "From our early beginnings to embracing gold in 1932 and silver in 1952, each chapter has shaped our reputation for trust and craftsmanship. In 1988, we pioneered certified hallmark jewellery, reinforcing our commitment to purity and integrity.",
     "As we celebrate over 100 years, we enter 2025 with a renewed vision and a grand new space, honouring our past while embracing the future.",
     "Thank you for being part of this enduring journey and for the trust that continues to inspire us.",
