@@ -6,6 +6,7 @@ const routes = [
   "/collections/rings",
   "/collections/bangles",
   "/collections/earrings",
+  "/collections/ornaments",
   "/bespoke",
   "/campaign",
   "/diamond-guide",
@@ -57,7 +58,7 @@ test("collection arrows, reverse navigation, mouse drag and category routes work
   const next = page.getByRole("button", { name: "Next collection", exact: true });
   const previous = page.getByRole("button", { name: "Previous collection", exact: true });
   await expect(previous).toBeDisabled();
-  for (const label of ["Explore rings", "Explore bangles", "Explore earrings"]) {
+  for (const label of ["Explore rings", "Explore bangles", "Explore earrings", "Explore hand ornaments"]) {
     await next.click();
     await expect(track).not.toHaveAttribute("data-sliding");
     const link = track.getByRole("link", { name: label, exact: true });

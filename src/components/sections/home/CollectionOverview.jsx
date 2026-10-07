@@ -3,17 +3,25 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { collectionPage } from "@/data/legacy";
 import { ScrollMotion } from "@/components/motion/ScrollMotion";
+import { products } from "@/data/product-catalog";
 
 export function CollectionHero() {
   return (
     <ScrollMotion as="section" className="collection-introduction bg-cream-soft text-ink">
       <div className="collection-introduction-grid container-x">
         <div data-scroll-fade className="collection-introduction-copy">
-          <p className="eyebrow text-wine-soft">{collectionPage.eyebrow}</p>
-          <h1>{collectionPage.heading}</h1>
-          <p className="body-l text-ink-muted">{collectionPage.introduction}</p>
-          <a href="#collections" className="house-story-link ui-label">
-            {collectionPage.cta}
+          <p className="eyebrow text-wine-soft">The complete jewellery edit</p>
+          <h1>
+            Little details.
+            <br />
+            <em>Extraordinary presence.</em>
+          </h1>
+          <p className="body-l text-ink-muted">
+            Sixteen expressions of the craft. Necklaces, bangles, rings and the pieces that bring it all together. Find
+            a little beauty to call your own.
+          </p>
+          <a href="#all-pieces" className="house-story-link ui-label">
+            Discover all {products.length} pieces
             <ArrowDown size={17} aria-hidden="true" />
           </a>
           <Link href="/about#heritage" className="collection-history-link">
@@ -24,25 +32,25 @@ export function CollectionHero() {
         <div className="collection-introduction-images">
           <div className="collection-introduction-main" data-image-swipe="intro">
             <Image
-              src="/house/necklace-presentation.webp"
-              alt="A gold necklace on a cream display, with the house's wine-colored presentation boxes"
+              src="/campaign/mj-265.jpg"
+              alt="A bride wearing layered ceremonial jewellery with a green accented necklace"
               fill
               priority
               sizes="(min-width: 1024px) 40vw, 85vw"
-              className="object-cover object-[50%_48%]"
+              className="object-cover object-[50%_30%]"
             />
           </div>
           <div className="collection-introduction-detail" data-image-swipe="intro">
             <Image
-              src="/house/ring-presentation.webp"
-              alt="A gold ring in a cream-lined Manish Jewellers presentation box"
+              src="/collection-products/coin-choker.webp"
+              alt="A coin motif choker with pale bead details on ivory fabric"
               fill
               priority
               sizes="(min-width: 1024px) 18vw, 40vw"
-              className="object-cover"
+              className="object-contain"
             />
           </div>
-          <span className="collection-image-note">The art is in the details.</span>
+          <span className="collection-image-note">From the house. For your story.</span>
         </div>
       </div>
     </ScrollMotion>

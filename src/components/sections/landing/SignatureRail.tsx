@@ -1,11 +1,16 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { landingCollections } from "@/data/enhance-landing";
+import { findCollection } from "@/data/collections";
 import { ImageFrame } from "@/components/ui/ImageFrame";
 import { LandingReveal as Reveal } from "./LandingReveal";
 
 /** A normal grid keeps every collection reachable with a keyboard or without JS. */
 export function SignatureRail() {
+  const items = landingCollections.items.map((item) => {
+    const collection = findCollection(item.name.toLowerCase());
+    return collection ? { ...item, src: collection.image, alt: collection.alt } : item;
+  });
   return (
     <section
       id="collections"
@@ -23,7 +28,7 @@ export function SignatureRail() {
           <p className="body-copy max-w-[36ch] text-ink-muted">{landingCollections.lede}</p>
         </Reveal>
         <div className="landing-collections-grid">
-          {landingCollections.items.map((item, i) => (
+          {items.map((item, i) => (
             <Link
               key={item.name}
               href={`/collections/${item.name.toLowerCase()}`}
@@ -36,7 +41,7 @@ export function SignatureRail() {
                 alt={item.alt}
                 sizes="(min-width: 768px) 30vw, 90vw"
                 curtain="cream-soft"
-                className="aspect-[4/5]"
+                className="landing-category-image aspect-[1.08]"
                 depth={0}
                 delay={i * 0.08}
               />

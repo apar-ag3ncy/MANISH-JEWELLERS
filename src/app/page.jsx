@@ -6,6 +6,8 @@ import { SignatureRail } from "@/components/sections/landing/SignatureRail";
 import { Invitation } from "@/components/sections/landing/Invitation";
 import { Heritage } from "@/components/sections/landing/Heritage";
 import { CollectionEditorial } from "@/components/sections/collections/CollectionEditorial";
+import { ProductGallery } from "@/components/sections/collections/ProductGallery";
+import { featuredProducts } from "@/data/product-catalog";
 
 export const metadata = {
   title: { absolute: `${brand.name} — ${brand.motto}` },
@@ -39,6 +41,15 @@ export default function LandingPage() {
       />
       <Hero />
       <Marquee />
+      <ProductGallery
+        id="house-favourites"
+        products={featuredProducts}
+        heading="The pieces make the moment."
+        eyebrow="A first look at the collection"
+        description="A sculptural curve. A touch of colour. Something you will reach for again and again. Discover a few favourites from the house."
+        filters={false}
+        showAllLink
+      />
       <SignatureRail />
       <CampaignSlides slides={landingCampaign.slides} />
       <Heritage />

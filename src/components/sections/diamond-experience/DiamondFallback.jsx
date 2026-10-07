@@ -72,8 +72,9 @@ export function DiamondFallback() {
             key={i}
             points={piece.join(" ")}
             style={{
-              "--dx": `${Math.cos(i * 2.4) * (220 + i * 9)}px`,
-              "--dy": `${Math.sin(i * 2.4) * (140 + i * 10) - 80}px`,
+              // Stable precision across Node and browser math implementations.
+              "--dx": `${(Math.cos(i * 2.4) * (220 + i * 9)).toFixed(3)}px`,
+              "--dy": `${(Math.sin(i * 2.4) * (140 + i * 10) - 80).toFixed(3)}px`,
               "--turn": `${(i % 2 ? 1 : -1) * (40 + i * 12)}deg`,
             }}
           />

@@ -1,6 +1,8 @@
 import { collectionPage } from "@/data/legacy";
 import { landingCampaign } from "@/data/content";
-import { CollectionHero, CollectionOverview } from "@/components/sections/home/CollectionOverview";
+import { HouseHomeHero } from "@/components/sections/home/HouseHomeHero";
+import { ProductGallery } from "@/components/sections/collections/ProductGallery";
+import { featuredProducts } from "@/data/product-catalog";
 import { CampaignSlides } from "@/components/sections/landing/CampaignSlides";
 import { CollectionEditorial } from "@/components/sections/collections/CollectionEditorial";
 import { LegacyJourney } from "@/components/sections/about/LegacyJourney";
@@ -15,8 +17,15 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      <CollectionHero />
-      <CollectionOverview />
+      <HouseHomeHero />
+      <ProductGallery
+        id="collections"
+        products={featuredProducts}
+        heading="A little beauty. A lasting feeling."
+        eyebrow="Selected from the house"
+        filters={false}
+        showAllLink
+      />
       <CampaignSlides slides={landingCampaign.slides} />
       <div id="house-edit" className="house-page scroll-mt-24">
         <CollectionEditorial />

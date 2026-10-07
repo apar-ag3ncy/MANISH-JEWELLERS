@@ -1,0 +1,370 @@
+.product-edit {
+  padding-block: clamp(64px, 7vw, 110px);
+  scroll-margin-top: 100px;
+  color: var(--color-ink);
+  background: var(--color-cream-soft);
+}
+/* The collection opens with the wearer and the jewel, in a tighter photographic spread. */
+.collection-introduction {
+  padding-top: 126px;
+  padding-bottom: 65px;
+}
+.collection-introduction-grid {
+  gap: 5vw;
+}
+.collection-introduction h1 {
+  max-width: 14ch;
+  font-size: clamp(52px, 5.5vw, 82px);
+}
+.collection-introduction-images {
+  height: min(560px, 63svh);
+}
+.collection-introduction-main {
+  border-radius: 0;
+}
+.collection-introduction-detail {
+  background: var(--color-cream-soft);
+}
+.collection-introduction em {
+  font-weight: 400;
+}
+.landing-category-image img {
+  object-fit: contain;
+}
+.landing-category-image {
+  background: #efe8df;
+}
+.product-edit-heading {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 48px;
+}
+.product-edit .eyebrow {
+  color: var(--color-wine);
+}
+.product-edit-heading h2 {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 4.7vw, 70px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  max-width: 17ch;
+  margin-top: 20px;
+}
+.product-edit-introduction > p {
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: 40ch;
+  color: var(--color-ink-muted);
+}
+.product-edit-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  border-block: 1px solid var(--color-cream-deep);
+  padding-block: 20px;
+  margin-bottom: 40px;
+}
+.product-edit-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.product-edit-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 17px;
+  border-radius: 30px;
+  color: var(--color-wine);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.product-edit-filter span {
+  font-size: 10px;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+.product-edit-filter[aria-current] {
+  background: rgb(121 63 72 / 14%);
+  border-color: var(--color-wine);
+}
+.product-edit-count {
+  flex-shrink: 0;
+  color: var(--color-ink-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.product-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 42px 26px;
+}
+.product-edit-piece {
+  min-width: 0;
+}
+.product-edit-grid[data-piece-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 760px;
+  margin-inline: auto;
+}
+.product-edit-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.06;
+  overflow: hidden;
+  background: #efe8df;
+  cursor: zoom-in;
+}
+.product-edit-photograph {
+  object-fit: contain;
+  transition: transform 1.25s cubic-bezier(0.2, 0.65, 0.2, 1);
+}
+.product-edit-expand {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  inset: auto 16px 16px auto;
+  color: var(--color-wine-deep);
+  background: rgb(250 244 235 / 72%);
+  backdrop-filter: blur(14px);
+  padding: 10px 13px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid rgb(255 255 255 / 55%);
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity 0.4s,
+    transform 0.6s;
+}
+.product-edit-image:is(:hover, :focus-visible) .product-edit-expand {
+  opacity: 1;
+  transform: none;
+}
+.product-edit-image:focus-visible {
+  outline: 2px solid var(--color-wine);
+  outline-offset: 4px;
+}
+.product-edit-piece figcaption {
+  padding-top: 18px;
+}
+.product-edit-piece-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--color-wine);
+}
+.product-edit-piece-label a {
+  padding-block: 4px;
+}
+.product-edit-piece-label a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.product-edit-piece-label span {
+  opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
+.product-edit-piece h3 {
+  font-family: var(--font-display);
+  font-size: clamp(25px, 2.1vw, 33px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-top: 9px;
+  font-weight: 400;
+}
+.product-edit-piece figcaption > p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+  margin-top: 10px;
+  max-width: 38ch;
+}
+.product-edit-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  border-top: 1px solid var(--color-cream-deep);
+  padding-top: 25px;
+  margin-top: 55px;
+}
+.product-edit-bottom > p {
+  color: var(--color-wine);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 25px;
+}
+.product-edit-bottom .house-text-link {
+  margin-top: 0;
+}
+.product-viewer {
+  width: min(1280px, calc(100vw - 64px));
+  max-width: none;
+  max-height: calc(100svh - 60px);
+  margin: auto;
+  padding: 26px;
+  border: 1px solid var(--color-cream-deep);
+  color: var(--color-ink);
+  background: var(--color-cream-soft);
+  overflow: auto;
+}
+.product-viewer::backdrop {
+  background: rgb(36 20 23 / 82%);
+  backdrop-filter: blur(12px);
+}
+.product-viewer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+.product-viewer .eyebrow {
+  font-size: 10px;
+}
+.product-viewer-layout {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.product-viewer-image {
+  position: relative;
+  min-height: 320px;
+  height: min(66svh, 670px);
+  background: #efe8df;
+}
+.product-viewer-copy h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.3vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-block: 18px;
+}
+.product-viewer-copy > p:not(.eyebrow) {
+  color: var(--color-ink-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.product-viewer-copy .product-viewer-note {
+  margin-top: 24px;
+  font-size: 13px;
+}
+.product-viewer-navigation {
+  display: flex;
+  gap: 10px;
+  margin-top: 32px;
+}
+/* Photographs stay fully framed; only a barely perceptible hover drift. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .product-edit-image:hover .product-edit-photograph {
+    transform: scale(1.025);
+  }
+}
+@media (max-width: 1100px) {
+  .product-edit-toolbar {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+@media (max-width: 900px) {
+  .product-edit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 20px;
+  }
+  .product-edit-heading {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .product-edit-introduction > p {
+    max-width: 54ch;
+  }
+  .product-viewer-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .product-viewer-image {
+    height: 48svh;
+    min-height: 220px;
+  }
+}
+@media (max-width: 599px) {
+  .collection-introduction {
+    padding-block: 102px 30px;
+  }
+  .collection-introduction-images {
+    height: 440px;
+    margin-block: 12px 35px;
+  }
+  .product-edit {
+    padding-block: 56px;
+  }
+  .product-edit-heading {
+    margin-bottom: 30px;
+  }
+  .product-edit-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .product-edit-toolbar {
+    margin-bottom: 28px;
+    padding-block: 17px;
+  }
+  .product-edit-filter {
+    padding-inline: 14px;
+  }
+  .product-edit-expand {
+    opacity: 1;
+    transform: none;
+    inset: auto 12px 12px auto;
+  }
+  .product-edit-bottom {
+    align-items: start;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .product-viewer {
+    width: calc(100vw - 24px);
+    max-height: calc(100svh - 24px);
+    padding: 16px;
+  }
+  .product-viewer-top {
+    margin-bottom: 16px;
+  }
+  .product-viewer-top .eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .product-viewer-layout {
+    gap: 22px;
+  }
+  .product-viewer-image {
+    height: 40svh;
+  }
+  .product-viewer-copy h2 {
+    font-size: 36px;
+  }
+  .product-viewer-navigation {
+    margin-top: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-edit-photograph,
+  .product-edit-expand {
+    transition: none;
+  }
+}

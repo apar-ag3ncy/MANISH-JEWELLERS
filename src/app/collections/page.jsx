@@ -3,6 +3,7 @@ import { CollectionCarousel } from "@/components/sections/collections/Collection
 import { CollectionEditorial } from "@/components/sections/collections/CollectionEditorial";
 import { PageInvitation } from "@/components/sections/shared/PageInvitation";
 import { ScrollMotion } from "@/components/motion/ScrollMotion";
+import { ProductGallery } from "@/components/sections/collections/ProductGallery";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -17,6 +18,7 @@ export default function CollectionsPage() {
   return (
     <>
       <CollectionHero />
+      <ProductGallery />
       <CollectionCarousel />
       <CollectionEditorial />
       <ScrollMotion className="house-page">

@@ -64,12 +64,12 @@ export function CollectionCarousel() {
     <section id="collections" className="collection-slider house-section" aria-labelledby="collection-slider-heading">
       <div className="house-section-head container-x">
         <div>
-          <p className="eyebrow text-wine-soft">Four expressions. One house.</p>
+          <p className="eyebrow text-wine-soft">Five expressions. One house.</p>
           <h2 id="collection-slider-heading">Find your expression.</h2>
         </div>
         <div className="collection-slider-controls">
           <span className="collection-slider-count" aria-live="polite">
-            0{active + 1} <span>/ 04</span>
+            {String(active + 1).padStart(2, "0")} <span>/ {String(collections.length).padStart(2, "0")}</span>
           </span>
           <button
             className="glass-control"
@@ -154,7 +154,7 @@ export function CollectionCarousel() {
             className="collection-slider-card"
             role="group"
             aria-roledescription="slide"
-            aria-label={`${index + 1} of 4`}
+            aria-label={`${index + 1} of ${collections.length}`}
           >
             <Link
               href={`/collections/${collection.slug}`}
@@ -171,7 +171,7 @@ export function CollectionCarousel() {
                   fill
                   sizes="(min-width: 1024px) 38vw, 82vw"
                   draggable={false}
-                  className="object-cover"
+                  className="object-contain"
                 />
                 <span aria-hidden="true">0{index + 1}</span>
               </div>

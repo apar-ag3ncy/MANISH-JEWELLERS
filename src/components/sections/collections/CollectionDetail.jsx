@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { ScrollMotion } from "@/components/motion/ScrollMotion";
 import { PageInvitation } from "@/components/sections/shared/PageInvitation";
 import { collections } from "@/data/collections";
+import { ProductGallery } from "./ProductGallery";
 
 export function CollectionDetail({ collection }) {
   return (
@@ -28,40 +29,19 @@ export function CollectionDetail({ collection }) {
               fill
               priority
               sizes="(min-width: 1024px) 52vw, 90vw"
-              className="object-cover"
+              className="object-contain"
               style={{ objectPosition: collection.position }}
             />
           </div>
         </section>
-        <section id="the-edit" className="house-section collection-piece-section container-x">
-          <div className="house-section-head" data-scroll-fade>
-            <div>
-              <p className="eyebrow text-wine-soft">A closer look</p>
-              <h2>The {collection.name.toLowerCase()} edit.</h2>
-            </div>
-            <p>A selection from our house brochure. Discover the full collection with us in Beawar.</p>
-          </div>
-          <div className="collection-piece-grid">
-            {collection.pieces.map((piece, index) => (
-              <figure key={piece.image}>
-                <div className="collection-piece-image" data-image-swipe>
-                  <Image
-                    src={piece.image}
-                    alt={piece.alt}
-                    fill
-                    sizes="(min-width: 768px) 43vw, 90vw"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption>
-                  <span className="eyebrow">0{index + 1}</span>
-                  <h3>{piece.name}</h3>
-                  <p>{piece.detail}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
+        <ProductGallery
+          id="the-edit"
+          products={collection.pieces}
+          heading={`The ${collection.name.toLowerCase()} edit.`}
+          eyebrow="A closer look"
+          description="Explore the details in full. Take a closer look at each piece, then discover the collection with us in Beawar."
+          filters={false}
+        />
         <section className="collection-editorial-note house-section container-x" data-scroll-fade>
           <p className="eyebrow text-wine-soft">Made for your own story</p>
           <h2>{collection.story}</h2>

@@ -110,6 +110,7 @@ test("the restored internal pages have their own canonical URLs", async ({ page,
   await page.goto("/home#collections");
   await expect(page).toHaveURL(/\/home#collections$/);
   await expect(page.locator("#collections")).toBeInViewport();
+  await expect(page.locator("#collections [data-product-id]")).toHaveCount(6);
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://manishjewellers.in/home");
   const sitemap = await (await request.get("/sitemap.xml")).text();
   expect(sitemap).toContain("/home");

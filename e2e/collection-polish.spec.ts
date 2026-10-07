@@ -10,7 +10,9 @@ for (const viewport of [
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/collections");
-    await expect(page.locator('main img[src*="%2Fhouse%2F"]')).toHaveCount(8);
+    await expect(
+      page.locator(".collection-house-edit img, .collection-atelier img, .collection-gifting img"),
+    ).toHaveCount(6);
     const opener = page.getByRole("button", { name: "Take a closer look: Gold, with a presence." });
     await opener.click();
     const gallery = page.getByRole("dialog", { name: "Gold, with a presence." });

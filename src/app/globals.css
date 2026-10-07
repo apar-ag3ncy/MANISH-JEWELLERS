@@ -13,6 +13,8 @@
 @import "../styles/diamond-experience.css";
 @import "../styles/collection-editorial.css";
 @import "../styles/glass-controls.css";
+@import "../styles/product-catalog.css";
+@import "../styles/home-showcase.css";
 
 /* ------------------------------------------------------------------ */
 /*  DESIGN TOKENS — the single source of truth (spec §4)               */

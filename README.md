@@ -31,8 +31,8 @@ The welcome page is `/`, with its existing sections:
 
 The internal pages are:
 
-- `/collections` — introduction and a horizontally swipeable collection gallery
-- `/collections/necklaces`, `/collections/rings`, `/collections/bangles`, `/collections/earrings` — individual edits with real house photographs
+- `/collections` — model and jewellery introduction, all 16 brochure product photographs, category filters and the horizontally swipeable collection gallery
+- `/collections/necklaces`, `/collections/rings`, `/collections/bangles`, `/collections/earrings`, `/collections/ornaments` — complete category edits with full product views
 - `/bespoke` — the commission process, diamond explorer and fitting tools
 - `/campaign` — the bridal editorial, using the campaign photography
 - `/diamond-guide` — five interactive shapes, facet controls and an animated anatomy/light explainer
@@ -94,6 +94,10 @@ The client-confirmed primary brand color is **#793f48**, defined as `--color-bra
 Collections includes eight optimized WebP house assets in `public/house/`. Presentation imagery complements the original brochure pieces; it does not claim product availability or prices. `CollectionEditorial.jsx`, `collection-editorial.js` and `collection-editorial.css` keep the gallery's behavior, content and style separate. The native dialog supports previous/next, arrow keys, Escape, focus return and coordinated Lenis scroll locking.
 
 The welcome page reuses that house edit, atelier and gifting presentation in place of the old text-only bespoke section. The internal collections page retains its complete edition. Footer sizing and process links now point to the useful tools on the bespoke page.
+
+The jewellery inventory comes directly from the 16 unique native photographs on pages 5–12 of the supplied `manish-jewellers-final.pdf`. They are extracted into `public/collection-products/` as WebP files, preserving the original photographic settings and complete coordinated groups. No brochure typography or page borders are carried into the product images. Native dimensions are retained without upscaling; two background-only trims bring the bangle compositions closer. The source objects and crop decisions are recorded in `docs/brochure-products.md`, and `scripts/extract-brochure-products.py` reproduces the extraction from a supplied PDF path.
+
+`brochure-products.json` is the single product inventory. `product-catalog.js` supplies category names and the six-piece home selection; `collections.js` derives each category's complete set from that inventory. `ProductGallery.jsx` supplies responsive product framing, filters and a native enlarged-image dialog with arrow navigation, Escape dismissal, focus return and coordinated scroll locking. Without JavaScript the collection links open category pages and each photograph links directly to its full image. The welcome page features the selection immediately after the opening; `/home` pairs bridal campaign photography with two original product images in a full editorial spread, followed by the selection. The original landing logo, wine and photograph sequence is retained.
 
 The opening stays within one viewport: the original logo trace and lettering animation, the wine-coloured hero, then a full-screen photograph. Once that opening settles, four actual campaign images crossfade every two seconds with restrained zoom. The hero has no visible playback buttons: swipe or left/right arrow keys browse manually, and Space pauses or resumes. Focusing the photographs pauses automatic changes. Autoplay stops outside the hero, in a hidden tab or with reduced motion. The central logo and copy fade away as the photograph appears. A screen-reader heading remains available without adding a visible overlay. Image selection and timing live in `src/data/hero-slides.js`. The collection dropdown remains keyboard accessible with a bare chevron instead of a glass capsule.
 
