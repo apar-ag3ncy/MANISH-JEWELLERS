@@ -1,291 +1,167 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { gsap, useGSAP, HOVER_OK } from "@/lib/gsap";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { cn, pad2 } from "@/lib/utils";
 import { campaign } from "@/data/content";
 import type { Slide } from "@/types";
-import { SplitText } from "@/components/ui/SplitText";
-import { Monogram } from "@/components/ui/Monogram";
-import { BrandWordmark } from "@/components/ui/brand/BrandLockup";
 
-const SLIDE_SECONDS = 5.5;
-
+const SLIDE_MS = 5500;
 type Props = { slides?: readonly Slide[]; id?: string };
 
-/**
- * Full-bleed campaign slides cut like film: two frames always in motion (the outgoing
- * plate pushes in as it fades, the incoming one drifts out of a slow zoom), the caption
- * assembles word by word, and the dash row keeps a memory of the frames already seen.
- */
 export function CampaignSlides({ slides = campaign.slides, id = campaign.id }: Props) {
   const ref = useRef<HTMLElement>(null);
-  const progress = useRef<gsap.core.Tween | null>(null);
-  const startX = useRef<number | null>(null);
-  const prevIndex = useRef(0);
+  const start = useRef<{ x: number; y: number } | null>(null);
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [reduced, setReduced] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [reduced, setReduced] = useState(true);
   const [inView, setInView] = useState(false);
-  const hold = useRef(true);
+  const [visible, setVisible] = useState(true);
   const count = slides.length;
-
-  const go = useCallback((i: number) => setIndex(((i % count) + count) % count), [count]);
+  const active = count ? index % count : 0;
+  const held = paused || hovered || focused || reduced || !inView || !visible;
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const motion = () => setReduced(query.matches);
+    const visibility = () => setVisible(!document.hidden);
+    motion();
+    visibility();
+    query.addEventListener("change", motion);
+    document.addEventListener("visibilitychange", visibility);
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.35 });
+    if (ref.current) observer.observe(ref.current);
+    return () => {
+      query.removeEventListener("change", motion);
+      document.removeEventListener("visibilitychange", visibility);
+      observer.disconnect();
+    };
   }, []);
 
-  /* autoplay only while the slides are actually on screen */
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.35 });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+    if (held || count < 2) return;
+    const timer = window.setTimeout(() => setIndex((i) => (i + 1) % count), SLIDE_MS);
+    return () => window.clearTimeout(timer);
+  }, [active, held, count]);
 
-  /* choreographed arrows — one small timeline each, attached once */
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      const mm = gsap.matchMedia();
-      mm.add(HOVER_OK, () => {
-        const off: Array<() => void> = [];
-        el.querySelectorAll<HTMLElement>("[data-arrow]").forEach((btn) => {
-          const chev = btn.querySelector("[data-chev]");
-          const dir = btn.dataset.arrow === "prev" ? -3 : 3;
-          const enter = () => {
-            gsap.to(chev, { x: dir, duration: 0.45, ease: "power3.out", overwrite: true });
-            gsap.to(btn, { scale: 1.06, duration: 0.45, ease: "power3.out", overwrite: true });
-          };
-          const leave = () => {
-            gsap.to(chev, { x: 0, duration: 0.45, ease: "power3.out", overwrite: true });
-            gsap.to(btn, { scale: 1, duration: 0.45, ease: "power3.out", overwrite: true });
-          };
-          btn.addEventListener("mouseenter", enter);
-          btn.addEventListener("mouseleave", leave);
-          off.push(() => {
-            btn.removeEventListener("mouseenter", enter);
-            btn.removeEventListener("mouseleave", leave);
-          });
-        });
-        return () => off.forEach((fn) => fn());
-      });
-    },
-    { scope: ref },
-  );
+  function go(next: number) {
+    if (!count) return;
+    setPaused(true);
+    setIndex(((next % count) + count) % count);
+  }
 
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      progress.current?.kill();
-      const previous = prevIndex.current;
-      prevIndex.current = index;
-
-      gsap.utils.toArray<HTMLElement>("[data-slide]", el).forEach((layer, i) => {
-        const active = i === index;
-        const img = layer.querySelector("[data-zoom]");
-        if (reduced) {
-          gsap.set(layer, { opacity: active ? 1 : 0 });
-          gsap.set(img, { scale: 1, yPercent: 0 });
-          return;
-        }
-        gsap.to(layer, { opacity: active ? 1 : 0, duration: 1.2, ease: "power2.out", overwrite: true });
-        if (active) {
-          /* the incoming frame drifts out of a slow zoom, with a direction */
-          gsap.fromTo(
-            img,
-            { scale: 1.12, yPercent: 1.5 },
-            { scale: 1, yPercent: 0, duration: SLIDE_SECONDS + 1.6, ease: "none", overwrite: true },
-          );
-        } else if (i === previous) {
-          /* the outgoing frame keeps moving — that is what reads as a cut, not a fade */
-          gsap.to(img, { scale: 1.04, duration: 1.2, ease: "power2.out", overwrite: true });
-        }
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-caption]", el).forEach((c, i) => {
-        const active = i === index;
-        const words = c.querySelectorAll("[data-split]");
-        if (reduced) {
-          gsap.set(c, { opacity: active ? 1 : 0, yPercent: 0 });
-          gsap.set(words, { yPercent: 0 });
-          return;
-        }
-        if (active) {
-          gsap.set(c, { opacity: 1, yPercent: 0 });
-          gsap.fromTo(
-            words,
-            { yPercent: 110 },
-            { yPercent: 0, duration: 1.0, ease: "expo.out", stagger: 0.045, delay: 0.22, overwrite: true },
-          );
-        } else {
-          gsap.to(c, { opacity: 0, yPercent: -60, duration: 0.45, ease: "power3.in", overwrite: true });
-        }
-      });
-
-      /* the dash row remembers: seen frames hold, the live one fills, a wrap clears it */
-      const bars = gsap.utils.toArray<HTMLElement>("[data-bar]", el);
-      const wrapped = index === 0 && previous > 0;
-      gsap.set(bars, { transformOrigin: "left center" });
-
-      if (reduced) {
-        bars.forEach((b, i) => gsap.set(b, { scaleX: i <= index ? 1 : 0, opacity: i < index ? 0.45 : 1 }));
-        return;
-      }
-
-      if (wrapped) {
-        gsap.to(bars.slice(1), { scaleX: 0, opacity: 1, duration: 0.5, stagger: 0.04, ease: "power2.out" });
-        gsap.set(bars[0], { scaleX: 0, opacity: 1 });
-      } else {
-        bars.forEach((b, i) => {
-          if (i < index) gsap.set(b, { scaleX: 1, opacity: 0.45 });
-          else if (i > index) gsap.set(b, { scaleX: 0, opacity: 1 });
-          else gsap.set(b, { scaleX: 0, opacity: 1 });
-        });
-      }
-
-      progress.current = gsap.to(bars[index], {
-        scaleX: 1,
-        duration: SLIDE_SECONDS,
-        ease: "none",
-        onComplete: () => setIndex((i) => (i + 1) % count),
-      });
-      if (hold.current) progress.current.pause();
-    },
-    { scope: ref, dependencies: [index, reduced, count] },
-  );
-
-  useEffect(() => {
-    hold.current = paused || !inView;
-    const t = progress.current;
-    if (!t) return;
-    if (hold.current) t.pause();
-    else t.resume();
-  }, [paused, inView, index]);
+  if (!count) return null;
 
   return (
     <section
       ref={ref}
       id={id}
+      role="region"
       aria-roledescription="carousel"
       aria-label={campaign.label}
-      className="on-wine relative h-[80svh] min-h-[520px] w-full scroll-mt-0 overflow-hidden bg-wine-deep text-cream select-none sm:h-[88svh]"
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      className="on-wine relative h-[78svh] max-h-[900px] min-h-[560px] w-full scroll-mt-24 overflow-hidden bg-wine-deep text-cream"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+          e.preventDefault();
+          go(active + (e.key === "ArrowRight" ? 1 : -1));
+        }
+      }}
       onPointerDown={(e) => {
-        startX.current = e.clientX;
+        if (e.pointerType === "touch") start.current = { x: e.clientX, y: e.clientY };
+      }}
+      onPointerCancel={() => {
+        start.current = null;
       }}
       onPointerUp={(e) => {
-        if (startX.current === null) return;
-        const dx = e.clientX - startX.current;
-        startX.current = null;
-        if (Math.abs(dx) > 50) go(index + (dx < 0 ? 1 : -1));
+        if (!start.current) return;
+        const dx = e.clientX - start.current.x;
+        const dy = e.clientY - start.current.y;
+        start.current = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(active + (dx < 0 ? 1 : -1));
       }}
     >
-      {slides.map((s, i) => (
+      {slides.map((slide, i) => (
         <div
-          key={s.src}
-          data-slide
+          key={slide.src}
           role="group"
           aria-roledescription="slide"
-          aria-label={`${i + 1} / ${count}`}
-          aria-hidden={i !== index}
-          className={cn("absolute inset-0", i === 0 ? "opacity-100" : "opacity-0")}
+          aria-label={`${i + 1} of ${count}`}
+          aria-hidden={i !== active}
+          className={cn(
+            "campaign-photo absolute inset-0",
+            i === active ? "opacity-100" : "pointer-events-none opacity-0",
+          )}
         >
-          <div data-zoom className="absolute inset-0 will-change-transform">
-            <Image
-              src={s.src}
-              alt={s.alt}
-              fill
-              sizes="100vw"
-              priority={i === 0}
-              className={cn("object-cover", s.focus)}
-            />
-          </div>
+          <Image src={slide.src} alt={slide.alt} fill sizes="100vw" className={cn("object-cover", slide.focus)} />
         </div>
       ))}
-
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-linear-to-t from-wine-deep/90 via-wine-deep/10 to-wine-deep/20"
+        className="pointer-events-none absolute inset-0 bg-linear-to-t from-wine-deep via-wine-deep/10 to-wine-deep/30"
       />
-
-      <div className="absolute inset-x-0 bottom-0 container-x pb-[clamp(20px,4.5vh,44px)]">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-          <div className="min-w-0 sm:flex-1">
-            <p className="eyebrow text-cream/70 tabular">
-              {pad2(index + 1)} / {pad2(count)}
+      <div className="absolute inset-x-0 top-10 container-x">
+        <p className="eyebrow">{campaign.label}</p>
+      </div>
+      <div className="absolute inset-x-0 bottom-0 container-x pb-7 sm:pb-10">
+        <div className="flex flex-col justify-between gap-7 sm:flex-row sm:items-end">
+          <div className="max-w-[760px]">
+            <p className="eyebrow text-cream/75 tabular">
+              {pad2(active + 1)} / {pad2(count)}
             </p>
-            <div
-              aria-live={paused ? "polite" : "off"}
-              className="relative mt-3 h-[1.35em] overflow-hidden font-display text-[clamp(1.35rem,3.6vw,3.25rem)] leading-[1.2] tracking-[-0.01em]"
-            >
-              {slides.map((s, i) => (
-                <p
-                  key={s.src}
-                  data-caption
-                  className={cn(
-                    "absolute inset-x-0 top-0 will-change-transform",
-                    i === 0 ? "opacity-100" : "opacity-0",
-                  )}
-                >
-                  <SplitText text={s.caption} />
-                </p>
-              ))}
-            </div>
+            <h2 aria-live={held ? "polite" : "off"} aria-atomic="true" className="campaign-caption mt-4">
+              {slides[active].caption}
+            </h2>
           </div>
-
-          <div className="flex shrink-0 items-center justify-between gap-5 sm:justify-end">
-            <div className="flex items-center gap-3">
+          <div role="group" aria-label="Campaign controls" className="flex shrink-0 items-center gap-3">
+            {!reduced && count > 1 ? (
               <button
                 type="button"
-                data-arrow="prev"
-                aria-label={campaign.prev}
-                onClick={() => go(index - 1)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/40 transition-colors duration-500 will-change-transform hover:bg-cream hover:text-wine"
+                aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+                aria-pressed={paused}
+                onClick={() => setPaused((value) => !value)}
+                className="glass-control flex h-12 w-12 items-center justify-center rounded-full border border-cream/60 transition-colors hover:bg-cream hover:text-wine"
               >
-                <ChevronLeft data-chev className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+                {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
               </button>
-              <button
-                type="button"
-                data-arrow="next"
-                aria-label={campaign.next}
-                onClick={() => go(index + 1)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/40 transition-colors duration-500 will-change-transform hover:bg-cream hover:text-wine"
-              >
-                <ChevronRight data-chev className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
-              </button>
-            </div>
-            <span className="flex items-center gap-2.5 text-cream/90" aria-hidden="true">
-              <Monogram className="h-6 w-auto" />
-              <BrandWordmark className="h-[11px] w-auto" />
-            </span>
+            ) : null}
+            <button
+              type="button"
+              aria-label={campaign.prev}
+              onClick={() => go(active - 1)}
+              className="glass-control flex h-12 w-12 items-center justify-center rounded-full border border-cream/60 transition-colors hover:bg-cream hover:text-wine"
+            >
+              <ChevronLeft size={20} strokeWidth={1.5} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              aria-label={campaign.next}
+              onClick={() => go(active + 1)}
+              className="glass-control flex h-12 w-12 items-center justify-center rounded-full border border-cream/60 transition-colors hover:bg-cream hover:text-wine"
+            >
+              <ChevronRight size={20} strokeWidth={1.5} aria-hidden="true" />
+            </button>
           </div>
         </div>
-
-        <div
-          className="mt-6 flex items-center gap-2 border-t border-cream/20 pt-4"
-          role="group"
-          aria-label={campaign.label}
-        >
-          {slides.map((s, i) => (
+        <div className="mt-5 flex gap-3" role="group" aria-label="Choose a campaign photograph">
+          {slides.map((slide, i) => (
             <button
-              key={s.src}
+              key={slide.src}
               type="button"
               aria-label={`${campaign.goTo} ${i + 1}`}
-              aria-current={i === index ? "true" : undefined}
+              aria-current={i === active ? "true" : undefined}
               onClick={() => go(i)}
-              className="flex h-6 flex-1 items-center"
+              className="flex h-11 flex-1 items-center"
             >
-              <span className="relative block h-px w-full overflow-hidden bg-cream/35">
-                <span data-bar className="absolute inset-0 origin-left [transform:scaleX(0)] bg-cream" />
-              </span>
+              <span className={cn("block h-px w-full", i === active ? "bg-cream" : "bg-cream/35")} />
             </button>
           ))}
         </div>

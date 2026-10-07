@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { holdReveal, releaseReveal, resetReveal } from "@/lib/reveal";
+import { holdReveal, releaseReveal } from "@/lib/reveal";
 import { lockScroll, unlockScroll } from "@/lib/lenis";
 import { INTRO } from "@/lib/constants";
 import { WineGround } from "@/components/ui/brand/WineGround";
@@ -24,8 +24,8 @@ function markIntro(state: "playing" | "done") {
  * preloader — a lit wine curtain. The hero's real brand lockup is lifted above
  * it and performs its intro in the centre of the screen: the monogram traces
  * and fills with rose gold, the wordmark tracks in, the tagline follows, a
- * sheen crosses the metal. The curtain then wipes upward while the lockup
- * glides into its place in the hero.
+ * sheen crosses the metal. The curtain dissolves into the same wine ground
+ * while the lockup glides into its place, before the hero reveals its photograph.
  *
  * Plays once per session. Hidden under prefers-reduced-motion (CSS), and a CSS
  * failsafe hides it if JavaScript never takes over.
@@ -39,19 +39,26 @@ export function Preloader() {
       if (!el) return;
 
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const failsafeFired = getComputedStyle(el).visibility === "hidden";
-      if (reduced || failsafeFired || playedThisSession) {
+      const failsafeFired = el.getAnimations().some((animation) => animation.playState === "finished");
+      if (reduced || failsafeFired || playedThisSession || window.location.hash || window.scrollY > 0) {
         gsap.set(el, { display: "none" });
+        releaseReveal();
         markIntro("done");
         return;
       }
 
       el.classList.add("mj-live");
-      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-      window.scrollTo(0, 0);
       holdReveal();
       markIntro("playing");
-      lockScroll();
+      lockScroll("intro");
+
+      // Release both the visual overlay and scroll lock if animation is interrupted.
+      const safety = window.setTimeout(() => {
+        gsap.set(el, { display: "none" });
+        releaseReveal();
+        unlockScroll("intro");
+        if (document.documentElement.dataset.intro !== "done") markIntro("done");
+      }, 4500);
 
       const bar = el.querySelector("[data-progress]");
       gsap.set(bar, { scaleX: 0, transformOrigin: "left center" });
@@ -61,25 +68,29 @@ export function Preloader() {
           onComplete: () => {
             gsap.set(el, { display: "none" });
             markIntro("done");
-            unlockScroll();
+            unlockScroll("intro");
             playedThisSession = true;
+            window.clearTimeout(safety);
           },
         })
         .to(bar, { scaleX: 1, duration: INTRO.reveal - 0.15, ease: "power1.inOut" }, 0)
         .to(bar, { opacity: 0, duration: 0.3, ease: "power2.out" }, INTRO.reveal - 0.15)
-        .to(el, { yPercent: -100, duration: INTRO.curtain, ease: "expo.inOut", onStart: releaseReveal }, INTRO.reveal);
+        .to(el, { opacity: 0, duration: INTRO.curtain, ease: "power2.inOut", onStart: releaseReveal }, INTRO.reveal);
 
-      return () => unlockScroll();
+      return () => {
+        window.clearTimeout(safety);
+        unlockScroll("intro");
+        releaseReveal();
+        el.classList.remove("mj-live");
+      };
     },
     { scope: ref },
   );
 
-  useEffect(() => () => resetReveal(), []);
-
   return (
     <div
       ref={ref}
-      className="mj-preloader on-wine fixed inset-0 z-[100] overflow-hidden will-change-transform"
+      className="mj-preloader on-wine fixed inset-0 z-[100] overflow-hidden will-change-[opacity]"
       aria-hidden="true"
     >
       <WineGround />

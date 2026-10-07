@@ -1,0 +1,219 @@
+.collection-house-edit {
+  padding-top: clamp(70px, 9vw, 140px);
+}
+.collection-house-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 50px;
+  margin-bottom: 65px;
+}
+.collection-house-heading h2,
+.collection-atelier h2,
+.collection-gifting h2 {
+  font-size: clamp(40px, 4.3vw, 67px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  margin-top: 24px;
+}
+.collection-house-heading > p {
+  max-width: 34ch;
+  color: var(--color-ink-muted);
+  font-size: 16px;
+}
+.collection-house-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 70px 7vw;
+}
+.collection-house-item {
+  min-width: 0;
+}
+.collection-house-item--2 {
+  padding-top: 100px;
+}
+.collection-house-item--4 {
+  padding-top: 80px;
+}
+.collection-house-photo {
+  position: relative;
+  aspect-ratio: 1.08;
+  overflow: hidden;
+  background: var(--color-cream);
+}
+.collection-house-item--2 .collection-house-photo {
+  aspect-ratio: 0.95;
+}
+.collection-house-item--3 .collection-house-photo {
+  aspect-ratio: 1.18;
+}
+.collection-gallery-open {
+  position: absolute !important;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+}
+.collection-house-item figcaption {
+  padding-top: 25px;
+}
+.collection-house-item figcaption h3 {
+  font-size: clamp(30px, 2.8vw, 42px);
+  line-height: 1.1;
+  margin-top: 14px;
+  letter-spacing: -0.02em;
+}
+.collection-house-item figcaption > p:not(.eyebrow) {
+  max-width: 40ch;
+  color: var(--color-ink-muted);
+  font-size: 15px;
+  margin-top: 16px;
+}
+.collection-house-item .house-text-link {
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+.collection-atelier {
+  padding-block: clamp(65px, 9vw, 140px);
+  background: var(--color-brand);
+  color: var(--color-cream-soft);
+}
+.collection-atelier-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 8vw;
+}
+.collection-atelier-photo {
+  position: relative;
+  aspect-ratio: 1.08;
+  overflow: hidden;
+}
+.collection-atelier-copy > p:not(.eyebrow) {
+  max-width: 37ch;
+  color: rgb(250 244 235 / 78%);
+  margin-top: 26px;
+}
+.collection-atelier .eyebrow {
+  color: rgb(250 244 235 / 65%);
+}
+.collection-atelier .house-text-link,
+.collection-gifting .house-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+.collection-gifting {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 8vw;
+}
+.collection-gifting > div > p:not(.eyebrow) {
+  max-width: 39ch;
+  margin-top: 24px;
+  color: var(--color-ink-muted);
+}
+.collection-gifting-photo {
+  position: relative;
+  aspect-ratio: 1.15;
+  overflow: hidden;
+}
+.collection-lightbox {
+  position: fixed;
+  inset: 0;
+  width: min(1240px, 94vw);
+  max-width: none;
+  height: min(920px, 92svh);
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 22%);
+  background: rgb(46 24 30 / 95%);
+  color: var(--color-cream-soft);
+  box-shadow: 0 30px 100px rgb(0 0 0 / 35%);
+}
+.collection-lightbox::backdrop {
+  background: rgb(25 12 17 / 75%);
+  backdrop-filter: blur(12px);
+}
+.collection-lightbox-inner {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 20px 28px;
+  gap: 18px;
+}
+.collection-lightbox-top,
+.collection-lightbox-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.collection-lightbox-photo {
+  position: relative;
+  min-height: 0;
+}
+.collection-lightbox-bottom h2 {
+  font-size: clamp(25px, 3vw, 38px);
+}
+.collection-lightbox-bottom > div {
+  display: flex;
+  gap: 9px;
+  flex-shrink: 0;
+}
+@media (max-width: 767px) {
+  .collection-house-heading {
+    flex-direction: column;
+    align-items: start;
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+  .collection-house-heading > p {
+    font-size: 15px;
+  }
+  .collection-house-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .collection-house-item--2,
+  .collection-house-item--4 {
+    padding-top: 0;
+  }
+  .collection-house-item--2 .collection-house-photo {
+    aspect-ratio: 1.08;
+  }
+  .collection-atelier-grid,
+  .collection-gifting {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .collection-atelier h2,
+  .collection-gifting h2 {
+    font-size: clamp(36px, 10vw, 48px);
+  }
+  .collection-lightbox {
+    width: 96vw;
+    height: 88svh;
+  }
+  .collection-lightbox-inner {
+    padding: 15px;
+    gap: 12px;
+  }
+  .collection-lightbox-top .eyebrow {
+    font-size: 8px;
+  }
+  .collection-lightbox-bottom {
+    align-items: end;
+    gap: 14px;
+  }
+  .collection-lightbox-bottom h2 {
+    font-size: 26px;
+  }
+  .collection-lightbox-bottom > div {
+    gap: 5px;
+  }
+}

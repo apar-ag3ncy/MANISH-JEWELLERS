@@ -1,0 +1,311 @@
+.house-finale {
+  background: var(--color-wine-deep);
+}
+.house-footer-wordmark-slot {
+  position: relative;
+  aspect-ratio: 1385.14 / 100;
+}
+.house-footer-wordmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  color: #e7d7c5;
+}
+.house-footer-wordmark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+/* A dark sculptural stage: rough stones, a luminous diamond, oversized house lettering. */
+.diamond-experience {
+  position: relative;
+  background: var(--color-wine-deep);
+  color: #faf4eb;
+  --diamond-burst: 0;
+  scroll-margin-top: 0;
+  border-top: 1px solid rgb(242 229 212 / 12%);
+}
+.diamond-experience-stage {
+  position: relative;
+  height: max(760px, 100svh);
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(ellipse at 50% 70%, #793f48 0%, #5b3038 36%, #28161c 78%, #1a0e12 100%);
+}
+.diamond-experience-stage::after {
+  content: "";
+  position: absolute;
+  inset: 65% 0 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(transparent, var(--color-wine-deep));
+}
+.diamond-experience[data-scroll="true"] {
+  height: 360svh;
+}
+.diamond-experience[data-scroll="true"] .diamond-experience-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+.diamond-experience-top {
+  position: absolute;
+  z-index: 4;
+  top: 108px;
+  left: clamp(24px, 4vw, 64px);
+  right: clamp(24px, 4vw, 64px);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.diamond-experience-top > p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 9px;
+  color: rgb(238 245 245 / 72%);
+}
+.diamond-view-reset {
+  display: flex;
+  flex-shrink: 0;
+  white-space: nowrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  min-height: 44px;
+  padding: 0 15px;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 24px;
+  background: rgb(255 255 255 / 8%);
+}
+.diamond-experience-masthead {
+  position: absolute;
+  z-index: 1;
+  top: 18%;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+.diamond-experience-masthead h2 {
+  margin: 0 auto;
+  width: calc(100% - clamp(40px, 6.4vw, 128px));
+  aspect-ratio: 1385.14 / 100;
+}
+.diamond-experience-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: grab;
+  touch-action: pan-y;
+  perspective: 900px;
+}
+.diamond-experience[data-dragging] .diamond-experience-visual {
+  cursor: grabbing;
+}
+.diamond-experience-visual:focus-visible {
+  outline: 1px solid rgb(242 229 212 / 75%);
+  outline-offset: -10px;
+}
+.diamond-experience-canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s;
+  pointer-events: none;
+}
+.diamond-experience-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.diamond-experience[data-renderer="webgl"] .diamond-experience-canvas {
+  opacity: 1;
+}
+.diamond-experience-fallback {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.6s;
+}
+.diamond-experience[data-renderer="webgl"] .diamond-experience-fallback {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.6s,
+    visibility 0s 0.6s;
+}
+.diamond-fallback-pieces polygon {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translate(calc(var(--diamond-burst) * var(--dx)), calc(var(--diamond-burst) * var(--dy)))
+    rotate(calc(var(--diamond-burst) * var(--turn)));
+}
+.diamond-fallback-rock {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translate(calc(var(--diamond-burst) * var(--rx)), calc(var(--diamond-burst) * var(--ry)))
+    rotate(calc(var(--diamond-burst) * var(--rt)));
+}
+.diamond-experience-bottom {
+  position: absolute;
+  inset: auto clamp(24px, 4vw, 64px) 42px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 28px;
+  pointer-events: none;
+}
+.diamond-experience-note {
+  max-width: 270px;
+}
+.diamond-experience-note > p:first-child {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgb(250 244 235 / 78%);
+  margin-bottom: 12px;
+}
+.diamond-experience-note > p:nth-child(2) {
+  font-size: 12px;
+  line-height: 1.65;
+  max-width: 25ch;
+  color: rgb(250 244 235 / 96%);
+}
+.diamond-experience-note > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  color: rgb(250 244 235 / 78%);
+  font-size: 10px;
+  line-height: 1.6;
+}
+.diamond-experience-status {
+  text-align: right;
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.19em;
+  color: rgb(237 245 246 / 65%);
+}
+.diamond-experience-continue {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  translate: -50% 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(239 245 245 / 25%);
+  border-radius: 20px;
+  pointer-events: auto;
+}
+.diamond-experience-progress {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: rgb(242 229 212 / 10%);
+  z-index: 4;
+  opacity: calc(1 - var(--footer-exit, 0) * 4);
+}
+.diamond-experience-progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #793f48, #f2e5d4);
+  transform-origin: left;
+  transform: scaleX(0.5);
+}
+.diamond-experience button:focus-visible,
+.diamond-experience a:focus-visible {
+  outline: 2px solid #f2e5d4;
+  outline-offset: 4px;
+}
+@media (max-width: 767px) {
+  .diamond-experience-top {
+    top: 96px;
+    left: 20px;
+    right: 20px;
+    gap: 12px;
+    align-items: start;
+  }
+  .diamond-experience-top > p {
+    max-width: 40ch;
+    line-height: 1.8;
+    font-size: 8px;
+    gap: 8px;
+    padding-top: 10px;
+  }
+  .diamond-experience-top > p > svg {
+    flex-shrink: 0;
+  }
+  .diamond-view-reset {
+    padding-inline: 10px;
+    font-size: 10px;
+    gap: 6px;
+  }
+  .diamond-experience-masthead {
+    top: 23%;
+  }
+  .diamond-experience-bottom {
+    inset: auto 20px 24px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .diamond-experience-note {
+    max-width: calc(100% - 54px);
+  }
+  .diamond-experience-note > p:first-child {
+    margin-bottom: 7px;
+  }
+  .diamond-experience-note > p:nth-child(2) {
+    font-size: 11px;
+    max-width: 32ch;
+  }
+  .diamond-experience-note > span {
+    margin-top: 9px;
+    font-size: 9px;
+  }
+  .diamond-experience-status {
+    display: none;
+  }
+  .diamond-experience-continue {
+    right: 0;
+    left: auto;
+    top: 0;
+    bottom: auto;
+    translate: 0 0;
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (max-height: 700px) and (min-width: 768px) {
+  .diamond-experience-top {
+    top: 90px;
+  }
+  .diamond-experience-masthead {
+    top: 19%;
+  }
+  .diamond-experience-bottom {
+    bottom: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diamond-experience-canvas,
+  .diamond-experience-fallback,
+  .diamond-experience[data-renderer="webgl"] .diamond-experience-fallback {
+    transition: none;
+  }
+  .diamond-scroll-hint {
+    display: none;
+  }
+}

@@ -2,8 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 
 /**
  * End-to-end checks run against the production build on :3000.
- * Locally they use the installed Google Chrome (no browser download);
- * CI falls back to Playwright's bundled Chromium.
+ * Use a matching Playwright Chromium build in both local development and CI.
+ * Install it once with `npx playwright install chromium`.
  */
 export default defineConfig({
   testDir: "./e2e",
@@ -24,8 +24,8 @@ export default defineConfig({
   },
   projects: [
     {
-      name: "chrome",
-      use: { ...devices["Desktop Chrome"], channel: process.env.CI ? undefined : "chrome" },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
 });

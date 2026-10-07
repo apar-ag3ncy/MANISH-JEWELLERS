@@ -1,0 +1,306 @@
+/* One transparent glass treatment across native buttons and linked controls. */
+body :is(button, .mj-button, .glass-control, .house-text-link, .diamond-experience-continue) {
+  isolation: isolate;
+  position: relative;
+  border: 1px solid rgb(121 63 72 / 28%);
+  background: rgb(255 255 255 / 12%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 60%),
+    inset 0 -1px 0 rgb(0 0 0 / 8%),
+    0 5px 18px rgb(38 9 18 / 8%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  transition:
+    background-color 0.45s,
+    border-color 0.45s,
+    box-shadow 0.45s,
+    transform 0.45s;
+}
+.mj-button::before,
+.glass-control::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(150deg, rgb(255 255 255 / 25%), transparent 45%, rgb(255 255 255 / 5%));
+  z-index: -1;
+}
+.mj-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  border-radius: inherit;
+  background: linear-gradient(110deg, transparent, rgb(255 255 255 / 30%), transparent);
+  transform: translateX(-150%) skewX(-15deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.mj-button:hover::after {
+  transform: translateX(310%) skewX(-15deg);
+  opacity: 1;
+  transition:
+    transform 1s ease,
+    opacity 0.5s;
+}
+.mj-button {
+  overflow: hidden;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+}
+.mj-button--cream {
+  color: var(--color-wine);
+  background: rgb(255 255 255 / 16%);
+  border-color: rgb(255 255 255 / 75%);
+}
+.mj-button--wine {
+  color: var(--color-wine);
+  background: rgb(121 63 72 / 12%);
+  border-color: rgb(121 63 72 / 50%);
+}
+.mj-button--clear {
+  color: var(--color-wine);
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(121 63 72 / 30%);
+}
+.mj-button--frost {
+  color: var(--color-cream);
+  background: rgb(255 255 255 / 9%);
+  border-color: rgb(255 245 227 / 50%);
+}
+.mj-button:hover {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 75%),
+    0 8px 24px rgb(38 9 18 / 15%);
+  transform: translateY(-2px);
+}
+.mj-button:active {
+  transform: translateY(0);
+}
+.mj-button--ghost {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  height: auto;
+  padding: 0;
+  color: inherit;
+  backdrop-filter: none;
+}
+.mj-button--ghost::before,
+.mj-button--ghost::after {
+  display: none;
+}
+.mj-button-symbol {
+  transition: transform 0.6s;
+}
+.mj-button:hover .mj-button-symbol {
+  transform: translate(2px, -2px);
+}
+.glass-control {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--color-wine);
+  background: rgb(255 255 255 / 14%);
+  border-color: rgb(121 63 72 / 24%);
+}
+.on-wine .glass-control {
+  color: var(--color-cream);
+  background: rgb(255 255 255 / 8%);
+  border-color: rgb(255 245 227 / 38%);
+}
+.glass-control:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 80%),
+    0 6px 18px rgb(0 0 0 / 18%);
+}
+.glass-control:disabled {
+  opacity: 0.45;
+}
+.mj-button:focus-visible,
+.glass-control:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+.house-text-link {
+  border: 1px solid rgb(121 63 72 / 25%);
+  border-radius: 40px;
+  padding: 14px 22px;
+  font-size: 11px;
+  line-height: 1.4;
+  max-width: 100%;
+  background: linear-gradient(150deg, rgb(255 255 255 / 18%), rgb(249 240 225 / 8%));
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 4px 14px rgb(121 63 72 / 5%);
+  backdrop-filter: blur(14px);
+  transition:
+    transform 0.5s,
+    box-shadow 0.5s;
+}
+.house-text-link svg {
+  flex-shrink: 0;
+}
+.on-wine .house-text-link {
+  border-color: rgb(255 245 227 / 40%);
+  background: rgb(255 255 255 / 8%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 28%),
+    0 4px 14px rgb(0 0 0 / 8%);
+}
+.house-text-link:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 60%),
+    0 6px 20px rgb(121 63 72 / 13%);
+}
+.hero-slideshow {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+.hero-slideshow-images,
+.hero-slideshow-photo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-slideshow-photo {
+  opacity: 0;
+}
+.hero-slideshow-photo.is-current {
+  opacity: 1;
+}
+.hero-slideshow:focus-visible {
+  outline: 1px solid var(--color-cream);
+  outline-offset: -10px;
+}
+.hero-slideshow-indicator {
+  position: absolute;
+  right: clamp(20px, 5vw, 80px);
+  bottom: 98px;
+  z-index: 4;
+  color: var(--color-cream);
+  pointer-events: none;
+}
+.hero-slide-count {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+.hero-slide-count span {
+  margin-left: 9px;
+  color: rgb(255 245 227 / 65%);
+}
+.landing-hero-shade {
+  z-index: 2;
+}
+@media (max-width: 767px) {
+  .hero-slideshow-indicator {
+    bottom: 115px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mj-button,
+  .glass-control,
+  .mj-button-symbol {
+    transition: none;
+  }
+  .mj-button:hover,
+  .glass-control:hover,
+  .mj-button:hover .mj-button-symbol {
+    transform: none;
+  }
+  .mj-button::after {
+    display: none;
+  }
+}
+
+/* Keep the glass transparent on wine, photographs and the crystal stage. */
+body
+  :is(.on-wine, .diamond-experience)
+  :is(button, .mj-button, .glass-control, .house-text-link, .diamond-experience-continue) {
+  color: var(--color-cream-soft);
+  background: rgb(255 255 255 / 8%);
+  border-color: rgb(255 255 255 / 30%);
+}
+body :is(button, .mj-button, .glass-control, .house-text-link):hover:not(:disabled) {
+  background-color: rgb(255 255 255 / 22%);
+  border-color: rgb(121 63 72 / 48%);
+}
+body :is(.on-wine, .diamond-experience) :is(button, .mj-button, .glass-control, .house-text-link):hover:not(:disabled) {
+  background-color: rgb(255 255 255 / 16%);
+  border-color: rgb(255 255 255 / 60%);
+}
+body :is(button, .mj-button, .glass-control)[aria-pressed="true"],
+body :is(button, .mj-button, .glass-control)[aria-selected="true"] {
+  color: var(--color-brand);
+  background: rgb(121 63 72 / 16%);
+  border-color: var(--color-brand);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 65%),
+    inset 0 0 0 1px rgb(121 63 72 / 25%);
+}
+body :is(.on-wine, .diamond-experience) button[aria-pressed="true"] {
+  background: rgb(255 255 255 / 20%);
+  border-color: rgb(255 255 255 / 75%);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 65%);
+}
+body .house-nav-pill:not(.on-wine) :is(button, .mj-button) {
+  color: var(--color-brand);
+}
+.footer-contact-phone {
+  white-space: nowrap;
+  padding: 12px 15px;
+  font-size: 11px;
+  letter-spacing: 0.025em;
+}
+body .house-nav-pill .house-nav-category-toggle,
+body .house-nav-pill .house-nav-category-toggle:hover:not(:disabled) {
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.house-nav-category-toggle:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+}
+body .house-story-link {
+  padding: 15px 22px;
+  border: 1px solid rgb(121 63 72 / 28%);
+  border-radius: 32px;
+  background: rgb(255 255 255 / 12%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 65%),
+    0 5px 18px rgb(38 9 18 / 8%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  transition:
+    background-color 0.45s,
+    box-shadow 0.45s;
+}
+body .house-story-link:hover {
+  background: rgb(255 255 255 / 22%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 75%),
+    0 8px 24px rgb(38 9 18 / 12%);
+}
+@media (max-width: 767px) {
+  .footer-contact-phone {
+    padding: 12px 9px;
+    font-size: 10px;
+    gap: 5px;
+  }
+}

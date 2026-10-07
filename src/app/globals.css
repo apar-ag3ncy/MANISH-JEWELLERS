@@ -5,18 +5,27 @@
 @import "../styles/enhance-home.css";
 @import "../styles/enhance-home-bottom.css";
 @import "../styles/enhance-chrome.css";
+@import "../styles/legacy.css";
+@import "../styles/internal-pages.css";
+@import "../styles/navigation.css";
+@import "../styles/heritage-story.css";
+@import "../styles/diamond-guide.css";
+@import "../styles/diamond-experience.css";
+@import "../styles/collection-editorial.css";
+@import "../styles/glass-controls.css";
 
 /* ------------------------------------------------------------------ */
 /*  DESIGN TOKENS — the single source of truth (spec §4)               */
-/*  #6E2D3C appears ONLY here.                                          */
+/*  The client-confirmed brand color: #793f48.                          */
 /* ------------------------------------------------------------------ */
 @theme {
   --color-*: initial;
 
   /* BRAND — strict */
-  --color-wine: #6e2d3c;
-  --color-wine-deep: #4a1d28;
-  --color-wine-soft: #8c4453;
+  --color-brand: #793f48;
+  --color-wine: var(--color-brand);
+  --color-wine-deep: #45242a;
+  --color-wine-soft: #985963;
 
   /* CREAMY BEIGE */
   --color-cream: #f2e5d4;
@@ -343,12 +352,27 @@
 }
 
 .mj-preloader {
+  visibility: hidden;
   animation: mj-preloader-failsafe 0s 5s forwards;
 }
 
 /* JavaScript has taken over the curtain; let the timeline finish it. */
 .mj-preloader.mj-live {
-  animation: none;
+  visibility: visible;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 150;
+  padding: 12px 20px;
+  background: var(--color-cream);
+  color: var(--color-wine);
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 /* Native range input styled in-brand for the Cut Studio */

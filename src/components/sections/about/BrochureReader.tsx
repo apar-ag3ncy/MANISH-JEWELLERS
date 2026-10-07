@@ -2,119 +2,82 @@
 
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
-import { cn, pad2 } from "@/lib/utils";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { ScrollTrigger } from "@/lib/gsap";
+import { pad2 } from "@/lib/utils";
 import { brochureBook } from "@/data/content";
-import { SectionHead } from "@/components/ui/SectionHead";
 
-/**
- * The brochure — the house's printed book, laid out as a horizontal reader on /about.
- *
- * A native scroll-snap strip, so it works with a trackpad, a drag, the arrow buttons
- * and the keyboard, and it needs no JavaScript to be usable at all. `data-lenis-prevent`
- * keeps the smooth-scroll wrapper off the horizontal axis. On a page with no pinned
- * sequences the pages can run wide: up to 1180px, so a spread reads at print scale.
- *
- * Motion is one entrance stagger under MOTION_OK; the pages themselves never move.
- */
+/** The original house brochure, kept in-page with native keyboard-accessible scrolling. */
 export function BrochureReader() {
-  const ref = useRef<HTMLElement>(null);
   const strip = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);
   const count = brochureBook.pages.length;
-
-  const go = useCallback((dir: -1 | 1) => {
+  const step = () => {
     const el = strip.current;
-    if (!el) return;
-    const first = el.querySelector<HTMLElement>("li");
-    const step = first ? first.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
+    return el?.querySelector("li")?.getBoundingClientRect().width ?? 0;
+  };
+  const go = useCallback((direction: number) => {
+    strip.current?.scrollBy({
+      left: direction * (step() + 24),
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+    });
   }, []);
-
-  /** Keep the counter honest whichever way the reader moves the strip. */
-  const onScroll = useCallback(() => {
-    const el = strip.current;
-    if (!el) return;
-    const first = el.querySelector<HTMLElement>("li");
-    const step = first ? first.getBoundingClientRect().width + 24 : el.clientWidth;
-    setIndex(Math.min(count - 1, Math.max(0, Math.round(el.scrollLeft / step))));
-  }, [count]);
-
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      const media = gsap.matchMedia();
-      media.add(MOTION_OK, () => {
-        const pages = gsap.utils.toArray<HTMLElement>("[data-page]", el);
-        if (!pages.length) return;
-        gsap.set(pages, { y: 28, opacity: 0 });
-        gsap.to(pages, {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.06,
-          scrollTrigger: { trigger: el, start: "top 80%", once: true },
-        });
-      });
-    },
-    { scope: ref },
-  );
-
   return (
-    <section id={brochureBook.id} ref={ref} className="scroll-mt-20 bg-cream-soft section-y text-ink">
-      <div className="container-x">
-        <div className="flex items-end justify-between gap-6">
-          <SectionHead eyebrow={brochureBook.eyebrow} heading={brochureBook.heading} headingClassName="max-w-[16ch]" />
-          <div className="hidden shrink-0 items-center gap-3 md:flex">
-            <span className="caption text-ink-muted tabular">
-              {pad2(index + 1)} / {pad2(count)}
-            </span>
+    <div className="container-x mt-16">
+      <details
+        id="brochure"
+        className="group scroll-mt-28 border-y border-wine/20"
+        onToggle={() => ScrollTrigger.refresh()}
+      >
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-6 font-display text-2xl sm:text-3xl">
+          Explore the house brochure
+          <ChevronDown size={22} className="shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div className="mb-5 flex items-center justify-between gap-5">
+          <span className="eyebrow text-wine-soft">
+            {pad2(index + 1)} / {pad2(count)}
+          </span>
+          <div className="flex gap-3">
             <button
               type="button"
               aria-label={brochureBook.prev}
+              disabled={index === 0}
               onClick={() => go(-1)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-cream-deep text-wine transition-colors duration-500 hover:bg-wine hover:text-cream"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-wine/30 text-wine disabled:opacity-30"
             >
-              <ChevronLeft className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              <ChevronLeft size={18} aria-hidden="true" />
             </button>
             <button
               type="button"
               aria-label={brochureBook.next}
+              disabled={index === count - 1}
               onClick={() => go(1)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-cream-deep text-wine transition-colors duration-500 hover:bg-wine hover:text-cream"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-wine/30 text-wine disabled:opacity-30"
             >
-              <ChevronRight className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
+              <ChevronRight size={18} aria-hidden="true" />
             </button>
           </div>
         </div>
-      </div>
-
-      <ul
-        ref={strip}
-        onScroll={onScroll}
-        tabIndex={0}
-        aria-label={brochureBook.scroller}
-        data-lenis-prevent
-        className="mj-book mt-12 flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-[clamp(20px,5vw,80px)] pb-4 md:mt-16"
-      >
-        {brochureBook.pages.map((page, i) => (
-          <li key={page.src} data-page className={cn("shrink-0 snap-center", "w-[min(92vw,1180px)]")}>
-            <div className="relative aspect-[1322/585] w-full overflow-hidden border border-cream-deep bg-white">
-              <Image
-                src={page.src}
-                alt={page.alt}
-                fill
-                sizes="(min-width: 1280px) 1180px, 92vw"
-                className="object-contain"
-              />
-            </div>
-            <p className="mt-3 caption text-ink-muted tabular">{pad2(i + 1)}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
+        <ul
+          ref={strip}
+          tabIndex={0}
+          aria-label={brochureBook.scroller}
+          data-lenis-prevent
+          className="flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain pb-6"
+          onScroll={() => {
+            if (strip.current)
+              setIndex(Math.min(count - 1, Math.max(0, Math.round(strip.current.scrollLeft / (step() + 24)))));
+          }}
+        >
+          {brochureBook.pages.map((page) => (
+            <li key={page.src} className="w-full shrink-0 snap-start">
+              <div className="relative aspect-[1322/585] overflow-hidden bg-white">
+                <Image src={page.src} alt={page.alt} fill sizes="90vw" className="object-contain" />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </details>
+    </div>
   );
 }

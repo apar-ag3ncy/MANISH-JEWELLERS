@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Tiny pub/sub so the Hero and Navbar can wait for the Preloader's wipe
+ * Tiny pub/sub so the Hero and Navbar can wait for the Preloader's hand-off
  * without prop drilling. On pages without a Preloader every subscriber
  * runs immediately.
  */

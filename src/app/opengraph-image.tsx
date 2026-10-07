@@ -8,7 +8,7 @@ const mono = LOCKUP.monogram.box;
 const wm = LOCKUP.wordmark.box;
 
 export const runtime = "nodejs";
-export const alt = `${brand.name} — ${brand.tagline}`;
+export const alt = `${brand.name} — ${brand.motto}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,7 +16,7 @@ export const contentType = "image/png";
 async function tokens() {
   const css = await readFile(join(process.cwd(), "src/app/globals.css"), "utf8");
   const pick = (name: string) => css.match(new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`))?.[1] ?? "";
-  return { wine: pick("wine"), cream: pick("cream") };
+  return { wine: pick("brand"), cream: pick("cream") };
 }
 
 export default async function OpenGraphImage() {
@@ -51,7 +51,7 @@ export default async function OpenGraphImage() {
         </svg>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <div style={{ fontSize: 88, lineHeight: 1, letterSpacing: "-0.02em" }}>{brand.tagline}</div>
+        <div style={{ fontSize: 88, lineHeight: 1, letterSpacing: "-0.02em" }}>{brand.motto}</div>
         <div style={{ fontSize: 26, opacity: 0.8, fontFamily: "sans-serif" }}>{brand.lede}</div>
       </div>
     </div>,

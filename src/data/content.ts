@@ -22,7 +22,6 @@ export const brand = {
   short: "Manish",
   wordmark: ["Manish", "Jewellers"],
   motto: "Crafted through generations",
-  tagline: "Fine jewellery, made to be lived in.",
   lede: "Handcrafted in 18k and 22k gold, set with certified stones.",
   description:
     "Manish Jewellers, Beawar, since 1916. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
@@ -33,17 +32,16 @@ export const brand = {
 /* ------------------------------------------------------------------ */
 /*  Navigation                                                         */
 /* ------------------------------------------------------------------ */
-// Phase 1: anchors into the two built pages. Phase 2 swaps these for
-// /collections, /bespoke, /craft, /visit.
+// The welcome page, the house collection and the family story.
 export const nav: readonly NavLink[] = [
-  { label: "Collections", href: "/home#collections" },
-  { label: "Bespoke", href: "/home#bespoke" },
-  { label: "Campaign", href: "/#campaign" },
+  { label: "Collections", href: "/collections" },
+  { label: "Bespoke", href: "/bespoke" },
+  { label: "Campaign", href: "/campaign" },
   { label: "About", mark: "हम", href: "/about" },
-  { label: "Visit", href: "/home#visit" },
+  { label: "Visit", href: "/visit" },
 ] as const;
 
-export const navCta = { label: "Book a viewing", href: "/home#visit" } as const;
+export const navCta = { label: "Visit our showroom", href: "/visit" } as const;
 
 export const mobileMenu = {
   open: "Open menu",
@@ -57,9 +55,9 @@ export const mobileMenu = {
 /* ------------------------------------------------------------------ */
 export const hero = {
   lockupLabel: "Manish Jewellers. Crafted through generations.",
-  tagline: { text: "Fine jewellery, made to be lived", italic: "in." },
-  primary: { label: "Explore the collection", href: "/home" },
-  secondary: { label: "Book a private viewing", href: "/home#visit" },
+  // tagline: { text: "Fine jewellery, made to be lived", italic: "in." },
+  primary: { label: "Explore the collection", href: "/" },
+  secondary: { label: "Plan a showroom visit", href: "/#visit" },
   stats: [
     { label: "Since", value: 1916, counter: true },
     { label: "BIS Hallmarked", value: null, counter: false },
@@ -279,7 +277,7 @@ export const craft = {
 export const invitation = {
   heading: "Come see them in person.",
   body: "Private viewings at our Beawar atelier, by appointment.",
-  cta: { label: "Book an appointment", href: "/home#visit" },
+  cta: { label: "Book an appointment", href: "/#visit" },
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -362,7 +360,7 @@ export const cutStudio = {
   ratioLabel: "Ratio",
   bestForLabel: "Best for",
   noteLabel: "Our note",
-  cta: { label: "Enquire about this stone", href: "#bespoke" },
+  cta: { label: "Enquire about this stone", href: "/bespoke" },
   hint: "Move your cursor over the stone",
   cuts: [
     {
@@ -493,32 +491,39 @@ export const store = {
 /*  Footer                                                             */
 /* ------------------------------------------------------------------ */
 export const footer = {
+  contact: {
+    heading: "Contact us",
+    name: "Parth Karnavat",
+    phone: "+91 9929295123",
+    phoneHref: "tel:+919929295123",
+  },
   columns: [
     {
       heading: "Visit",
       links: [
         { label: store.addressLines[0], href: store.directions.href },
         { label: store.addressLines[1], href: store.directions.href },
-        { label: "Mon – Sat, 11 – 8", href: "/home#visit" },
+        { label: "Mon – Sat, 11 – 8", href: "/visit" },
       ],
     },
     {
       heading: "Explore",
       links: [
-        { label: "Collections", href: "/home#collections" },
-        { label: "Bespoke", href: "/home#bespoke" },
-        { label: "The campaign", href: "/#campaign" },
+        { label: "Collections", href: "/collections" },
+        { label: "Bespoke", href: "/bespoke" },
+        { label: "The campaign", href: "/campaign" },
+        { label: "Diamond guide", href: "/diamond-guide" },
         { label: "About us", href: "/about" },
-        { label: "The story", href: "/" },
+        { label: "Our legacy · 1916–2026", href: "/about#heritage" },
       ],
     },
     {
       heading: "Client care",
       links: [
-        { label: "Book a viewing", href: "/home#visit" },
-        { label: "Sizing guide", href: "/home#cut-studio" },
-        { label: "Care & repair", href: "/home#bespoke" },
-        { label: "Contact", href: "/home#visit" },
+        { label: "Book a viewing", href: "/visit" },
+        { label: "Sizing guide", href: "/bespoke#fitting" },
+        { label: "Care & repair", href: "/bespoke#the-process" },
+        { label: "Contact", href: "/visit" },
       ],
     },
   ] satisfies FooterColumn[],
@@ -546,8 +551,8 @@ export const footer = {
 export const notFound = {
   eyebrow: "404",
   heading: "This page is still on the bench.",
-  body: "Collections, bespoke and appointments open in the next release. Until then, the home page has everything you need.",
-  cta: { label: "Go to the home page", href: "/home" },
+  body: "This page could not be found. Explore the collection or return to the house.",
+  cta: { label: "Go to the home page", href: "/" },
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -574,6 +579,7 @@ export const heritage = {
     { year: 1952, label: "Silver follows" },
     { year: 1988, label: "Certified hallmarking, pioneered" },
     { year: 2025, label: "A grand new space" },
+    { year: 2026, label: "A new generation, the same promise" },
   ],
 } as const;
 
@@ -723,12 +729,12 @@ export const about = {
   paragraphs: [
     "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
     "From our early beginnings to embracing gold in 1932 and silver in 1952, each chapter has shaped our reputation for trust and craftsmanship. In 1988, we pioneered certified hallmark jewellery, reinforcing our commitment to purity and integrity.",
-    "As we celebrate over 100 years, we enter 2025 with a renewed vision and a grand new space, honouring our past while embracing the future.",
+    "Following a grand new space in 2025, our journey reaches 110 years in 2026. A new generation carries our legacy forward, honouring the craftsmanship, elegance and care that have always defined the house.",
     "Thank you for being part of this enduring journey and for the trust that continues to inspire us.",
   ],
   timelineEyebrow: "The house through time",
-  cta: { label: "Book a viewing", href: "/home#visit" },
-  secondary: { label: "See the collection", href: "/home#collections" },
+  cta: { label: "Book a viewing", href: "/visit" },
+  secondary: { label: "See the collection", href: "/#collections" },
 } as const;
 
 export * from "./enhance-landing";
