@@ -78,10 +78,12 @@ export function BrandLockup({ className, label }: LockupProps) {
     <span className={cn("relative block", className)}>
       <svg viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full overflow-visible" role="img" aria-label={label}>
         <defs>
-          <linearGradient id={metal} x1="0" y1="0" x2="0.28" y2="1">
+          <linearGradient id={metal} data-metal-face x1="0" y1="0" x2="0.28" y2="1">
             <stop offset="0" className="[stop-color:var(--color-rose-glow)]" />
             <stop offset="0.22" className="[stop-color:var(--color-rose-light)]" />
-            <stop offset="0.58" className="[stop-color:var(--color-rose)]" />
+            <stop offset="0.42" className="[stop-color:var(--color-rose-glow)]" />
+            <stop offset="0.48" className="[stop-color:var(--color-rose)]" />
+            <stop offset="0.58" className="[stop-color:var(--color-rose-light)]" />
             <stop offset="0.86" className="[stop-color:var(--color-rose-deep)]" />
             <stop offset="1" className="[stop-color:var(--color-rose)]" />
           </linearGradient>

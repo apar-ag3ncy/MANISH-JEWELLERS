@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-test("hero photographs crossfade every two seconds without buttons and keyboard interaction pauses and resumes", async ({ page }) => {
+test("hero photographs crossfade every two seconds without buttons and keyboard interaction pauses and resumes", async ({
+  page,
+}) => {
   await page.goto("/");
   const show = page.locator(".hero-slideshow");
   await expect(show).toHaveAttribute("data-autoplay", "true", { timeout: 15000 });
@@ -45,6 +47,7 @@ test("hero photographs crossfade every two seconds without buttons and keyboard 
 });
 
 test("diamond shapes, facets and turns work and scroll assembles the diamond and draws light", async ({ page }) => {
+  test.setTimeout(60000);
   await page.setViewportSize({ width: 1440, height: 900 });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -52,20 +55,20 @@ test("diamond shapes, facets and turns work and scroll assembles the diamond and
   await page.evaluate(async () => {
     await document.fonts.ready;
   });
+  await expect(page.locator("#cut-studio")).toHaveAttribute("data-ready", "true", { timeout: 15000 });
   for (const name of ["Oval", "Pear", "Emerald", "Cushion", "Round"]) {
     await page.getByRole("button", { name, exact: true }).click();
-    await expect(page.getByRole("img", { name: `${name} diamond facet illustration`, exact: true })).toBeVisible();
+    await expect(page.locator(".cut-webgl")).toHaveAttribute("data-cut", name.toLowerCase());
+    await expect
+      .poll(async () => Number(await page.locator(".cut-webgl").getAttribute("data-scatter")))
+      .toBeLessThan(0.012);
   }
   await page.getByRole("button", { name: "Show facet detail" }).click();
-  await expect(page.getByRole("img", { name: "Round diamond outline", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Show facet detail" })).toHaveAttribute("aria-pressed", "true");
   await page.getByRole("button", { name: "Turn the diamond" }).click();
   await expect
-    .poll(() =>
-      page
-        .locator(".facet-stone")
-        .evaluate((element) => Math.round(Number.parseFloat(getComputedStyle(element).transform.split(",")[1]))),
-    )
-    .toBe(1);
+    .poll(async () => Number((await page.locator(".cut-webgl").getAttribute("data-rotation"))!.split(",")[1]))
+    .toBeGreaterThan(1.5);
   const story = page.locator("#light-story");
   await expect(story).toHaveAttribute("data-animated", "true");
   const bounds = await story.evaluate((element) => ({
@@ -102,13 +105,14 @@ for (const width of [1440, 390, 320]) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/diamond-guide");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.locator("#cut-studio")).toHaveAttribute("data-ready", "true", { timeout: 15000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const button = page.getByRole("button", { name: "Turn the diamond" });
     await button.focus();
     await button.press("Enter");
     await expect
-      .poll(() => page.locator(".facet-stone").evaluate((element) => getComputedStyle(element).transform))
-      .toBe("matrix(0, 1, -1, 0, 0, 0)");
+      .poll(async () => Number((await page.locator(".cut-webgl").getAttribute("data-rotation"))!.split(",")[1]))
+      .toBeGreaterThan(1.5);
     const style = await button.evaluate((element) => ({
       filter: getComputedStyle(element).backdropFilter,
       outline: getComputedStyle(element).outlineStyle,

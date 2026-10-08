@@ -2,6 +2,7 @@
 
 /* Per-group enhancement partials. Each group owns exactly one file. */
 @import "../styles/enhance-landing.css";
+@import "../styles/intro.css";
 @import "../styles/enhance-home.css";
 @import "../styles/enhance-home-bottom.css";
 @import "../styles/enhance-chrome.css";
@@ -10,6 +11,7 @@
 @import "../styles/navigation.css";
 @import "../styles/heritage-story.css";
 @import "../styles/diamond-guide.css";
+@import "../styles/diamond-cut-studio.css";
 @import "../styles/diamond-experience.css";
 @import "../styles/collection-editorial.css";
 @import "../styles/glass-controls.css";

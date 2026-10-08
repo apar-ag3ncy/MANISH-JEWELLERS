@@ -92,7 +92,8 @@ test("the old landing block is replaced by the working house edit and useful too
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Bring us a sketch. Or an idea." })).toHaveCount(0);
-  await expect(page.locator("#bespoke, #cut-studio, #fitting")).toHaveCount(0);
+  await expect(page.locator("#bespoke, #fitting")).toHaveCount(0);
+  await expect(page.locator("#cut-studio")).toHaveCount(1);
   const edit = page.locator("#house-edit");
   await edit.scrollIntoViewIfNeeded();
   await expect(edit.locator("img")).toHaveCount(6);

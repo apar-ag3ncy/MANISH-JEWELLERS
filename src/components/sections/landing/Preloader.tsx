@@ -23,7 +23,7 @@ function markIntro(state: "playing" | "done") {
 /**
  * preloader — a lit wine curtain. The hero's real brand lockup is lifted above
  * it and performs its intro in the centre of the screen: the monogram traces
- * and fills with rose gold, the wordmark tracks in, the tagline follows, a
+ * and fills with gold, the wordmark tracks in, the tagline follows, a
  * sheen crosses the metal. The curtain dissolves into the same wine ground
  * while the lockup glides into its place, before the hero reveals its photograph.
  *
@@ -95,11 +95,11 @@ export function Preloader() {
     >
       <WineGround />
       <div className="absolute bottom-[clamp(28px,6vh,56px)] left-1/2 w-[min(40vw,180px)] -translate-x-1/2">
-        <div className="h-px bg-rose/25">
-          <div data-progress className="h-px bg-rose" />
+        <div className="h-px bg-cream/15">
+          <div data-progress className="intro-progress h-px" />
         </div>
       </div>
-      <div className="absolute inset-x-0 bottom-0 h-px bg-rose/50" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-cream/20" />
     </div>
   );
 }

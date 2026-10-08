@@ -1,4 +1,5 @@
 import { DiamondCutStudio } from "@/components/sections/diamonds/DiamondCutStudio";
+import { FacetStone } from "@/components/sections/diamonds/FacetStone";
 import { DiamondLightStory } from "@/components/sections/diamonds/DiamondLightStory";
 import { PageInvitation } from "@/components/sections/shared/PageInvitation";
 import { diamondCuts, diamondSources } from "@/data/diamond-guide";
@@ -20,8 +21,11 @@ export default function DiamondGuidePage() {
           <h2 id="shape-index-heading">A shape for your own story.</h2>
           <dl>
             {diamondCuts.map((cut) => (
-              <div key={cut.id}>
-                <dt>{cut.name}</dt>
+              <div key={cut.id} id={`guide-${cut.id}`}>
+                <dt>
+                  <FacetStone cut={cut.id} name={cut.name} />
+                  {cut.name}
+                </dt>
                 <dd>{cut.body}</dd>
               </div>
             ))}

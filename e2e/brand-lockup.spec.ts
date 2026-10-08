@@ -26,6 +26,8 @@ test.describe("landing: the real lockup, animated", () => {
 
     const lockup = page.locator("[data-lockup-flip] svg[role=img]").first();
     await expect(lockup).toHaveAttribute("aria-label", LABEL);
+    await expect(lockup.locator("[data-metal-face] stop").first()).toHaveCSS("stop-color", "rgb(255, 247, 217)");
+    await expect(lockup.locator("[data-metal-face] stop").nth(3)).toHaveCSS("stop-color", "rgb(196, 151, 72)");
 
     // the monogram on screen is byte-for-byte the outline from the PDF
     const monoPath = await lockup.locator("[data-mono-fill] path").first().getAttribute("d");
@@ -90,7 +92,16 @@ for (const viewport of [
     // Observe actual rendered properties throughout the animation, including the
     // trace/letter assembly; a data attribute alone cannot prove the sequence.
     await page.addInitScript(() => {
-      type Frame = { phase: string; photo: number; fill: number; stroke: number; glyph: number; copy: number; overlay: number };
+      type Frame = {
+        phase: string;
+        photo: number;
+        fill: number;
+        stroke: number;
+        glyph: number;
+        copy: number;
+        overlay: number;
+        glint: number;
+      };
       const target = window as typeof window & { openingFrames: Frame[] };
       target.openingFrames = [];
       let previous = 0;
@@ -107,6 +118,11 @@ for (const viewport of [
             glyph: opacity("[data-glyph]"),
             copy: opacity(".landing-hero-lede"),
             overlay: opacity(".landing-hero-copy"),
+            glint: Math.max(
+              ...Array.from(hero.querySelectorAll("[data-intro-glint]")).map((el) =>
+                Number(getComputedStyle(el).opacity),
+              ),
+            ),
           });
         }
         if (time < 15_000) requestAnimationFrame(sample);
@@ -135,7 +151,12 @@ for (const viewport of [
     const photoBounds = await photo.boundingBox();
     expect(photoBounds).toMatchObject({ x: 0, y: 0, width: viewport.width, height: viewport.height });
     await expect(photo.locator("img").first()).toHaveJSProperty("complete", true);
-    expect(await photo.locator("img").first().evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+    expect(
+      await photo
+        .locator("img")
+        .first()
+        .evaluate((img: HTMLImageElement) => img.naturalWidth),
+    ).toBeGreaterThan(0);
     const copy = hero.locator(".landing-hero-copy");
     await expect(copy).toBeHidden();
     await expect(copy).toHaveCSS("opacity", "0");
@@ -145,9 +166,10 @@ for (const viewport of [
     for (const link of await copy.locator("a").all()) await expect(link).toBeHidden();
     await page.screenshot({ path: `docs/screenshots/intro-${viewport.name}-photograph.png` });
     // The vanished buttons must also disappear from keyboard navigation.
-    const lastHeaderControl = viewport.name === "desktop"
-      ? page.getByRole("link", { name: "Visit our showroom", exact: true })
-      : page.getByRole("button", { name: "Open menu", exact: true });
+    const lastHeaderControl =
+      viewport.name === "desktop"
+        ? page.getByRole("link", { name: "Visit our showroom", exact: true })
+        : page.getByRole("button", { name: "Open menu", exact: true });
     await lastHeaderControl.focus();
     await page.keyboard.press("Tab");
     await expect(hero.getByRole("region", { name: "House photographs", exact: true })).toBeFocused();
@@ -155,17 +177,37 @@ for (const viewport of [
     await expect(hero.locator(".landing-discover")).toBeFocused();
     expect(await page.evaluate(() => scrollY)).toBe(0);
 
-    const frames = await page.evaluate(() => (window as typeof window & {
-      openingFrames: { phase: string; photo: number; fill: number; stroke: number; glyph: number; copy: number; overlay: number }[];
-    }).openingFrames);
+    const frames = await page.evaluate(
+      () =>
+        (
+          window as typeof window & {
+            openingFrames: {
+              phase: string;
+              photo: number;
+              fill: number;
+              stroke: number;
+              glyph: number;
+              copy: number;
+              overlay: number;
+              glint: number;
+            }[];
+          }
+        ).openingFrames,
+    );
     const brand = frames.filter((frame) => frame.phase === "brand");
     expect(brand.some((frame) => frame.stroke > 1 && frame.fill < 1 && frame.glyph < 1)).toBe(true);
     expect(brand.some((frame) => frame.stroke === 0 && frame.fill === 1 && frame.glyph === 1)).toBe(true);
     expect(brand.every((frame) => frame.photo === 0)).toBe(true);
+    expect(brand.some((frame) => frame.glint > 0.3)).toBe(true);
+    await expect(hero.locator("[data-intro-glint]").first()).toHaveCSS("opacity", "0");
     const wine = frames.filter((frame) => frame.phase === "wine");
     expect(wine.some((frame) => frame.photo === 0 && frame.copy === 1 && frame.overlay === 1)).toBe(true);
-    expect(frames.some((frame) => frame.phase === "photograph-reveal" && frame.photo > 0 && frame.photo < 1)).toBe(true);
-    expect(frames.some((frame) => frame.phase === "photograph-reveal" && frame.overlay > 0 && frame.overlay < 1)).toBe(true);
+    expect(frames.some((frame) => frame.phase === "photograph-reveal" && frame.photo > 0 && frame.photo < 1)).toBe(
+      true,
+    );
+    expect(frames.some((frame) => frame.phase === "photograph-reveal" && frame.overlay > 0 && frame.overlay < 1)).toBe(
+      true,
+    );
     expect(errors).toEqual([]);
   });
 }

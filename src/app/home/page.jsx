@@ -7,6 +7,7 @@ import { CampaignSlides } from "@/components/sections/landing/CampaignSlides";
 import { CollectionEditorial } from "@/components/sections/collections/CollectionEditorial";
 import { LegacyJourney } from "@/components/sections/about/LegacyJourney";
 import { Invitation } from "@/components/sections/landing/Invitation";
+import { DiamondCutStudio } from "@/components/sections/diamonds/DiamondCutStudio";
 
 export const metadata = {
   title: "The house collection",
@@ -32,6 +33,7 @@ export default function HomePage() {
       </div>
       <LegacyJourney />
       <Invitation />
+      <DiamondCutStudio embedded />
     </>
   );
 }

@@ -9,4 +9,4 @@ export const CARAT = { min: 0.3, max: 3, step: 0.05, initial: 1 } as const;
 export const TESTIMONIAL_INTERVAL_MS = 6000;
 
 /** Landing intro timing (seconds): when the wine opening starts, and the curtain dissolve. */
-export const INTRO = { reveal: 1.75, curtain: 1.0 } as const;
+export const INTRO = { reveal: 2.4, curtain: 0.75 } as const;

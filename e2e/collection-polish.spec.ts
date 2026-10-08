@@ -54,7 +54,9 @@ test("brand color and transparent glass controls stay consistent across the site
         elements
           .filter(
             (element) =>
-              (element as HTMLElement).offsetWidth > 0 && !element.classList.contains("house-nav-category-toggle"),
+              (element as HTMLElement).offsetWidth > 0 &&
+              !element.classList.contains("house-nav-category-toggle") &&
+              !element.closest(".cut-studies"),
           )
           .map((element) => ({
             name: element.getAttribute("aria-label") || element.textContent?.trim(),

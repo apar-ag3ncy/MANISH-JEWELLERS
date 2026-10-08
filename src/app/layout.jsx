@@ -6,7 +6,7 @@ import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { PreloaderGate } from "@/components/layout/PreloaderGate";
 import { ScrollLine } from "@/components/layout/ScrollLine";
 import { Navbar } from "@/components/layout/Navbar";
-import { HouseFinale } from "@/components/layout/HouseFinale";
+import { HouseFinaleGate } from "@/components/layout/HouseFinaleGate";
 
 const bodoni = Bodoni_Moda({
   subsets: ["latin"],
@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
           <main id="main-content" tabIndex={-1}>
             {children}
           </main>
-          <HouseFinale />
+          <HouseFinaleGate />
         </SmoothScroll>
       </body>
     </html>

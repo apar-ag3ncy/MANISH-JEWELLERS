@@ -8,6 +8,7 @@ import { Heritage } from "@/components/sections/landing/Heritage";
 import { CollectionEditorial } from "@/components/sections/collections/CollectionEditorial";
 import { ProductGallery } from "@/components/sections/collections/ProductGallery";
 import { featuredProducts } from "@/data/product-catalog";
+import { DiamondCutStudio } from "@/components/sections/diamonds/DiamondCutStudio";
 
 export const metadata = {
   title: { absolute: `${brand.name} — ${brand.motto}` },
@@ -57,6 +58,7 @@ export default function LandingPage() {
         <CollectionEditorial />
       </div>
       <Invitation />
+      <DiamondCutStudio embedded />
     </>
   );
 }

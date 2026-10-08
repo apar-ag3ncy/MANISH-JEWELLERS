@@ -11,6 +11,7 @@ import { landingHero } from "@/data/enhance-landing";
 import { Button } from "@/components/ui/Button";
 import { BrandLockup, SHINE_TRAVEL } from "@/components/ui/brand/BrandLockup";
 import { WineGround } from "@/components/ui/brand/WineGround";
+import { IntroJewelleryLight } from "./IntroJewelleryLight";
 
 const RAISED = "z-[120]";
 
@@ -33,6 +34,8 @@ export function Hero() {
         const glyphs = q("[data-glyph]");
         const tags = q("[data-tag]");
         const shine = q("[data-shine]");
+        const glints = q("[data-intro-glint]");
+        const illumination = q(".intro-illumination");
         const photo = q(".landing-hero-photo");
         const dx = (target) => Number(target.dataset.dx ?? 0);
 
@@ -47,6 +50,7 @@ export function Hero() {
         });
         gsap.set(q("[data-mono-draw]"), { opacity: 1 });
         gsap.set(q("[data-mono-fill]"), { opacity: 0 });
+        gsap.set(glints, { opacity: 0, scale: 0.3, svgOrigin: "0 0" });
         gsap.set(glyphs, { opacity: 0, y: 28, x: (_, target) => dx(target) * 0.2 });
         gsap.set(tags, { opacity: 0, x: (_, target) => dx(target) * 0.26 });
         gsap.set(q("[data-hero-reveal]"), { opacity: 0, y: 18 });
@@ -59,15 +63,20 @@ export function Hero() {
           y: window.innerHeight / 2 - (r.top + r.height / 2),
         });
 
-        // Preserve the original logo choreography: trace, fill, tracking, sheen.
+        // Trace the maker's mark, assemble its name, then catch light on the finished metal.
         gsap
-          .timeline({ defaults: { ease: "expo.out" } })
+          .timeline({ defaults: { ease: "power3.out" } })
+          .addLabel("engrave", 0)
+          .addLabel("polish", 1.2)
+          .to(illumination, { opacity: 1, duration: 1.4, ease: "sine.inOut" }, "engrave")
           .to(paths, { strokeDashoffset: 0, duration: 0.95, ease: "power2.inOut" }, 0)
           .to(q("[data-mono-fill]"), { opacity: 1, duration: 0.7, ease: "power2.out" }, 0.6)
           .to(q("[data-mono-draw]"), { opacity: 0, duration: 0.6, ease: "power2.out" }, 1)
-          .to(glyphs, { opacity: 1, y: 0, x: 0, duration: 1.2, stagger: { each: 0.035, from: "center" } }, 0.45)
+          .to(glyphs, { opacity: 1, y: 0, x: 0, duration: 1.05, stagger: { each: 0.028, from: "center" } }, 0.45)
           .to(tags, { opacity: 1, x: 0, duration: 1.1, stagger: { each: 0.015, from: "center" } }, 0.9)
-          .fromTo(shine, { x: 0 }, { x: SHINE_TRAVEL, duration: 1.1, ease: "power2.inOut" }, 1.2);
+          .fromTo(shine, { x: 0 }, { x: SHINE_TRAVEL, duration: 1.1, ease: "sine.inOut" }, "polish")
+          .to(glints, { opacity: 0.9, scale: 1, duration: 0.18, stagger: 0.22 }, "polish+=0.18")
+          .to(glints, { opacity: 0, scale: 0.6, duration: 0.45, stagger: 0.22, ease: "sine.out" }, "polish+=0.38");
 
         // Build this inside the media context so its styles are reverted if the
         // motion preference changes, even though the preloader starts it later.
@@ -101,17 +110,18 @@ export function Hero() {
               copy.inert = true;
             },
             [],
-            2.1,
+            1.8,
           )
-          .to(copy, { autoAlpha: 0, duration: 0.8, ease: "power2.inOut" }, 2.1)
-          .to(photo, { opacity: 1, duration: 1.35, ease: "power2.inOut" }, 2.1)
-          .to(q(".landing-hero-photo img"), { scale: 1, duration: 1.7, ease: "power2.out" }, 2.1)
+          .to(copy, { autoAlpha: 0, duration: 0.8, ease: "power2.inOut" }, 1.8)
+          .to(illumination, { opacity: 0, duration: 0.8, ease: "sine.inOut" }, 1.8)
+          .to(photo, { opacity: 1, duration: 1.35, ease: "power2.inOut" }, 1.8)
+          .to(q(".landing-hero-photo img"), { scale: 1, duration: 1.65, ease: "power2.out" }, 1.8)
           .call(
             () => {
               el.dataset.openingStage = "photograph";
             },
             [],
-            3.8,
+            3.45,
           );
         const unsubscribe = onReveal(() => opening.play(0));
         return () => {
@@ -131,6 +141,7 @@ export function Hero() {
       <h1 className="sr-only">{hero.lockupLabel}</h1>
       <div className="landing-hero-stage">
         <WineGround />
+        <div className="intro-illumination" aria-hidden="true" />
         <div className="landing-hero-photo">
           <HeroSlideshow />
           <div className="landing-hero-shade" aria-hidden="true" />
@@ -140,7 +151,8 @@ export function Hero() {
             {landingHero.eyebrow}
           </p>
           <div data-lockup-flip className="landing-lockup relative" aria-hidden="true">
-            <BrandLockup label={hero.lockupLabel} />
+            <BrandLockup className="intro-metal" label={hero.lockupLabel} />
+            <IntroJewelleryLight />
           </div>
           <p data-hero-reveal className="landing-hero-lede">
             {landingHero.lede}

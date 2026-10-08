@@ -59,7 +59,9 @@ test("a high-density mobile display resolves to the full crisp resting resolutio
   await expect.poll(async () => Number(await root.getAttribute("data-burst"))).toBeLessThan(0.01);
   const host = root.locator(".diamond-experience-canvas");
   await expect.poll(async () => Number(await host.getAttribute("data-pixel-ratio"))).toBe(1.75);
-  expect(await host.locator("canvas").evaluate((element) => element.width / element.clientWidth)).toBeGreaterThan(1.7);
+  expect(
+    await host.locator("canvas").evaluate((element) => (element as HTMLCanvasElement).width / element.clientWidth),
+  ).toBeGreaterThan(1.7);
   expect(errors).toEqual([]);
   await context.close();
 });
@@ -261,7 +263,7 @@ test("the complete scene remains visible with JavaScript or WebGL unavailable", 
   const page = await context.newPage();
   await page.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
-    HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type, ...args) {
       if (type === "webgl" || type === "webgl2") return null;
       return Reflect.apply(original, this, [type, ...args]);
     } as typeof original;
