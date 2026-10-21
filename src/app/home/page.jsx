@@ -28,8 +28,8 @@ export default function HomePage() {
       />
       <CampaignSlides slides={landingCampaign.slides} />
       <LegacyJourney />
-      <Invitation />
       <DiamondCutStudio embedded />
+      <Invitation />
     </>
   );
 }

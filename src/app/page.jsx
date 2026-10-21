@@ -52,8 +52,8 @@ export default function LandingPage() {
       <SignatureRail />
       <CampaignSlides slides={landingCampaign.slides} />
       <Heritage />
-      <Invitation />
       <DiamondCutStudio embedded />
+      <Invitation />
     </>
   );
 }
