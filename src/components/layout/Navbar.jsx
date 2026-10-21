@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
 import { gsap, useGSAP, ScrollTrigger, MOTION_OK } from "@/lib/gsap";
-import { onReveal } from "@/lib/reveal";
 import { lockScroll, unlockScroll } from "@/lib/lenis";
 import { getWineGround, getWineGroundServer, subscribeGround } from "./ground";
 import { NAV_SCROLL_THRESHOLD } from "@/lib/constants";
@@ -34,7 +33,7 @@ export function Navbar() {
   const dropdownRef = useRef(null);
   const dropdownTrigger = useRef(null);
 
-  /* scrollNav + navReveal */
+  /* Keep the shared navigation visible while tracking its compact scroll state. */
   useGSAP(
     () => {
       setScrolled(window.scrollY > NAV_SCROLL_THRESHOLD);
@@ -45,19 +44,8 @@ export function Navbar() {
         onToggle: (self) => setScrolled(self.isActive),
       });
 
-      const mm = gsap.matchMedia();
-      mm.add(MOTION_OK, () => {
-        const pill = ref.current?.querySelector("[data-pill]");
-        if (!pill) return;
-        gsap.set(pill, { y: -24, opacity: 0 });
-        return onReveal(() => {
-          gsap.to(pill, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.7 });
-        });
-      });
-
       return () => {
         st.kill();
-        mm.revert();
       };
     },
     { scope: ref },

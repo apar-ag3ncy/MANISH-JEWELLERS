@@ -51,6 +51,31 @@ for (const viewport of [
   });
 }
 
+test("shared navigation stays visible while entering an internal page", async ({ page }) => {
+  await page.goto("/collections");
+  const pill = page.locator("[data-pill]");
+  await expect(pill).toHaveCSS("opacity", "1");
+
+  const stayedInFront = page.evaluate(async () => {
+    const started = performance.now();
+    while (performance.now() - started < 1500) {
+      const nav = document.querySelector<HTMLElement>("[data-pill]");
+      if (!nav || getComputedStyle(nav).opacity !== "1") return false;
+      const bounds = nav.getBoundingClientRect();
+      const topmost = document.elementFromPoint(bounds.left + 24, bounds.top + bounds.height / 2);
+      if (!topmost || !nav.contains(topmost)) return false;
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    }
+    return true;
+  });
+
+  await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: /About/ }).click();
+  await expect(page).toHaveURL(/\/about$/);
+  expect(await stayedInFront).toBe(true);
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await expect(pill).toHaveCSS("opacity", "1");
+});
+
 test("collection arrows, reverse navigation, mouse drag and category routes work", async ({ page }) => {
   await page.goto("/collections#collections");
   const track = page.getByRole("region", { name: "The house collection" });

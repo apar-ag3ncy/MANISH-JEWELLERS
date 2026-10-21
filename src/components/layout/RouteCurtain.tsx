@@ -125,7 +125,7 @@ export function RouteCurtain({ children }: { children: ReactNode }) {
         data-route-curtain
         hidden
         aria-hidden="true"
-        className="fixed inset-0 z-[90] flex items-center justify-center bg-wine will-change-transform"
+        className="fixed inset-0 z-[40] flex items-center justify-center bg-wine will-change-transform"
       >
         <span data-curtain-mono className="block will-change-transform">
           <Monogram className="h-14 w-auto text-rose/80" />
