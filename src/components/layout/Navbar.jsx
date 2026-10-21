@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
@@ -27,6 +28,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const [previewSlug, setPreviewSlug] = useState(collections[0].slug);
   const ref = useRef(null);
   const panelRef = useRef(null);
   const triggerRef = useRef(null);
@@ -198,6 +200,7 @@ export function Navbar() {
   const pillActive = scrolled;
   const activeRoute = (href) => pathname === href || pathname.startsWith(`${href}/`);
   const ctaVariant = pillActive ? "secondary" : onWine ? "outline-cream" : "outline";
+  const previewCollection = collections.find((collection) => collection.slug === previewSlug) ?? collections[0];
 
   return (
     <header ref={ref} className="pointer-events-none fixed inset-x-0 top-3 z-50 sm:top-5">
@@ -249,7 +252,14 @@ export function Navbar() {
                       aria-label="Show collection categories"
                       aria-expanded={collectionsOpen}
                       aria-controls="collection-menu"
-                      onClick={() => setCollectionsOpen((value) => !value)}
+                      onClick={() => {
+                        if (!collectionsOpen)
+                          setPreviewSlug(
+                            collections.find((collection) => pathname === `/collections/${collection.slug}`)?.slug ??
+                              collections[0].slug,
+                          );
+                        setCollectionsOpen((value) => !value);
+                      }}
                     >
                       <ChevronDown size={13} aria-hidden="true" />
                     </button>
@@ -259,31 +269,64 @@ export function Navbar() {
                       className="house-nav-collection-menu"
                       hidden={!collectionsOpen}
                     >
-                      <p className="eyebrow">The house collection</p>
-                      <ul>
-                        {collections.map((collection, index) => (
-                          <li key={collection.slug}>
-                            <Link
-                              href={`/collections/${collection.slug}`}
-                              aria-current={pathname === `/collections/${collection.slug}` ? "page" : undefined}
-                              onClick={() => setCollectionsOpen(false)}
-                            >
-                              <span className="house-nav-category-number">0{index + 1}</span>
-                              <span>
-                                {collection.name}
-                                <small>{collection.phrase}</small>
-                              </span>
-                              <ArrowUpRight size={17} aria-hidden="true" />
+                      <div className="house-nav-collection-heading">
+                        <p className="eyebrow">The house collection</p>
+                        <span aria-hidden="true">
+                          {String(collections.indexOf(previewCollection) + 1).padStart(2, "0")} / 0{collections.length}
+                        </span>
+                      </div>
+                      <div className="house-nav-collection-layout">
+                        <div className="house-nav-preview" aria-hidden="true">
+                          <div className="house-nav-preview-images">
+                            {collections.map((collection) => (
+                              <Image
+                                key={collection.slug}
+                                src={collection.image}
+                                alt=""
+                                fill
+                                sizes="(min-width: 1024px) 340px, 1px"
+                                className="house-nav-preview-image"
+                                data-preview-active={previewSlug === collection.slug}
+                              />
+                            ))}
+                          </div>
+                          <div className="house-nav-preview-caption">
+                            <span>{previewCollection.name}</span>
+                            <span>{previewCollection.phrase}</span>
+                          </div>
+                        </div>
+                        <div className="house-nav-collection-content">
+                          <p className="eyebrow">Find your piece</p>
+                          <ul aria-label="Jewellery categories">
+                            {collections.map((collection, index) => (
+                              <li key={collection.slug}>
+                                <Link
+                                  href={`/collections/${collection.slug}`}
+                                  aria-current={pathname === `/collections/${collection.slug}` ? "page" : undefined}
+                                  data-preview-active={previewSlug === collection.slug}
+                                  onMouseEnter={() => setPreviewSlug(collection.slug)}
+                                  onFocus={() => setPreviewSlug(collection.slug)}
+                                  onClick={() => setCollectionsOpen(false)}
+                                >
+                                  <span className="house-nav-category-number" aria-hidden="true">
+                                    0{index + 1}
+                                  </span>
+                                  <span className="house-nav-category-name">{collection.name}</span>
+                                  <ArrowUpRight size={17} aria-hidden="true" />
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="house-nav-collection-actions">
+                            <Link href="/collections" onClick={() => setCollectionsOpen(false)}>
+                              Discover all collections <ArrowUpRight size={15} aria-hidden="true" />
                             </Link>
-                          </li>
-                        ))}
-                      </ul>
-                      <Link href="/collections" className="house-nav-all" onClick={() => setCollectionsOpen(false)}>
-                        Discover all collections <ArrowUpRight size={15} aria-hidden="true" />
-                      </Link>
-                      <Link href="/diamond-guide" className="house-nav-all" onClick={() => setCollectionsOpen(false)}>
-                        The diamond guide <ArrowUpRight size={15} aria-hidden="true" />
-                      </Link>
+                            <Link href="/diamond-guide" onClick={() => setCollectionsOpen(false)}>
+                              The diamond guide <ArrowUpRight size={15} aria-hidden="true" />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </>
                 )}
