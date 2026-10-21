@@ -18,7 +18,7 @@ export function Footer({ wordmarkRef, wordmarkSlotRef }) {
 
         <div data-rule className="my-10 h-px w-full bg-cream/18 md:my-14" />
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
           {footer.columns.map((col) => (
             <div key={col.heading} data-col>
               <h2 className="eyebrow font-body text-cream/55">{col.heading}</h2>
@@ -37,21 +37,23 @@ export function Footer({ wordmarkRef, wordmarkSlotRef }) {
             </div>
           ))}
 
-          <div data-col className="col-span-2 md:col-span-1">
+          <div data-col className="col-span-2 sm:col-span-1">
             <h2 className="eyebrow font-body text-cream/75">{footer.contact.heading}</h2>
             <p className="mt-5 text-[17px] text-cream">{footer.contact.name}</p>
-            <a
-              href={footer.contact.phoneHref}
-              className="footer-contact-phone house-text-link mt-3 inline-flex items-center gap-2"
-              aria-label={`Call ${footer.contact.name} on ${footer.contact.phone}`}
-            >
-              <Phone size={14} aria-hidden="true" />
-              {footer.contact.phone}
-            </a>
-            <Link href="/about#brochure" className="link-underline mt-5 inline-flex items-center gap-2 py-2 text-sm">
-              {landingFooter.cta}
-              <ArrowRight size={16} aria-hidden="true" />
-            </Link>
+            <div className="flex flex-col items-start">
+              <a
+                href={footer.contact.phoneHref}
+                className="footer-contact-phone house-text-link mt-3 inline-flex items-center gap-2"
+                aria-label={`Call ${footer.contact.name} on ${footer.contact.phone}`}
+              >
+                <Phone size={14} aria-hidden="true" />
+                {footer.contact.phone}
+              </a>
+              <Link href="/about#brochure" className="link-underline mt-4 inline-flex items-center gap-2 py-2 text-sm">
+                {landingFooter.cta}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
 
