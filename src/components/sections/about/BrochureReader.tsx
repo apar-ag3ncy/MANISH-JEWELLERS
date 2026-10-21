@@ -7,7 +7,7 @@ import { ScrollTrigger } from "@/lib/gsap";
 import { pad2 } from "@/lib/utils";
 import { brochureBook } from "@/data/content";
 
-/** The original house brochure, kept in-page with native keyboard-accessible scrolling. */
+/** Selected visual spreads from the house brochure, with native keyboard-accessible scrolling. */
 export function BrochureReader() {
   const strip = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);

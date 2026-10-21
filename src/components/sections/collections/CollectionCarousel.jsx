@@ -64,7 +64,7 @@ export function CollectionCarousel() {
     <section id="collections" className="collection-slider house-section" aria-labelledby="collection-slider-heading">
       <div className="house-section-head container-x">
         <div>
-          <p className="eyebrow text-wine-soft">Five expressions. One house.</p>
+          <p className="eyebrow text-wine-soft">By category</p>
           <h2 id="collection-slider-heading">Find your expression.</h2>
         </div>
         <div className="collection-slider-controls">
@@ -179,7 +179,6 @@ export function CollectionCarousel() {
                 <h3>{collection.name}</h3>
                 <ArrowUpRight size={24} strokeWidth={1.2} aria-hidden="true" />
               </div>
-              <p>{collection.note}</p>
             </Link>
           </article>
         ))}

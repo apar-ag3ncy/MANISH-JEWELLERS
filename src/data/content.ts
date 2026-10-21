@@ -1,6 +1,7 @@
 // src/data/content.ts — single source of truth for ALL copy.
 // Becomes Supabase queries in Phase 2. No component may hard-code copy.
 
+import { foundingYear, legacyEditionYear, sinceFounding } from "./house-history";
 import type {
   CategoryTile,
   CraftNote,
@@ -24,8 +25,8 @@ export const brand = {
   motto: "Crafted through generations",
   lede: "Handcrafted in 18k and 22k gold, set with certified stones.",
   description:
-    "Manish Jewellers, Beawar, since 1916. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.",
-  since: 1916,
+    `Manish Jewellers, Beawar, since ${foundingYear}. Fine jewellery handcrafted in 18k and 22k gold, set with certified stones. Bespoke commissions and private viewings by appointment.`,
+  since: foundingYear,
   url: "https://manishjewellers.in",
 } as const;
 
@@ -59,7 +60,7 @@ export const hero = {
   primary: { label: "Explore the collection", href: "/" },
   secondary: { label: "Plan a showroom visit", href: "/#visit" },
   stats: [
-    { label: "Since", value: 1916, counter: true },
+    { label: "Since", value: foundingYear, counter: false },
     { label: "BIS Hallmarked", value: null, counter: false },
     { label: "IGI Certified Stones", value: null, counter: false },
   ],
@@ -513,16 +514,13 @@ export const footer = {
         { label: "Bespoke", href: "/bespoke" },
         { label: "The campaign", href: "/campaign" },
         { label: "Diamond guide", href: "/diamond-guide" },
-        { label: "About us", href: "/about" },
-        { label: "Our legacy · 1916–2026", href: "/about#heritage" },
+        { label: `Our legacy · ${sinceFounding}`, href: "/about#heritage" },
       ],
     },
     {
       heading: "Client care",
       links: [
-        { label: "Book a viewing", href: "/visit" },
         { label: "Sizing guide", href: "/bespoke#fitting" },
-        { label: "Care & repair", href: "/bespoke#the-process" },
         { label: "Contact", href: "/visit" },
       ],
     },
@@ -536,7 +534,7 @@ export const footer = {
   },
   legal: {
     copyright: `© ${new Date().getFullYear()} Manish Jewellers`,
-    marks: "Hallmarked since 1988 · BIS · IGI",
+    marks: "BIS hallmarked jewellery · IGI certified stones",
     links: [
       { label: "Instagram", href: store.instagram },
       { label: "WhatsApp", href: store.whatsappHref },
@@ -560,26 +558,22 @@ export const notFound = {
 /* ------------------------------------------------------------------ */
 
 /* ------------------------------------------------------------------ */
-/*  Heritage + brochure assets — from the house brochure (since 1916)   */
+/*  Heritage + brochure assets — from the house brochure (since 1915)   */
 /* ------------------------------------------------------------------ */
 export const heritage = {
   id: "heritage",
   eyebrow: "The house",
   hindiMark: "आपके अपने",
   heading: "A century in Beawar.",
-  line: "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat.",
-  closing: "Over a hundred years, and counting.",
+  line: `A family journey begun by our great-grandfather in ${foundingYear}, carried forward by your trust.`,
+  closing: "Your trust is our greatest inheritance.",
   bench: { src: "/brochure/br-bench.jpg", alt: "A goldsmith at the bench, shaping a piece by hand" },
   team: { src: "/brochure/br-team.jpg", alt: "The Karnawat family greeting guests at the showroom" },
   family: { src: "/brochure/br-family.jpg", alt: "The Manish Jewellers family at a celebration" },
   foil: { src: "/brochure/br-gold-foil.jpg", alt: "" },
   milestones: [
-    { year: 1916, label: "The house opens in Beawar" },
-    { year: 1932, label: "Gold enters the ledger" },
-    { year: 1952, label: "Silver follows" },
-    { year: 1988, label: "Certified hallmarking, pioneered" },
-    { year: 2025, label: "A grand new space" },
-    { year: 2026, label: "A new generation, the same promise" },
+    { year: foundingYear, label: "Our great-grandfather begins the family business in Beawar" },
+    { year: legacyEditionYear, label: "The third generation carries your trust into a new chapter" },
   ],
 } as const;
 
@@ -617,14 +611,13 @@ export const brochureShots = [
 export const brochureBook = {
   id: "brochure",
   eyebrow: "The brochure",
-  heading: "The book, page by page.",
+  heading: "Selected pages from the house brochure.",
   prev: "Previous page",
   next: "Next page",
   scroller: "Brochure pages",
   pages: [
-    { src: "/brochure/pages/page-01.jpg", alt: "Cover: आपके अपने, Manish Jewellers, since 1916" },
+    { src: "/brochure/pages/page-01.jpg", alt: `Cover: आपके अपने, Manish Jewellers, since ${foundingYear}` },
     { src: "/brochure/pages/page-03.jpg", alt: "स्वागत, the welcome page" },
-    { src: "/brochure/pages/page-04.jpg", alt: "हम: the house, founded in Beawar in 1916" },
     { src: "/brochure/pages/page-05.jpg", alt: "Rose gold earrings and a gemstone hand harness" },
     { src: "/brochure/pages/page-06.jpg", alt: "A peacock ring and a pair of kundan kada" },
     { src: "/brochure/pages/page-07.jpg", alt: "A flower ring and a vine bracelet set with pink stones" },
@@ -720,17 +713,17 @@ export const about = {
   mark: "हम",
   heading: "A century in Beawar.",
   description:
-    "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
+    `Our great-grandfather began the Manish Jewellers family journey in Beawar in ${foundingYear}. Your trust has helped carry it through the generations.`,
   photo: {
     src: "/brochure/br-bench.jpg",
     alt: "A goldsmith at the bench, shaping a piece by hand",
     caption: { text: "Crafted with precision,", italic: "treasured for eternity" },
   },
   paragraphs: [
-    "Founded in 1916 by Phool Chand Ji Sa Karnawat and Mool Chand Ji Sa Karnawat in Beawar, Manish Jewellers stands on a legacy built over a century.",
-    "From our early beginnings to embracing gold in 1932 and silver in 1952, each chapter has shaped our reputation for trust and craftsmanship. In 1988, we pioneered certified hallmark jewellery, reinforcing our commitment to purity and integrity.",
-    "Following a grand new space in 2025, our journey reaches 110 years in 2026. A new generation carries our legacy forward, honouring the craftsmanship, elegance and care that have always defined the house.",
-    "Thank you for being part of this enduring journey and for the trust that continues to inspire us.",
+    `Our great-grandfather began the family journey in Beawar in ${foundingYear}, before India's independence. The generations after him carried his values forward.`,
+    "Gold jewellery became part of the house's craft. Families made it part of their weddings, celebrations and keepsakes, and their trust shaped our story.",
+    "Today a third generation brings new ideas and a fresh boutique experience while holding to the honesty, transparency and care passed down by our elders.",
+    "Thank you for your faith and blessings. This journey has always belonged to you, too.",
   ],
   timelineEyebrow: "The house through time",
   cta: { label: "Book a viewing", href: "/visit" },

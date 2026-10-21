@@ -7,7 +7,7 @@ const collectionStories = [
     name: "Necklaces",
     phrase: "Close to the heart.",
     description:
-      "A necklace can hold a whole occasion. Discover expressive silhouettes, intricate settings and the details that make a piece feel personal.",
+      "Expressive necklaces, from sculptural designs to intricate settings.",
     hero: "long-medallion-necklace",
     note: "From an intimate celebration to a grand entrance.",
     story:
@@ -18,7 +18,7 @@ const collectionStories = [
     name: "Rings",
     phrase: "A world in your hand.",
     description:
-      "A small canvas for extraordinary detail. Explore sculptural forms, colour and character, from a quiet accent to a piece that starts a conversation.",
+      "Sculptural rings with distinctive colour and detail.",
     hero: "sunburst-cocktail-ring",
     note: "Little treasures. Unmistakable character.",
     story:
@@ -29,7 +29,7 @@ const collectionStories = [
     name: "Bangles",
     phrase: "Tradition in motion.",
     description:
-      "A familiar gesture, beautifully reimagined. Explore sculptural kadas, open cuffs and considered combinations that move with you, from a single statement to a treasured stack.",
+      "Sculptural kadas, open cuffs and classic stacks.",
     hero: "peacock-kada",
     note: "The pieces that move through generations.",
     story:
@@ -40,7 +40,7 @@ const collectionStories = [
     name: "Earrings",
     phrase: "A beautiful finishing touch.",
     description:
-      "Frame a moment with a little light. Discover delicate lines and expressive combinations, chosen to complement the way you dress and the way you move.",
+      "Delicate lines and expressive silhouettes.",
     hero: "sculpted-loop-earrings",
     note: "A little light. A lasting impression.",
     story:
@@ -51,7 +51,7 @@ const collectionStories = [
     name: "Hand ornaments",
     phrase: "Beauty in every gesture.",
     description:
-      "Fine connecting chains, floral motifs and the smallest considered details. Discover an ornament that brings its own character to the hand that wears it.",
+      "Floral motifs and fine chains for the hand.",
     hero: "blush-floral-hand-ornament",
     note: "A graceful detail for a special moment.",
     story:

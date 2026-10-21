@@ -7,7 +7,7 @@ export function sandHeight(x, z) {
   return (ripple + drift) * envelope;
 }
 
-export function sandRandom(seed = 1916) {
+export function sandRandom(seed = 1915) {
   return () => {
     seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
     return seed / 4294967296;

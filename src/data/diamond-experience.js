@@ -2,7 +2,7 @@
 export const diamondExperience = {
   brand: "Manish Jewellers",
   eyebrow: "Manish Jewellers · The diamond experience",
-  description: "Born of the earth. Shaped by hand. A legacy, revealed in light.",
+  description: "Crafted through generations.",
   phases: ["Scatter", "Gather", "Radiate"],
 };
 

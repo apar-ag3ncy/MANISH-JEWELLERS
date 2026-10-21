@@ -41,6 +41,9 @@
   align-items: end;
   margin-bottom: 48px;
 }
+.product-edit-heading:has(> :only-child) {
+  grid-template-columns: 1fr;
+}
 .product-edit .eyebrow {
   color: var(--color-wine);
 }

@@ -48,7 +48,6 @@ export function SignatureRail() {
               <div className="flex items-center justify-between gap-4 border-b border-cream-deep py-5">
                 <div>
                   <h3 className="font-display text-3xl">{item.name}</h3>
-                  <p className="mt-1 text-sm text-ink-muted">{item.note}</p>
                 </div>
                 <ArrowUpRight
                   size={22}

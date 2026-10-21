@@ -41,10 +41,9 @@ export function BespokeExperience() {
         >
           <div className="house-section-head" data-scroll-fade>
             <div>
-              <p className="eyebrow text-wine-soft">From the first thought to the final detail</p>
+              <p className="eyebrow text-wine-soft">The process</p>
               <h2 id="process-heading">Made with you.</h2>
             </div>
-            <p>A thoughtful process, shaped around your piece.</p>
           </div>
           <ol>
             {bespokePage.steps.map((step, index) => (
@@ -74,8 +73,7 @@ export function BespokeExperience() {
               <h2 id="explorer-heading">Shape. Scale. Fit.</h2>
             </div>
             <p>
-              Use our visual guides to start a conversation. Confirm the final dimensions and fit with the house in
-              person.
+              Explore shapes and sizes. Confirm your final fit in person.
             </p>
           </div>
           <Personalisation />
@@ -92,7 +90,6 @@ export function BespokeExperience() {
       <PageInvitation
         eyebrow="Begin a conversation"
         heading="Your idea belongs here."
-        body="Bring a reference, a remembered detail or simply a thought. Explore what it could become with the house in Beawar."
       />
     </>
   );

@@ -17,7 +17,7 @@ export function LegacyJourney({ id = "heritage" }) {
       const scenes = [...element.querySelectorAll("[data-legacy-scene]")];
       const links = [...element.querySelectorAll("[data-legacy-link]")];
       const mark = (index) => {
-        element.dataset.activeYear = legacy.chapters[index].year;
+        element.dataset.activeChapter = legacy.chapters[index].id;
         links.forEach((link, i) =>
           i === index ? link.setAttribute("aria-current", "step") : link.removeAttribute("aria-current"),
         );
@@ -114,7 +114,7 @@ export function LegacyJourney({ id = "heritage" }) {
       return () => {
         media.revert();
         navigation.forEach((trigger) => trigger.kill());
-        delete element.dataset.activeYear;
+        delete element.dataset.activeChapter;
         links.forEach((link) => link.removeAttribute("aria-current"));
       };
     },
@@ -125,16 +125,21 @@ export function LegacyJourney({ id = "heritage" }) {
     <section ref={root} id={id} className="heritage-story on-wine" aria-labelledby={`${id}-heading`}>
       <header className="heritage-prologue container-x">
         <div>
-          <p className="eyebrow">A journey through generations</p>
+          <p className="eyebrow">{legacy.eyebrow}</p>
           <h2 id={`${id}-heading`}>
-            One thread.
+            Many hands.
             <br />
-            <em>One hundred and ten years.</em>
+            <em>One shared story.</em>
           </h2>
         </div>
         <div>
-          <p>Hands change. A promise endures. Follow the craft, the family and the care carried from 1916 into 2026.</p>
-          <a className="heritage-scroll-hint" href={`#${id}-1916`}>
+          <p>
+            Four chapters in a family journey, shaped by craft and your trust.
+          </p>
+          <p className="heritage-promise" lang="hi">
+            आपका विश्वास, हमारी सबसे अनमोल विरासत।
+          </p>
+          <a className="heritage-scroll-hint" href={`#${id}-${legacy.firstYear}`}>
             <MoveDown size={18} aria-hidden="true" />
             Scroll to follow the story
           </a>
@@ -144,10 +149,10 @@ export function LegacyJourney({ id = "heritage" }) {
         <span className="heritage-nav-title eyebrow">The living legacy</span>
         <ol>
           {legacy.chapters.map((chapter) => (
-            <li key={chapter.year}>
-              <a data-legacy-link href={`#${id}-${chapter.year}`} aria-label={`${chapter.year}: ${chapter.theme}`}>
+            <li key={chapter.id}>
+              <a data-legacy-link href={`#${id}-${chapter.id}`} aria-label={`${chapter.navigation}: ${chapter.theme}`}>
                 <span aria-hidden="true" />
-                {chapter.year}
+                {chapter.navigation}
               </a>
             </li>
           ))}
@@ -162,20 +167,25 @@ export function LegacyJourney({ id = "heritage" }) {
         </div>
         {legacy.chapters.map((chapter, index) => (
           <article
-            key={chapter.year}
-            id={`${id}-${chapter.year}`}
+            key={chapter.id}
+            id={`${id}-${chapter.id}`}
             data-legacy-scene
             className={`heritage-scene heritage-scene--${index % 2 ? "reverse" : "forward"} ${chapter.contain ? "heritage-scene--family" : ""}`}
           >
             <span className="heritage-thread-node" aria-hidden="true" />
             <div className="heritage-scene-inner container-x">
               <div className="heritage-era">
-                <span className="eyebrow">Chapter 0{index + 1} / 06</span>
-                <p data-legacy-year className="heritage-year">
-                  {chapter.year}
+                <span className="eyebrow">
+                  Chapter {String(index + 1).padStart(2, "0")} / {String(legacy.chapters.length).padStart(2, "0")}
+                </span>
+                <p
+                  data-legacy-year
+                  className={`heritage-year ${chapter.marker.length < 4 ? "heritage-year--chapter" : ""}`}
+                >
+                  {chapter.marker}
                 </p>
                 <div className="heritage-symbol">
-                  <LegacySymbol chapter={index} />
+                  <LegacySymbol chapter={chapter.symbol} />
                   <span>{chapter.value}</span>
                 </div>
               </div>
@@ -198,12 +208,12 @@ export function LegacyJourney({ id = "heritage" }) {
                 <h3>{chapter.title}</h3>
                 <p className="legacy-body">{chapter.body}</p>
                 <a
-                  href={`#${id}-${index === legacy.chapters.length - 1 ? "end" : legacy.chapters[index + 1].year}`}
+                  href={`#${id}-${index === legacy.chapters.length - 1 ? "end" : legacy.chapters[index + 1].id}`}
                   className="heritage-next"
                 >
                   {index === legacy.chapters.length - 1
                     ? "Carry the story forward"
-                    : `Next chapter · ${legacy.chapters[index + 1].year}`}
+                    : `Next chapter · ${legacy.chapters[index + 1].navigation}`}
                   <ArrowDown size={16} aria-hidden="true" />
                 </a>
               </div>
@@ -212,15 +222,14 @@ export function LegacyJourney({ id = "heritage" }) {
         ))}
       </div>
       <div id={`${id}-end`} className="heritage-epilogue container-x" tabIndex={-1}>
-        <p className="eyebrow">1916 — 2026 · The next generation</p>
+        <p className="eyebrow">{legacy.since} · The story continues</p>
         <h2>
-          New hands.
+          With gratitude.
           <br />
-          <em>The same royal spirit.</em>
+          <em>And with you.</em>
         </h2>
         <p>
-          The artistry evolves. The care stays personal. A new generation carries the excellence of Manish Jewellers
-          into the stories still to come.
+          Thank you for your trust. We carry it forward with honesty and care.
         </p>
         <Button href="/visit" variant="glass">
           Visit the house <ArrowUpRight size={17} aria-hidden="true" />

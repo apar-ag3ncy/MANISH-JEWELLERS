@@ -124,6 +124,12 @@
   font-size: clamp(64px, 8vw, 112px);
   line-height: 1.15;
 }
+.landing-heritage-photo-note {
+  margin-top: 48px;
+  color: var(--color-ink-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
 .landing-invitation-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -219,6 +225,9 @@
   .landing-heritage-date {
     right: -4px;
     bottom: -24px;
+  }
+  .landing-heritage-photo-note {
+    margin-top: 40px;
   }
   .landing-trust {
     padding-inline: 12px;

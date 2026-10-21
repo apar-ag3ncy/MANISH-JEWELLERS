@@ -41,26 +41,31 @@
   padding: 48px 20px 46px;
   text-align: center;
 }
-.house-anniversary-arch {
-  position: absolute;
-  inset: 0;
-  border: 1px solid var(--color-cream-deep);
-  border-radius: 50% 50% 0 0;
+.house-heritage-visual {
+  width: clamp(220px, 22vw, 280px);
+  max-width: 100%;
+  margin: -8px auto 22px;
 }
-.house-anniversary-mark {
-  width: 27px;
-  height: 27px;
-  margin: 12px 0 24px;
+.house-heritage-visual img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .house-anniversary-number {
+  display: block;
   font-family: var(--font-display);
-  font-size: clamp(140px, 18vw, 268px);
+  font-size: clamp(104px, 14vw, 206px);
   line-height: 0.95;
   letter-spacing: -0.07em;
   padding-right: 0.07em;
 }
 .house-anniversary .eyebrow {
   margin-top: 18px;
+}
+.house-anniversary .house-anniversary-since {
+  display: block;
+  margin: 0 0 20px;
+  letter-spacing: 0.25em;
 }
 .house-anniversary-dates {
   display: flex;
@@ -71,7 +76,7 @@
   letter-spacing: 0.12em;
 }
 .house-anniversary-dates span {
-  width: 56px;
+  width: 24px;
   height: 1px;
   background: var(--color-wine-soft);
 }
@@ -266,10 +271,11 @@
     padding-block: 24px;
   }
   .house-anniversary-number {
-    font-size: 154px;
+    font-size: clamp(96px, 31vw, 138px);
   }
-  .house-anniversary-mark {
-    margin-bottom: 12px;
+  .house-heritage-visual {
+    width: 220px;
+    margin-bottom: 18px;
   }
   .house-anniversary-dates {
     margin-top: 22px;

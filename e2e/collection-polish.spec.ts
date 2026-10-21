@@ -11,8 +11,8 @@ for (const viewport of [
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("/collections");
     await expect(
-      page.locator(".collection-house-edit img, .collection-atelier img, .collection-gifting img"),
-    ).toHaveCount(6);
+      page.locator(".collection-house-edit img, .collection-atelier img"),
+    ).toHaveCount(3);
     const opener = page.getByRole("button", { name: "Take a closer look: Gold, with a presence." });
     await opener.click();
     const gallery = page.getByRole("dialog", { name: "Gold, with a presence." });
@@ -23,7 +23,7 @@ for (const viewport of [
     await expect(page.getByRole("dialog")).toHaveAccessibleName("A world of possibilities.");
     await page.keyboard.press("ArrowLeft");
     await page.keyboard.press("ArrowLeft");
-    await expect(page.getByRole("dialog")).toHaveAccessibleName("Beauty, beyond the jewel.");
+    await expect(page.getByRole("dialog")).toHaveAccessibleName("A world of possibilities.");
     await page.getByRole("button", { name: "Next house image" }).click();
     await expect(page.getByRole("dialog")).toHaveAccessibleName("Gold, with a presence.");
     expect(await gallery.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);

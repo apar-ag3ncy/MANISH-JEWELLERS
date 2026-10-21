@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { ScrollMotion } from "@/components/motion/ScrollMotion";
 import { campaignPage } from "@/data/internal-pages";
+import { collectionPage } from "@/data/legacy";
 import { PageInvitation } from "@/components/sections/shared/PageInvitation";
 
 export function BridalEditorial() {
@@ -76,10 +77,10 @@ export function BridalEditorial() {
               are shared.
             </h2>
             <p>
-              For the people beside you, and the generations behind you. Discover the house’s own story of belonging.
+              Part of a family story, since 1915.
             </p>
             <Link href="/about#heritage" className="house-text-link">
-              Journey through 110 years <ArrowUpRight size={18} aria-hidden="true" />
+              {collectionPage.story} <ArrowUpRight size={18} aria-hidden="true" />
             </Link>
           </div>
         </section>

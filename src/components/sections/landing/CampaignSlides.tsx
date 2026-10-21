@@ -151,20 +151,6 @@ export function CampaignSlides({ slides = campaign.slides, id = campaign.id }: P
             </button>
           </div>
         </div>
-        <div className="mt-5 flex gap-3" role="group" aria-label="Choose a campaign photograph">
-          {slides.map((slide, i) => (
-            <button
-              key={slide.src}
-              type="button"
-              aria-label={`${campaign.goTo} ${i + 1}`}
-              aria-current={i === active ? "true" : undefined}
-              onClick={() => go(i)}
-              className="flex h-11 flex-1 items-center"
-            >
-              <span className={cn("block h-px w-full", i === active ? "bg-cream" : "bg-cream/35")} />
-            </button>
-          ))}
-        </div>
       </div>
     </section>
   );

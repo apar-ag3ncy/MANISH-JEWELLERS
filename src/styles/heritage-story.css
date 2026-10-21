@@ -27,6 +27,14 @@
   max-width: 35ch;
   color: rgb(246 236 220 / 75%);
 }
+.heritage-prologue > div:last-child > .heritage-promise {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(242 229 212 / 22%);
+  color: var(--color-rose-light);
+  font-size: 20px;
+  line-height: 1.5;
+}
 .heritage-scroll-hint {
   display: flex;
   align-items: center;
@@ -154,6 +162,11 @@
   letter-spacing: -0.07em;
   margin-top: 18px;
   color: var(--color-cream);
+}
+.heritage-year--chapter {
+  color: var(--color-rose-light);
+  font-style: italic;
+  letter-spacing: -0.04em;
 }
 .heritage-symbol {
   display: flex;

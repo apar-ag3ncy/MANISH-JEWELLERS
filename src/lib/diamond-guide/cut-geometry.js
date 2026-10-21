@@ -97,7 +97,7 @@ export function createCutGeometry(cut) {
     ),
   );
   whole.computeVertexNormals();
-  const random = seededRandom(1916);
+  const random = seededRandom(1915);
   const attributes = { position: [], aCentre: [], aRest: [], aAxis: [], aSpin: [], aDelay: [] };
   const core = new THREE.Vector3(0, -0.03, 0);
   faces.forEach((face, i) => {

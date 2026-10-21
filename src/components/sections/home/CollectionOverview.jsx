@@ -17,8 +17,7 @@ export function CollectionHero() {
             <em>Extraordinary presence.</em>
           </h1>
           <p className="body-l text-ink-muted">
-            Sixteen expressions of the craft. Necklaces, bangles, rings and the pieces that bring it all together. Find
-            a little beauty to call your own.
+            Necklaces, rings, bangles and more. Explore the house collection.
           </p>
           <a href="#all-pieces" className="house-story-link ui-label">
             Discover all {products.length} pieces
@@ -50,7 +49,6 @@ export function CollectionHero() {
               className="object-contain"
             />
           </div>
-          <span className="collection-image-note">From the house. For your story.</span>
         </div>
       </div>
     </ScrollMotion>

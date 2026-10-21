@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { ScrollMotion } from "@/components/motion/ScrollMotion";
+import { sinceFounding } from "@/data/house-history";
 
 /** The house collection opens with the campaign and the jewels behind it. */
 export function HouseHomeHero() {
@@ -9,7 +10,7 @@ export function HouseHomeHero() {
     <ScrollMotion as="section" className="house-home-opening on-wine" aria-labelledby="house-home-title">
       <div className="house-home-spread">
         <div className="house-home-copy">
-          <p className="house-home-eyebrow eyebrow">The house collection · Since 1916</p>
+          <p className="house-home-eyebrow eyebrow">The house collection · {sinceFounding}</p>
           <div className="house-home-story">
             <h1 id="house-home-title">
               For every
@@ -19,7 +20,7 @@ export function HouseHomeHero() {
               <em>beginning.</em>
             </h1>
             <p className="house-home-introduction">
-              A jewel for the day. A memory for the years. Discover the pieces that make a moment your own.
+              Jewellery for celebrations and everyday life.
             </p>
             <Link href="/collections#all-pieces" className="house-home-discover house-text-link">
               Discover the collection
@@ -27,7 +28,7 @@ export function HouseHomeHero() {
             </Link>
           </div>
           <Link href="/about#heritage" className="house-home-history">
-            1916—2026 <span>A legacy, still unfolding</span>
+            {sinceFounding} <span>A legacy, still unfolding</span>
             <ArrowUpRight size={15} strokeWidth={1.3} aria-hidden="true" />
           </Link>
         </div>

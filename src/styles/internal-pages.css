@@ -70,20 +70,34 @@
 .house-page-invitation {
   background: var(--color-wine);
   color: var(--color-cream);
-  text-align: center;
+  padding-block: clamp(48px, 5vw, 72px);
+}
+.house-page-invitation > .container-x {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
 }
 .house-page-invitation h2 {
-  max-width: 14ch;
-  margin: 24px auto;
+  font-size: clamp(32px, 3.5vw, 48px);
+  margin: 12px 0;
 }
 .house-page-invitation p:not(.eyebrow) {
   max-width: 48ch;
-  margin: auto;
   line-height: 1.75;
   opacity: 0.8;
 }
 .house-page-invitation .house-text-link {
   color: var(--color-cream);
+  flex-shrink: 0;
+  margin-top: 0;
+}
+@media (max-width: 767px) {
+  .house-page-invitation > .container-x {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 /* Collection gallery: a native scroll lane, never a pinned vertical-scroll trap. */

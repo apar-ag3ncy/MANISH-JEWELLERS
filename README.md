@@ -24,10 +24,9 @@ The welcome page is `/`, with its existing sections:
 - `#campaign` — accessible bridal campaign carousel
 - `#our-story` — heritage and craftsmanship
 - `#brochure` — expandable, keyboard-accessible brochure reader
-- `#house-edit` — the collection imagery, atelier story and gifting presentation
 - `#visit` — showroom details and directions
 
-`/home` is the house collection, with jewellery categories, the bridal campaign, house edit and heritage journey. `/about` is the family story and brochure. The diamond-cut explorer and sizing guide live on `/bespoke#cut-studio` and `/bespoke#fitting`. Each route has its own canonical URL and sitemap entry.
+`/home` is the house collection, with jewellery categories, the bridal campaign and heritage journey. `/about` is the family story and brochure. The diamond-cut explorer and sizing guide live on `/bespoke#cut-studio` and `/bespoke#fitting`. Each route has its own canonical URL and sitemap entry.
 
 The internal pages are:
 
@@ -75,7 +74,11 @@ Keep routes small: compose a feature component rather than putting animation, da
 
 `ScrollMotion.jsx` scopes its GSAP timelines to its own feature and reverts them on navigation or a motion-preference change. `data-scroll-fade` gives copy a reversible entrance, reading pause and exit. `data-image-swipe` uncovers photography from left to right with a restrained image drift; `="intro"` uses a timed entrance for above-the-fold imagery. The gallery keeps native touch scrolling and keyboard links, with eased GSAP arrow navigation and mouse dragging. HTML remains readable without JavaScript; reduced motion removes the fades, masks and image drift.
 
-The heritage journey at `/about#heritage` and `/home#heritage` tells six chapters: 1916, 1932, 1952, 1988, 2025 and 2026. Each chapter occupies its own scene in normal document flow. Scoped GSAP timelines draw craft symbols, drift the photography and fade the narrative in both scroll directions. A slim sticky year navigator links to real chapter anchors; the story itself never pins or locks scrolling. Reduced motion and no JavaScript retain every chapter. Copy and photo references live in `src/data/legacy.ts`; historic dates and founding names follow the existing house brochure. Photographs illustrate the narrative and carry source captions.
+The heritage journey at `/about#heritage` and `/home#heritage` tells four chapters: the 1915 beginning, gold craft, customer trust and the next generation in 2026. Each chapter occupies its own scene in normal document flow. Scoped GSAP timelines draw craft symbols, drift the photography and fade the narrative in both scroll directions. A slim sticky chapter navigator links to real chapter anchors; the story itself never pins or locks scrolling. Reduced motion and no JavaScript retain every chapter. Copy and photo references live in `src/data/legacy.ts`; unverified intervening dates and founder names are omitted. Photographs illustrate the narrative and carry source captions.
+
+`src/data/house-history.ts` owns the confirmed founding year and the permanent “Since 1915” label used across the site and its metadata. The 2026 chapter is a dated milestone, not an end date. Its 111-year anniversary is calculated from the founding year and explicitly labelled “111 years in 2026”.
+
+The About introduction uses an original Blender-rendered gold-bangle study (`public/heritage/heritage-bangles.webp`), decorative artwork rather than a historical photograph. Its editable source is `assets/blender/heritage-bangles.blend`; `scripts/blender/heritage-bangles.py` recreates the scene with local procedural geometry and Cycles. The transparent WebP uses a responsive image with intrinsic dimensions; the founding statement remains accessible HTML, including without JavaScript.
 
 The diamond guide opens with a Three.js cutting table on procedural black sand. GSAP scroll choreography gathers tetrahedral shards into five closed cut geometries, reveals facets and traces an illustrative light path. Shape buttons and horizontal touch swipes re-form the selected cut; mouse drag, turn controls and keyboard arrows inspect it. A custom GLSL shader adds sharp studio reflections, internal refraction and restrained dispersion. Reduced motion changes states directly; SVG illustrations remain usable without WebGL. The existing anatomy diagrams and GIA sources continue below. See [the cutting-table implementation notes](docs/diamond-cut-studio.md) for controls, rendering and fallback details.
 
@@ -93,9 +96,9 @@ Brand, catalogue and store data live in `src/data/content.ts`; current page copy
 
 The client-confirmed primary brand color is **#793f48**, defined as `--color-brand` in `globals.css`. The wine token aliases it, including the Open Graph preview. Shared glass styles in `glass-controls.css` cover native buttons and linked controls with transparent fills, backdrop blur and subtle edges. Parth Karnavat's verified contact number, **+91 9929295123**, lives in the footer data and opens a native telephone link.
 
-Collections includes eight optimized WebP house assets in `public/house/`. Presentation imagery complements the original brochure pieces; it does not claim product availability or prices. `CollectionEditorial.jsx`, `collection-editorial.js` and `collection-editorial.css` keep the gallery's behavior, content and style separate. The native dialog supports previous/next, arrow keys, Escape, focus return and coordinated Lenis scroll locking.
+The collections page uses two jewellery presentations and one atelier image from `public/house/`. Presentation imagery complements the original brochure pieces; it does not claim product availability or prices. `CollectionEditorial.jsx`, `collection-editorial.js` and `collection-editorial.css` keep the gallery's behavior, content and style separate. The native dialog supports previous/next, arrow keys, Escape, focus return and coordinated Lenis scroll locking.
 
-The welcome page reuses that house edit, atelier and gifting presentation in place of the old text-only bespoke section. The internal collections page retains its complete edition. Footer sizing and process links now point to the useful tools on the bespoke page.
+The welcome and home pages keep the featured jewellery, campaign and legacy sections. Extended house imagery stays on the collections page. Product grids show names and categories; descriptions remain in the closer-look dialog. Footer links retain contact, directions, sizing and the brochure.
 
 The jewellery inventory comes directly from the 16 unique native photographs on pages 5–12 of the supplied `manish-jewellers-final.pdf`. They are extracted into `public/collection-products/` as WebP files, preserving the original photographic settings and complete coordinated groups. No brochure typography or page borders are carried into the product images. Native dimensions are retained without upscaling; two background-only trims bring the bangle compositions closer. The source objects and crop decisions are recorded in `docs/brochure-products.md`, and `scripts/extract-brochure-products.py` reproduces the extraction from a supplied PDF path.
 

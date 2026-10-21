@@ -86,7 +86,7 @@ for (const viewport of [
   });
 }
 
-test("the old landing block is replaced by the working house edit and useful tools live on bespoke", async ({
+test("the landing stays focused on jewellery and useful tools live on bespoke", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -94,11 +94,11 @@ test("the old landing block is replaced by the working house edit and useful too
   await expect(page.getByRole("heading", { name: "Bring us a sketch. Or an idea." })).toHaveCount(0);
   await expect(page.locator("#bespoke, #fitting")).toHaveCount(0);
   await expect(page.locator("#cut-studio")).toHaveCount(1);
-  const edit = page.locator("#house-edit");
+  const edit = page.locator("#house-favourites");
   await edit.scrollIntoViewIfNeeded();
   await expect(edit.locator("img")).toHaveCount(6);
-  await edit.getByRole("button", { name: "Take a closer look: Gold, with a presence." }).click();
-  await expect(page.getByRole("dialog", { name: "Gold, with a presence." })).toBeVisible();
+  await edit.getByRole("link", { name: "Take a closer look: Long medallion necklace" }).click();
+  await expect(page.getByRole("dialog", { name: "Long medallion necklace" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toBeHidden();
   await page.locator("footer").getByRole("link", { name: "Sizing guide", exact: true }).click();

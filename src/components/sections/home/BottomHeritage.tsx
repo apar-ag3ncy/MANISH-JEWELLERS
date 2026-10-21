@@ -11,9 +11,8 @@ import { ImageFrame } from "@/components/ui/ImageFrame";
 /**
  * Heritage — the house's own century, scrubbed.
  *
- * The section is held for 150% of a viewport while the five milestones step through a
- * single numeral: 1916, 1932, 1952, 1988, 2025. The goldsmith holds the left half and
- * pushes in slowly behind them; five hairline dashes fill as the reader advances, and
+ * The section is held for 150% of a viewport while confirmed milestones step through a
+ * single numeral. The goldsmith holds the left half and pushes in slowly behind them; hairline dashes fill as the reader advances, and
  * they are also the control — touching one hands the sequence over for good.
  *
  * ACCESSIBILITY AND FALLBACK. The stacked numeral is a decorative stage (aria-hidden):

@@ -48,8 +48,6 @@ export function Footer({ wordmarkRef, wordmarkSlotRef }) {
               <Phone size={14} aria-hidden="true" />
               {footer.contact.phone}
             </a>
-            <h3 className="mt-9 eyebrow font-body text-cream/75">{landingFooter.heading}</h3>
-            <p className="mt-3 text-[15px] text-cream/80">{landingFooter.body}</p>
             <Link href="/about#brochure" className="link-underline mt-5 inline-flex items-center gap-2 py-2 text-sm">
               {landingFooter.cta}
               <ArrowRight size={16} aria-hidden="true" />
@@ -64,19 +62,6 @@ export function Footer({ wordmarkRef, wordmarkSlotRef }) {
             <span>{footer.legal.copyright}</span>
             <span>{footer.legal.marks}</span>
           </div>
-          <ul className="flex items-center gap-2 caption text-cream/80">
-            {[
-              { label: "Our story", href: "/about" },
-              { label: "Visit us", href: "/visit" },
-            ].map((l, i) => (
-              <li key={l.label} className="flex items-center gap-2">
-                {i > 0 ? <span aria-hidden="true">·</span> : null}
-                <Link href={l.href} className="link-underline-draw transition-colors duration-300 hover:text-cream">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </footer>

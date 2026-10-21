@@ -42,8 +42,8 @@ test("client navigation removes the entire finale and restores one footer when r
   await expect(page).toHaveURL(/\/collections$/);
   await expect(page.locator("footer")).toHaveCount(1);
   await expect(page.locator("[data-footer-wordmark]")).toHaveCount(1);
-  await page.locator("footer").getByRole("link", { name: "About us", exact: true }).click();
-  await expect(page).toHaveURL(/\/about$/);
+  await page.locator("footer").getByRole("link", { name: "Our legacy · Since 1915", exact: true }).click();
+  await expect(page).toHaveURL(/\/about#heritage$/);
   await expect(page.locator("footer, [data-house-finale]")).toHaveCount(0);
   expect(errors).toEqual([]);
 });

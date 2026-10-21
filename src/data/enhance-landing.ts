@@ -1,10 +1,11 @@
 // Copy owned by the landing group. Prefix every export "landing".
 import type { Slide } from "@/types";
+import { foundingYear, sinceFounding } from "./house-history";
 
 /** Hero — the scroll cue that sits in the void between the buttons and the stats. */
 export const landingHero = {
-  eyebrow: "Beawar, Rajasthan · Since 1916",
-  lede: "For the moments you hold close, and the stories you pass on.",
+  eyebrow: `Beawar, Rajasthan · ${sinceFounding}`,
+  lede: "Jewellery to treasure.",
   scrollCue: "Discover the house",
   collection: "The bridal collection",
   image: {
@@ -15,8 +16,8 @@ export const landingHero = {
 
 export const landingCollections = {
   eyebrow: "The collections",
-  heading: "Treasures for every chapter.",
-  lede: "From everyday favourites to once-in-a-lifetime pieces. Find a little of yourself in every detail.",
+  heading: "Find your signature.",
+  lede: "Explore the collection by category.",
   cta: "View the house brochure",
   href: "/#brochure",
   items: [
@@ -42,18 +43,18 @@ export const landingCollections = {
 } as const;
 
 export const landingHeritage = {
-  eyebrow: "Our story · Since 1916",
-  heading: "Some things only grow more precious with time.",
-  body: "Rooted in Beawar, our story began in 1916. Through changing times and generations of families, one thing endures: the care that goes into every piece.",
-  cta: "Journey through 110 years",
+  eyebrow: `Our story · ${sinceFounding}`,
+  heading: "A legacy of trust.",
+  body: `A family journey begun in Beawar in ${foundingYear}, carried forward through craft and your trust.`,
+  cta: "Our story",
   href: "/about#heritage",
 } as const;
 
 export const landingVisit = {
   id: "visit",
   eyebrow: "A personal invitation",
-  heading: "Your next heirloom begins with a visit.",
-  body: "Discover the collection at our Beawar showroom. Take your time, try on your favourites, and find the piece that feels like you.",
+  heading: "Visit us in Beawar.",
+  body: "Discover the collection in person.",
   directions: "Find our showroom",
 } as const;
 

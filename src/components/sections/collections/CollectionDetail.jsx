@@ -39,16 +39,8 @@ export function CollectionDetail({ collection }) {
           products={collection.pieces}
           heading={`The ${collection.name.toLowerCase()} edit.`}
           eyebrow="A closer look"
-          description="Explore the details in full. Take a closer look at each piece, then discover the collection with us in Beawar."
           filters={false}
         />
-        <section className="collection-editorial-note house-section container-x" data-scroll-fade>
-          <p className="eyebrow text-wine-soft">Made for your own story</p>
-          <h2>{collection.story}</h2>
-          <Link className="house-text-link" href="/bespoke">
-            Make it personal <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </section>
         <nav className="collection-siblings container-x" aria-label="Explore more collections">
           <p className="eyebrow text-wine-soft">Continue discovering</p>
           <div>

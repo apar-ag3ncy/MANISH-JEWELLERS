@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { heritage } from "@/data/content";
+import { foundingYear } from "@/data/house-history";
 import { landingHeritage } from "@/data/enhance-landing";
 import { ImageFrame } from "@/components/ui/ImageFrame";
 import { LandingReveal as Reveal } from "./LandingReveal";
@@ -15,18 +16,21 @@ export function Heritage() {
     >
       <div className="landing-heritage-grid container-x">
         <div className="relative">
-          <ImageFrame
-            reveal="none"
-            src={heritage.bench.src}
-            alt={heritage.bench.alt}
-            sizes="(min-width: 1024px) 42vw, 90vw"
-            curtain="cream"
-            className="aspect-[4/5]"
-            depth={0}
-          />
-          <span className="landing-heritage-date font-display" aria-hidden="true">
-            1916
-          </span>
+          <div className="relative">
+            <ImageFrame
+              reveal="none"
+              src={heritage.bench.src}
+              alt={heritage.bench.alt}
+              sizes="(min-width: 1024px) 42vw, 90vw"
+              curtain="cream"
+              className="aspect-[4/5]"
+              depth={0}
+            />
+            <span className="landing-heritage-date font-display" aria-hidden="true">
+              {foundingYear}
+            </span>
+          </div>
+          <p className="landing-heritage-photo-note">The craft, photographed today</p>
         </div>
         <Reveal>
           <p className="eyebrow text-wine-soft">{landingHeritage.eyebrow}</p>

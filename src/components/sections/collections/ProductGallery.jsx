@@ -12,9 +12,9 @@ import { categoryName, productCategories, products as allProducts } from "@/data
 export function ProductGallery({
   products = allProducts,
   id = "all-pieces",
-  heading = "Find the piece that feels like you.",
+  heading = "The collection.",
   eyebrow = "The jewellery edit",
-  description = "Every curve, every setting, every little detail. Explore the complete jewellery edit and take a closer look at the pieces you love.",
+  description = "",
   filters = true,
   showAllLink = false,
 }) {
@@ -74,14 +74,16 @@ export function ProductGallery({
             <p className="eyebrow">{eyebrow}</p>
             <h2 id={headingId}>{heading}</h2>
           </div>
-          <div className="product-edit-introduction">
-            <p>{description}</p>
-            {showAllLink && (
-              <Link href="/collections#all-pieces" className="house-text-link">
-                Discover all {allProducts.length} pieces <ArrowUpRight size={17} aria-hidden="true" />
-              </Link>
-            )}
-          </div>
+          {(description || showAllLink) && (
+            <div className="product-edit-introduction">
+              {description && <p>{description}</p>}
+              {showAllLink && (
+                <Link href="/collections#all-pieces" className="house-text-link">
+                  Discover all {allProducts.length} pieces <ArrowUpRight size={17} aria-hidden="true" />
+                </Link>
+              )}
+            </div>
+          )}
         </div>
 
         {filters && (
@@ -143,22 +145,12 @@ export function ProductGallery({
               <figcaption>
                 <div className="product-edit-piece-label">
                   <Link href={`/collections/${piece.category}#the-edit`}>{categoryName(piece.category)}</Link>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                 </div>
                 <h3>{piece.name}</h3>
-                <p>{piece.detail}</p>
               </figcaption>
             </figure>
           ))}
         </div>
-        {showAllLink && (
-          <div className="product-edit-bottom">
-            <p>There is more to fall in love with.</p>
-            <Link href="/collections#all-pieces" className="house-text-link">
-              Explore the complete collection <ArrowUpRight size={17} aria-hidden="true" />
-            </Link>
-          </div>
-        )}
       </div>
 
       <dialog
@@ -208,9 +200,6 @@ export function ProductGallery({
                   {selected.name}
                 </h2>
                 <p>{selected.detail}</p>
-                <p className="product-viewer-note">
-                  A piece to see, feel and make your own. Explore the collection with us at the house in Beawar.
-                </p>
                 <Link href="/visit" className="house-text-link">
                   Plan a viewing <ArrowUpRight size={17} aria-hidden="true" />
                 </Link>

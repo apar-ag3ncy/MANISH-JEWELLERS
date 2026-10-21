@@ -37,13 +37,14 @@ test("campaign controls wrap, support keyboard navigation and pause", async ({ p
   await expect(carousel).toBeInViewport();
   await carousel.getByRole("button", { name: "Pause slideshow" }).click();
   await expect(carousel.getByRole("button", { name: "Play slideshow" })).toBeVisible();
-  await carousel.getByRole("button", { name: "Show slide 4" }).click();
+  await carousel.getByRole("button", { name: "Previous slide" }).click();
   await expect(carousel.getByRole("heading")).toHaveText("The Bridal Edit, 2026.");
   await carousel.getByRole("button", { name: "Next slide" }).click();
   await expect(carousel.getByRole("heading")).toHaveText("Polki, set by hand.");
   await carousel.getByRole("button", { name: "Next slide" }).press("ArrowLeft");
   await expect(carousel.getByRole("heading")).toHaveText("The Bridal Edit, 2026.");
   await expect(carousel.getByRole("group", { name: /of 4/ })).toHaveCount(1);
+  await carousel.screenshot({ path: test.info().outputPath("campaign-no-selectors.png") });
 });
 
 test("direct landing anchors survive the intro", async ({ page }) => {
@@ -131,6 +132,6 @@ test("the bespoke tools and landing brochure stay interactive", async ({ page })
   await page.goto("/#our-story");
   await page.getByText("Explore the house brochure", { exact: true }).click();
   await page.getByRole("button", { name: "Next page", exact: true }).click();
-  await expect(page.locator("#brochure .eyebrow")).toHaveText("02 / 12");
+  await expect(page.locator("#brochure .eyebrow")).toHaveText("02 / 11");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

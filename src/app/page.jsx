@@ -5,7 +5,6 @@ import { Marquee } from "@/components/sections/landing/Marquee";
 import { SignatureRail } from "@/components/sections/landing/SignatureRail";
 import { Invitation } from "@/components/sections/landing/Invitation";
 import { Heritage } from "@/components/sections/landing/Heritage";
-import { CollectionEditorial } from "@/components/sections/collections/CollectionEditorial";
 import { ProductGallery } from "@/components/sections/collections/ProductGallery";
 import { featuredProducts } from "@/data/product-catalog";
 import { DiamondCutStudio } from "@/components/sections/diamonds/DiamondCutStudio";
@@ -45,18 +44,14 @@ export default function LandingPage() {
       <ProductGallery
         id="house-favourites"
         products={featuredProducts}
-        heading="The pieces make the moment."
+        heading="Selected pieces."
         eyebrow="A first look at the collection"
-        description="A sculptural curve. A touch of colour. Something you will reach for again and again. Discover a few favourites from the house."
         filters={false}
         showAllLink
       />
       <SignatureRail />
       <CampaignSlides slides={landingCampaign.slides} />
       <Heritage />
-      <div id="house-edit" className="house-page scroll-mt-24">
-        <CollectionEditorial />
-      </div>
       <Invitation />
       <DiamondCutStudio embedded />
     </>

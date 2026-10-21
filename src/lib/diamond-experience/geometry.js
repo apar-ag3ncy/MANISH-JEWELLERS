@@ -52,7 +52,7 @@ export function createDiamondGeometry(triangles) {
 
 /** Closed tetrahedral pieces share one draw call; the GPU moves each piece independently. */
 export function createFragmentGeometry(triangles) {
-  const random = seededRandom(1916);
+  const random = seededRandom(1915);
   const positions = [],
     centres = [],
     bursts = [],

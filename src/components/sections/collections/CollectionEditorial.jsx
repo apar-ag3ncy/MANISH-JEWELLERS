@@ -43,7 +43,6 @@ export function CollectionEditorial() {
               <em>looked at closely.</em>
             </h2>
           </div>
-          <p>From a statement in gold to the box that holds it. Explore the collection and the world around it.</p>
         </div>
         <div className="collection-house-grid">
           {collectionEditorial.map((entry, index) => (
@@ -72,7 +71,6 @@ export function CollectionEditorial() {
               <figcaption data-scroll-fade>
                 <p className="eyebrow text-wine-soft">{entry.eyebrow}</p>
                 <h3>{entry.title}</h3>
-                <p>{entry.description}</p>
                 <Link href={entry.href} className="house-text-link">
                   {entry.link}
                   <ArrowUpRight size={16} aria-hidden="true" />
@@ -101,39 +99,13 @@ export function CollectionEditorial() {
               <br />A lasting <em>impression.</em>
             </h2>
             <p>
-              A curve refined. A setting considered. A surface finished. The beauty of a jewel begins with attention to
-              the smallest detail.
+              Shaped, set and finished with care.
             </p>
             <Link href="/bespoke" className="house-text-link">
               Begin a personal creation
               <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </div>
-        </div>
-      </ScrollMotion>
-
-      <ScrollMotion as="section" className="collection-gifting house-section container-x">
-        <div data-scroll-fade>
-          <p className="eyebrow text-wine-soft">The joy of giving</p>
-          <h2>
-            A beautiful beginning.
-            <br />
-            <em>Before the box opens.</em>
-          </h2>
-          <p>For a milestone, a celebration, or simply someone special. Let us help you find a jewel with meaning.</p>
-          <Link href="/visit" className="house-text-link">
-            Visit the house
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="collection-gifting-photo" data-image-swipe>
-          <Image
-            src="/house/gift-presentation.webp"
-            alt="A cream-wrapped gift with a wine-colored Manish Jewellers ribbon and monogram"
-            fill
-            sizes="(min-width: 1024px) 40vw, 90vw"
-            className="object-cover"
-          />
         </div>
       </ScrollMotion>
 
@@ -160,7 +132,7 @@ export function CollectionEditorial() {
         {selected && (
           <div className="collection-lightbox-inner">
             <div className="collection-lightbox-top">
-              <p className="eyebrow">The house edit · {String(active + 1).padStart(2, "0")} / 04</p>
+              <p className="eyebrow">The house edit · {String(active + 1).padStart(2, "0")} / {String(collectionEditorial.length).padStart(2, "0")}</p>
               <button
                 type="button"
                 className="glass-control"

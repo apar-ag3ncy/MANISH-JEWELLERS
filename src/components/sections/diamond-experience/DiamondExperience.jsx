@@ -6,6 +6,7 @@ import { ArrowDown, MoveHorizontal, RotateCcw, Sparkles } from "lucide-react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { getLenis } from "@/lib/lenis";
 import { diamondExperience as copy } from "@/data/diamond-experience";
+import { sinceFounding } from "@/data/house-history";
 import { DiamondFallback } from "./DiamondFallback";
 
 /** A reversible, scroll-controlled finale. Content stays in native document flow. */
@@ -288,7 +289,7 @@ export function DiamondExperience({ finaleRef, brandAnchorRef }) {
         </div>
         <div className="diamond-experience-bottom">
           <div className="diamond-experience-note">
-            <p>1916 — 2026</p>
+            <p>{sinceFounding}</p>
             <p>{copy.description}</p>
             <span id="diamond-interaction-help">
               <MoveHorizontal size={14} aria-hidden="true" />
